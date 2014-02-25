@@ -18,7 +18,7 @@ module Fever
     end
 
     def self.it_looks_the_same
-      Fever::Comparator.test(@component)
+      Fever::Comparator.new(@component)
     end
   end
 end
