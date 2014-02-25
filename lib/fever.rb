@@ -1,0 +1,2 @@
+module Fever
+end
