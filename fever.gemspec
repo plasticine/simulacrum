@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path('../lib', __FILE__)
-require 'kayessess/version'
+require 'fever/version'
 
 Gem::Specification.new do |s|
   s.name          = Fever::PACKAGE

@@ -1,15 +1,7 @@
 #!/bin/sh -xe
 
-script/bootstrap
+$(dirname $0)/bootstrap
 
 rm -rf coverage/
-
-if [[ $TRAVIS || $CI ]]; then
-  bin/rake spec:appraisal:rails3.0.x spec:unit
-  bin/rake spec:appraisal:rails3.1.x spec:unit
-  bin/rake spec:appraisal:rails3.2.x spec:unit
-fi
-
-bin/rake spec:appraisal:rails4.0.x spec:unit COVERAGE=true
-
-script/quality
+bin/rubocop lib
+bin/rspec COVERAGE=true

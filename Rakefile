@@ -6,8 +6,6 @@ require 'bundler'
 Bundler::GemHelper.install_tasks
 
 namespace :spec do
-  require 'appraisal'
-
   begin
     require 'cane/rake_task'
 
@@ -29,10 +27,10 @@ namespace :spec do
     spec.rspec_opts = "--require spec_helper --format progress --colour"
   end
 
-  desc 'Generate documentation for the nestive plugin.'
+  desc 'Generate documentation for the Fever plugin.'
   Rake::RDocTask.new(:rdoc) do |rdoc|
     rdoc.rdoc_dir = 'rdoc'
-    rdoc.title    = 'Nestive'
+    rdoc.title    = 'Fever'
     rdoc.options << '--line-numbers' << '--inline-source'
     rdoc.rdoc_files.include('README')
     rdoc.rdoc_files.include('lib/**/*.rb')
