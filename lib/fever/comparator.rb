@@ -37,7 +37,7 @@ module Fever
 
     def skipped
       @candidate.save
-      pending("#{@component.candidate_path} written to disk — please resolve")
+      pending "#{@component.candidate_path} written to disk — please resolve"
     end
 
     def diff(candidate)
