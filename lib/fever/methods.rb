@@ -1,21 +1,24 @@
+require 'ostruct'
+
 module Fever
+  #
+  # Rspec utility methods for defining components, browser environments and
+  #
   module Methods
-    # Sets the `component` var via `let` in the context to an instance of
-    # `Fever::Component`
-    def component(name, &block)
-      yield(OpenStruct.new)
+    def self.component(name, &block)
+      options = OpenStruct.new
+      yield options
+      @component = Fever::Component.new(name, options)
     end
 
-    def configure_browser(name, &block)
-      yield(OpenStruct.new)
+    def self.configure_browser(name, &block)
+      options = OpenStruct.new
+      yield options
+      @browser = Fever::Browser.new(name, options)
     end
 
-    def capture
-      # Fever::Image.new
-    end
-
-    def it_looks_the_same
-      # Fever::Comparator.new
+    def self.it_looks_the_same
+      Fever::Comparator.test(@component)
     end
   end
 end

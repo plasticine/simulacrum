@@ -4,4 +4,4 @@ $(dirname $0)/bootstrap
 
 rm -rf coverage/
 bin/rubocop lib
-bin/rspec COVERAGE=true
+COVERAGE=true bin/rspec
