@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    Simulacrum (0.0.1)
+    simulacrum (0.0.1)
       capybara
       rmagick
       rspec
@@ -94,7 +94,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Simulacrum!
   coveralls
   pry
   rake
@@ -103,3 +102,4 @@ DEPENDENCIES
   rubocop
   shoulda-matchers
   simplecov
+  simulacrum!

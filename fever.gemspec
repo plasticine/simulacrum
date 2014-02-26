@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email         = ['desk@pixelbloom.com']
   s.homepage      = 'https://github.com/plasticine/simulacrum'
   s.summary       = 'A gem for visually testing and inspecting user interface components.'
-  s.description   = 'A gem for visually testing and inspecting user interface components.'
+  s.description   = 'An opinionated UI component regression testing tool built to be tightly integrated with RSpec, Selenium and tools you already use.'
   s.licenses      = ['MIT']
 
   s.files         = Dir["{lib}/**/*", "README.md", "LICENSE"]

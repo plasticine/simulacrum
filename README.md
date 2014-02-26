@@ -1,6 +1,6 @@
 ## Simulacrum
 
-An opinionated web UI regression testing tool built to be tightly integrated with Rspec and Selenium.
+An opinionated UI component regression testing tool built to be tightly integrated with RSpec, Selenium and tools you already use.
 
 ***
 
