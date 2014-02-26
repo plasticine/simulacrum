@@ -1,4 +1,5 @@
 /bin
+/pkg
 /.bundle
 *.sublime-workspace
 *.sublime-project
