@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    simulacrum (0.0.1)
+    simulacrum (0.0.2)
       capybara
       rmagick
       rspec
