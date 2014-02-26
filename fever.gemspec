@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path('../lib', __FILE__)
-require 'Simulacrum/version'
+require 'simulacrum/version'
 
 Gem::Specification.new do |s|
   s.name          = Simulacrum::PACKAGE
@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform      = Gem::Platform::RUBY
   s.authors       = ['Justin Morris']
   s.email         = ['desk@pixelbloom.com']
-  s.homepage      = 'https://github.com/plasticine/Simulacrum'
+  s.homepage      = 'https://github.com/plasticine/simulacrum'
   s.summary       = 'A gem for visually testing and inspecting user interface components.'
   s.description   = 'A gem for visually testing and inspecting user interface components.'
   s.licenses      = ['MIT']

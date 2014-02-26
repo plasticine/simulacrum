@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fever (0.0.1)
+    Simulacrum (0.0.1)
       capybara
       rmagick
       rspec
@@ -94,8 +94,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  Simulacrum!
   coveralls
-  fever!
   pry
   rake
   rspec

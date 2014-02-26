@@ -1,4 +1,4 @@
-require_relative '../../lib/Simulacrum'
+require_relative '../../lib/simulacrum'
 
 RSpec.configure do |config|
   config.include Simulacrum
