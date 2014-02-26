@@ -1,62 +1,59 @@
-require 'rmagick'
+require_relative 'diff/rmagick'
 
 module Fever
   # The Comparator class is responsible for comparing and handling
   # processing of screenshots and candidates
   class Comparator
+    include RSpec::Core::Pending
+
+    attr_accessor :component, :candidate, :diff
+
     def initialize(component)
-      @candidate = @component.capture
+      @component = component
+    end
 
-      # If the component has a reference then we should diff the candidate image
-      # against the reference
+    def test
+      @candidate = @component.capture_candidate
+
+      # If the component has a reference then we should diff the candidate
+      # image against the reference
       if @component.reference?
-        @diff = diff(candidate)
-
         # If there is a diff between the candidate and the reference then we
         # should save both the candidate and diff images and fail the test
-        @diff.nil? ? pass : fail
+        perform_diff ? pass : fail
 
       # Otherwise we should just write the captured candidate to disk, and mark
-      # the spec as being pending until the user works out if the candidate is OK
+      # the spec as being pending until the user works out if the candidate is
+      # OK by renaming candidate.png to reference.png
       else
-        skipped
+        skip
       end
     end
 
     private
 
     def pass
+      @component.remove_candidate
       true
     end
 
     def fail
-      @diff.save
-      @candidate.save
-      fail 'Images are not the same! Please resolve the diff!'
+      @diff.save(@component.diff_path)
+      false
     end
 
-    def skipped
-      @candidate.save
-      pending "#{@component.candidate_path} written to disk — please resolve"
+    def skip
+      nil
     end
 
-    def diff(candidate)
-      reference_image = Magick::Image.read(@component.reference_path)
-      candidate_image = Magick::Image.read(candidate) # read in image data from string? or temp file?
-      diff_image, diff_metric = compare_images(reference_image, candidate_image)
-
-      return diff_image if diff_error?(diff_metric)
+    def perform_diff()
+      @diff = Fever::RmagicDiff.new(@component.reference_path,
+                                    @component.candidate_path)
+      diff_delta_percent_is_acceptable
     end
 
-    def diff_error?(diff_metric)
-      diff_metric != 0.0
-    end
-
-    def compare_images(reference_image, candidate_image)
-      reference_image[0].compare_channel(
-        candidate_image[0],
-        Magick::MeanSquaredErrorMetric
-      )
+    def diff_delta_percent_is_acceptable
+      (@diff.delta * 1000) < @component.acceptable_delta
     end
   end
 end
