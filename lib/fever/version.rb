@@ -1,5 +1,5 @@
 # Package information
-module Fever
-  PACKAGE = 'fever'
+module Simulacrum
+  PACKAGE = 'Simulacrum'
   VERSION = '0.0.1'
 end

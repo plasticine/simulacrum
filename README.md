@@ -1,12 +1,12 @@
-## Fever
+## Simulacrum
 
 #### Installing
-`gem "fever"`
+`gem "Simulacrum"`
 
 Configuring Rspec
 
 ```ruby
 RSpec.configure do |config|
-  config.include Fever::Methods
+  config.include Simulacrum::Methods
 end
 ```

@@ -4,7 +4,7 @@ if ENV['COVERAGE']
 end
 
 require 'bundler/setup'
-require 'fever'
+require 'Simulacrum'
 require 'rspec/autorun'
 
 RSpec.configure do |config|

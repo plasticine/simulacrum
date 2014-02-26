@@ -1,6 +1,6 @@
 require 'ostruct'
 
-module Fever
+module Simulacrum
   class Configuration
     attr_reader :images_path, :reference_filename, :candidate_filename,
       :diff_filename, :capture_selector, :acceptable_delta

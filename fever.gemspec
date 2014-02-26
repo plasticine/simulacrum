@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path('../lib', __FILE__)
-require 'fever/version'
+require 'Simulacrum/version'
 
 Gem::Specification.new do |s|
-  s.name          = Fever::PACKAGE
-  s.version       = Fever::VERSION
+  s.name          = Simulacrum::PACKAGE
+  s.version       = Simulacrum::VERSION
   s.platform      = Gem::Platform::RUBY
   s.authors       = ['Justin Morris']
   s.email         = ['desk@pixelbloom.com']
-  s.homepage      = 'https://github.com/plasticine/fever'
+  s.homepage      = 'https://github.com/plasticine/Simulacrum'
   s.summary       = 'A gem for visually testing and inspecting user interface components.'
   s.description   = 'A gem for visually testing and inspecting user interface components.'
   s.licenses      = ['MIT']

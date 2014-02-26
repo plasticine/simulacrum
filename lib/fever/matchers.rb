@@ -1,12 +1,12 @@
 require_relative 'comparator'
 
-module Fever
+module Simulacrum
   module Matchers
     extend RSpec::Matchers::DSL
 
     matcher :look_the_same do
       match do |component|
-        comparator = Fever::Comparator.new(component)
+        comparator = Simulacrum::Comparator.new(component)
         case comparator.test
         when true
           true

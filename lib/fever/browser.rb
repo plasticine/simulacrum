@@ -1,7 +1,7 @@
 require 'capybara'
 require 'capybara/dsl'
 
-module Fever
+module Simulacrum
   class Browser
   end
 end

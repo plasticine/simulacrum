@@ -1,6 +1,6 @@
 require_relative 'diff/rmagick'
 
-module Fever
+module Simulacrum
   # The Comparator class is responsible for comparing and handling
   # processing of screenshots and candidates
   class Comparator
@@ -47,7 +47,7 @@ module Fever
     end
 
     def perform_diff()
-      @diff = Fever::RmagicDiff.new(@component.reference_path,
+      @diff = Simulacrum::RmagicDiff.new(@component.reference_path,
                                     @component.candidate_path)
       diff_delta_percent_is_acceptable
     end

@@ -1,6 +1,6 @@
 require 'capybara'
 
-module Fever
+module Simulacrum
   class Component
     include Capybara::DSL
     Capybara.default_driver = :selenium
@@ -26,19 +26,19 @@ module Fever
     end
 
     def root_path
-      File.join(Fever.configuration.images_path, name.to_s)
+      File.join(Simulacrum.configuration.images_path, name.to_s)
     end
 
     def reference_path
-      File.join(root_path, Fever.configuration.reference_filename)
+      File.join(root_path, Simulacrum.configuration.reference_filename)
     end
 
     def candidate_path
-      File.join(root_path, Fever.configuration.candidate_filename)
+      File.join(root_path, Simulacrum.configuration.candidate_filename)
     end
 
     def diff_path
-      File.join(root_path, Fever.configuration.diff_filename)
+      File.join(root_path, Simulacrum.configuration.diff_filename)
     end
 
     def reference?
@@ -50,7 +50,7 @@ module Fever
     end
 
     def acceptable_delta
-      @options.acceptable_delta || Fever.configuration.acceptable_delta
+      @options.acceptable_delta || Simulacrum.configuration.acceptable_delta
     end
 
     private
@@ -60,7 +60,7 @@ module Fever
     end
 
     def capture_selector
-      @options.capture_selector || Fever.configuration.capture_selector
+      @options.capture_selector || Simulacrum.configuration.capture_selector
     end
   end
 end

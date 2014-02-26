@@ -1,8 +1,8 @@
 require 'rmagick'
 require_relative '../diff'
 
-module Fever
-  class RmagicDiff < Fever::Diff
+module Simulacrum
+  class RmagicDiff < Simulacrum::Diff
     private
 
     def compare

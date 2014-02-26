@@ -1,10 +1,10 @@
-require_relative '../../lib/fever'
+require_relative '../../lib/Simulacrum'
 
 RSpec.configure do |config|
-  config.include Fever
+  config.include Simulacrum
 
-  Fever.configure do |config|
-    config.images_path = '/Users/justin/src/personal/fever/example/spec/ui_specs'
+  Simulacrum.configure do |config|
+    config.images_path = '/Users/justin/src/personal/Simulacrum/example/spec/ui_specs'
     config.acceptable_delta = 2 # allow a maximum of 2% difference
   end
 end

@@ -1,12 +1,12 @@
 require 'ostruct'
-require_relative 'fever/methods'
-require_relative 'fever/matchers'
-require_relative 'fever/configuration'
+require_relative 'Simulacrum/methods'
+require_relative 'Simulacrum/matchers'
+require_relative 'Simulacrum/configuration'
 
 # Gem module
-module Fever
+module Simulacrum
   @components = {}
-  @configuration = Fever::Configuration.new
+  @configuration = Simulacrum::Configuration.new
 
   def self.components
     @components
@@ -23,7 +23,7 @@ module Fever
   end
 
   def self.included(receiver, &block)
-    receiver.extend         Fever::Methods
-    receiver.send :include, Fever::Matchers
+    receiver.extend         Simulacrum::Methods
+    receiver.send :include, Simulacrum::Matchers
   end
 end

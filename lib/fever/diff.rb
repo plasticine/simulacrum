@@ -1,4 +1,4 @@
-module Fever
+module Simulacrum
   class Diff
     attr_accessor :a_path, :b_path, :delta, :image
 

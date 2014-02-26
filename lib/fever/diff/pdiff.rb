@@ -1,8 +1,8 @@
 require 'chunky_png'
 require_relative '../diff'
 
-module Fever
-  class Pdiff < Fever::Diff
+module Simulacrum
+  class Pdiff < Simulacrum::Diff
     include ChunkyPNG::Color
 
     def compare
