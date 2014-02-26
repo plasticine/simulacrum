@@ -25,6 +25,10 @@ module Simulacrum
       FileUtils.rm(candidate_path) if candidate?
     end
 
+    def remove_diff
+      FileUtils.rm(diff_path) if diff?
+    end
+
     def root_path
       File.join(Simulacrum.configuration.images_path, name.to_s)
     end
@@ -47,6 +51,10 @@ module Simulacrum
 
     def candidate?
       File.exists?(candidate_path)
+    end
+
+    def diff?
+      File.exists?(diff_path)
     end
 
     def acceptable_delta

@@ -34,6 +34,7 @@ module Simulacrum
 
     def pass
       @component.remove_candidate
+      @component.remove_diff
       true
     end
 
