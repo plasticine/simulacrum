@@ -5,6 +5,7 @@ require_relative 'Simulacrum/configuration'
 
 # Gem module
 module Simulacrum
+  @browsers = {}
   @components = {}
   @configuration = Simulacrum::Configuration.new
 

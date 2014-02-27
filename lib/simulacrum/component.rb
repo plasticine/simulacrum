@@ -1,9 +1,10 @@
-require 'capybara'
+require 'capybara/dsl'
 
 module Simulacrum
   class Component
     include Capybara::DSL
-    Capybara.default_driver = :selenium
+    # Capybara.default_driver = :selenium
+    # Capybara.run_server = true
 
     attr_reader :name
 

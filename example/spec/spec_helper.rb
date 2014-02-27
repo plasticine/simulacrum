@@ -5,6 +5,6 @@ RSpec.configure do |config|
 
   Simulacrum.configure do |config|
     config.images_path = '/Users/justin/src/personal/Simulacrum/example/spec/ui_specs'
-    config.acceptable_delta = 2 # allow a maximum of 2% difference
+    config.acceptable_delta = 0.3 # allow a maximum of 2% difference
   end
 end
