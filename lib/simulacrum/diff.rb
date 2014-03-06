@@ -12,9 +12,5 @@ module Simulacrum
     def save(path)
       @image.write(path)
     end
-
-    def percent_change
-      (@delta * 1000).round(2)
-    end
   end
 end

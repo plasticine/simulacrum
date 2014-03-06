@@ -8,23 +8,30 @@ module Simulacrum
     def component(name, &block)
       options = OpenStruct.new
       yield options
-      component = Simulacrum::Component.new(name, options)
+      component = Simulacrum::Component.new(name, nil, options)
       Simulacrum.components[name] = component
-
-      subject do
-        component
-      end
+      subject { component }
+      let(:component) { component }
     end
 
     def browser(name, &block)
       options = OpenStruct.new
+      options.caps = {}
       yield options
-      browser = Simulacrum::Browser.new(name, options)
-      Simulacrum.browsers[name] = browser
+      Simulacrum.browsers[name] = Simulacrum::Browser.new(name, options)
+      let(name.to_sym) { browser }
+    end
 
-      let :browser do
-        browser.use
-      end
+    def use_browser(name, extra_config = {})
+      previous_browser = Simulacrum.current_browser
+      current_browser = Simulacrum.browsers[name]
+      current_browser.configure(extra_config)
+      Simulacrum.current_browser = current_browser
+      subject { component.render_with(current_browser) }
+      after(:each) {
+        Simulacrum.current_browser = previous_browser
+        component.render_with(previous_browser)
+      }
     end
   end
 end

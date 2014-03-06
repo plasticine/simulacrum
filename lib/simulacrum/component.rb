@@ -3,23 +3,27 @@ require 'capybara/dsl'
 module Simulacrum
   class Component
     include Capybara::DSL
-    # Capybara.default_driver = :selenium
-    # Capybara.run_server = true
 
-    attr_reader :name
+    attr_reader :name, :browser
+    attr_accessor :options
 
-    def initialize(name, options)
+    def initialize(name, browser = nil, options = {})
       @name = name
       @options = options
+      @browser = browser
     end
 
     # Load up the component url and capture an image, returns a File object
-    def capture_candidate
+    def render
+      use_browser
       ensure_example_path
       visit(@options.url)
-      within(capture_selector) do
-        page.save_screenshot(candidate_path)
-      end
+      page.driver.save_screenshot(candidate_path, options)
+      kill_driver
+    end
+
+    def render_with(browser)
+      self.class.new(name, browser, @options)
     end
 
     def remove_candidate
@@ -31,7 +35,7 @@ module Simulacrum
     end
 
     def root_path
-      File.join(Simulacrum.configuration.images_path, name.to_s)
+      File.join(Simulacrum.configuration.images_path, render_path)
     end
 
     def reference_path
@@ -63,6 +67,25 @@ module Simulacrum
     end
 
     private
+
+    def kill_driver
+      if not @browser.nil? and @browser.remote?
+        page.driver.quit
+      end
+    end
+
+    def render_path
+      path = [name.to_s]
+      path << @browser.name unless @browser.nil?
+      File.join(path.map(&:to_s))
+    end
+
+    def use_browser
+      unless @browser.nil?
+        @browser.use
+        sleep @browser.capture_delay.to_i
+      end
+    end
 
     def ensure_example_path
       FileUtils.mkdir_p(root_path)

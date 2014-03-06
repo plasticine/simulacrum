@@ -10,11 +10,10 @@ module Simulacrum
 
     def initialize(component)
       @component = component
+      @component.render
     end
 
     def test
-      @candidate = @component.capture_candidate
-
       # If the component has a reference then we should diff the candidate
       # image against the reference
       if @component.reference?
@@ -49,12 +48,12 @@ module Simulacrum
 
     def perform_diff()
       @diff = Simulacrum::RmagicDiff.new(@component.reference_path,
-                                    @component.candidate_path)
+                                         @component.candidate_path)
       diff_delta_percent_is_acceptable
     end
 
     def diff_delta_percent_is_acceptable
-      (@diff.delta * 1000) < @component.acceptable_delta
+      @diff.delta_percent < @component.acceptable_delta
     end
   end
 end
