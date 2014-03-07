@@ -1,4 +1,32 @@
 
+http://www.youtube.com/watch?v=UMnZiTL0tUc
+
+<!-- ADD IN BROWSER LET OPTION -->
+
+def component(name, &block)
+  options = OpenStruct.new
+  yield options
+  component = Simulacrum::Component.new(name, options)
+  Simulacrum.components[name] = component
+
+  let :component do component end
+end
+
+***
+
+let(:browser) {  }
+component.should look_the_same
+
+
+
+
+
+
+
+
+
+
+
 
 ### Example
 
