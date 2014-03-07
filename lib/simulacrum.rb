@@ -1,7 +1,8 @@
 require 'ostruct'
-require_relative 'Simulacrum/methods'
-require_relative 'Simulacrum/matchers'
-require_relative 'Simulacrum/configuration'
+require 'capybara'
+require_relative './simulacrum/methods'
+require_relative './simulacrum/matchers'
+require_relative './simulacrum/configuration'
 
 # Gem module
 module Simulacrum

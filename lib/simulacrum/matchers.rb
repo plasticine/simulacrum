@@ -1,4 +1,4 @@
-require_relative 'comparator'
+require_relative './comparator'
 
 module Simulacrum
   module Matchers

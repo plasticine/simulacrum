@@ -1,16 +1,16 @@
-require 'chunky_png'
-require_relative '../diff'
+# require 'chunky_png'
+# require_relative '../diff'
 
-module Simulacrum
-  class Pdiff < Simulacrum::Diff
-    include ChunkyPNG::Color
+# module Simulacrum
+#   class Pdiff < Simulacrum::Diff
+#     include ChunkyPNG::Color
 
-    def compare
-      a_image = ChunkyPNG::Image.from_file(@a_path)
-      b_image = ChunkyPNG::Image.from_file(@b_path)
-    end
-  end
-end
+#     def compare
+#       a_image = ChunkyPNG::Image.from_file(@a_path)
+#       b_image = ChunkyPNG::Image.from_file(@b_path)
+#     end
+#   end
+# end
 
 # require 'chunky_png'
 # include ChunkyPNG::Color

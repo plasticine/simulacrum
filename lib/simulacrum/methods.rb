@@ -1,6 +1,6 @@
 require 'ostruct'
-require_relative 'browser'
-require_relative 'component'
+require_relative './browser'
+require_relative './component'
 
 module Simulacrum
   # Rspec utility methods for defining components, browser environments

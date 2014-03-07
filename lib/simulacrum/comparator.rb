@@ -1,4 +1,4 @@
-require_relative 'diff/rmagick'
+require_relative './diff/rmagick'
 
 module Simulacrum
   # The Comparator class is responsible for comparing and handling
