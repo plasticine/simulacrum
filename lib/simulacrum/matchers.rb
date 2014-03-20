@@ -5,9 +5,6 @@ module Simulacrum
     extend RSpec::Matchers::DSL
 
     matcher :look_the_same do
-      # browser = options[:in_browser]
-      # browser.use unless browser.nil?
-
       match do |component|
         component = component
         comparator = Simulacrum::Comparator.new(component)
@@ -27,7 +24,7 @@ module Simulacrum
       <<-eos
 The pixel change percentage exceeded the maximum threshold of #{component.acceptable_delta}%.
 
-There was a #{comparator.diff.percent_change}% pixel difference found between \
+There was a #{comparator.diff.delta_percent}% pixel difference found between \
 the reference and the candidate.
 
 Reference: #{component.reference_path}

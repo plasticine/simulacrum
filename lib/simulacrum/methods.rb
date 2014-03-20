@@ -1,5 +1,4 @@
 require 'ostruct'
-require_relative './browser'
 require_relative './component'
 
 module Simulacrum
@@ -8,30 +7,26 @@ module Simulacrum
     def component(name, &block)
       options = OpenStruct.new
       yield options
-      component = Simulacrum::Component.new(name, nil, options)
+      component = Simulacrum::Component.new(name, options)
       Simulacrum.components[name] = component
-      subject { component }
-      let(:component) { component }
+
+      subject do
+        component
+      end
+
+      let(:component) do
+        component
+      end
     end
 
-    def browser(name, &block)
-      options = OpenStruct.new
-      options.caps = {}
-      yield options
-      Simulacrum.browsers[name] = Simulacrum::Browser.new(name, options)
-      let(name.to_sym) { browser }
-    end
+    def use_window_size(dimensions)
+      subject do
+        component.set_window_size(dimensions)
+      end
 
-    def use_browser(name, extra_config = {})
-      previous_browser = Simulacrum.current_browser
-      current_browser = Simulacrum.browsers[name]
-      current_browser.configure(extra_config)
-      Simulacrum.current_browser = current_browser
-      subject { component.render_with(current_browser) }
-      after(:each) {
-        Simulacrum.current_browser = previous_browser
-        component.render_with(previous_browser)
-      }
+      after(:each) do
+        subject.reset_window_size
+      end
     end
   end
 end

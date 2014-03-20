@@ -2,43 +2,56 @@ require 'ostruct'
 
 module Simulacrum
   class Configuration
-    attr_reader :images_path, :reference_filename, :candidate_filename,
-      :diff_filename, :capture_selector, :acceptable_delta, :capture_delay
+
+    COMPONENT_DEFAULTS = {
+      acceptable_delta: 1,
+      window_size:      [1024, 768],
+      capture_delay:    nil,
+      capture_selector: :html,
+    }
+
+    attr_reader :references_path, :reference_filename, :candidate_filename,
+      :diff_filename, :acceptable_delta, :capture_delay, :window_size,
+      :capture_selector, :default_browser
 
     def initialize
-      @config = OpenStruct.new
+      @config = OpenStruct.new(defaults: OpenStruct.new(COMPONENT_DEFAULTS))
     end
 
     def configure(config)
       @config = OpenStruct.new(@config.to_h.merge!(config))
     end
 
-    def images_path
-      @config.images_path
+    def default_browser
+      @config.default_browser || :selenium
+    end
+
+    def references_path
+      if @config.references_path
+        @config.references_path
+      elsif defined?(Rails)
+        File.join(Rails.root, 'spec/ui/references')
+      end
     end
 
     def reference_filename
-      @config.reference_filename || 'reference.png'
+      @config.reference_filename || 'reference'
     end
 
     def candidate_filename
-      @config.candidate_filename || 'candidate.png'
+      @config.candidate_filename || 'candidate'
     end
 
     def diff_filename
-      @config.diff_filename || 'diff.png'
-    end
-
-    def capture_delay
-      @config.capture_delay || 0
+      @config.diff_filename || 'diff'
     end
 
     def acceptable_delta
-      @config.acceptable_delta || 0.0
+      @config.defaults.acceptable_delta || 0.0
     end
 
-    def remote_url
-      @config.remote_url
+    def capture_selector
+      @config.defaults.capture_selector || nil
     end
   end
 end

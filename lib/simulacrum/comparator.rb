@@ -46,7 +46,7 @@ module Simulacrum
       nil
     end
 
-    def perform_diff()
+    def perform_diff
       @diff = Simulacrum::RmagicDiff.new(@component.reference_path,
                                          @component.candidate_path)
       diff_delta_percent_is_acceptable

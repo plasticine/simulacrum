@@ -6,29 +6,13 @@ require_relative './simulacrum/configuration'
 
 # Gem module
 module Simulacrum
-  @current_browser = nil
   @browsers = {}
   @components = {}
+  @current_browser = nil
   @configuration = Simulacrum::Configuration.new
-
-  Capybara.configure do |config|
-    config.default_driver = :selenium
-  end
 
   def self.components
     @components
-  end
-
-  def self.browsers
-    @browsers
-  end
-
-  def self.current_browser
-    @current_browser
-  end
-
-  def self.current_browser=(browser)
-    @current_browser = browser
   end
 
   def self.configuration
@@ -36,7 +20,7 @@ module Simulacrum
   end
 
   def self.configure(&block)
-    options = OpenStruct.new
+    options = OpenStruct.new(defaults: OpenStruct.new)
     yield options
     @configuration.configure(options.to_h)
   end
@@ -44,5 +28,10 @@ module Simulacrum
   def self.included(receiver, &block)
     receiver.extend         Simulacrum::Methods
     receiver.send :include, Simulacrum::Matchers
+
+    if defined?(Rails)
+      receiver.send :include, Rails.application.routes.url_helpers
+      receiver.send :include, Rails.application.routes.mounted_helpers
+    end
   end
 end
