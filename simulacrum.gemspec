@@ -17,15 +17,14 @@ Gem::Specification.new do |s|
   s.test_files    = Dir["spec/**/*"]
   s.require_paths = ['lib']
 
-  s.add_dependency 'capybara'
-  s.add_dependency 'rspec'
-  s.add_dependency 'rmagick'
-  s.add_dependency 'selenium-webdriver'
+  s.add_dependency 'capybara', '~> 2.2.1'
+  s.add_dependency 'rspec', '~> 2.14.1'
+  s.add_dependency 'rmagick', '~> 2.13.2'
+  s.add_dependency 'selenium-webdriver', '~> 2.40.0'
 
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec'
   s.add_development_dependency 'rspec-nc'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'shoulda-matchers'
