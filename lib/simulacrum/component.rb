@@ -66,7 +66,7 @@ module Simulacrum
 
     def cleanup
       @renderer.cleanup
-      FileUtils.remove_entry(root_path) unless reference? || candidate? || diff?
+      # FileUtils.remove_entry(root_path) unless reference? || candidate? || diff?
     end
 
     def save_candidate(tmp_image_path)

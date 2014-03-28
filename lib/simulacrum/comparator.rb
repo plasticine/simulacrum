@@ -1,3 +1,4 @@
+require 'rspec'
 require_relative './diff/rmagick'
 
 module Simulacrum

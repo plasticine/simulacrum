@@ -11,16 +11,21 @@ An opinionated UI component regression testing tool built to be tightly integrat
 
 ```ruby
 RSpec.configure do |config|
-  config.include Simulacrum
+  include Simulacrum
 end
 ```
 
 Simulacrum can also be configured once included;
 
 ```ruby
-Simulacrum.configure do |config|
-	config.images_path = 'somewhere/example/spec/ui_specs'
-	config.acceptable_delta = 2 # allow a maximum of 2% difference
+RSpec.configure do |config|
+	include Simulacrum
+
+	Simulacrum.configure do |simulacrum|
+		simulacrum.images_path = 'somewhere/example/spec/ui_specs'
+		simulacrum.acceptable_delta = 0.1 # allow a maximum of 0.1% difference
+		config.defaults.capture_selector = '.kayessess__examples'
+	end
 end
 ```
 
