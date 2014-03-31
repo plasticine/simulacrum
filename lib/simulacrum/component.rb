@@ -1,6 +1,6 @@
 require 'capybara/dsl'
 require 'fileutils'
-require 'rmagick'
+require 'RMagick'
 require_relative 'renderer'
 
 module Simulacrum

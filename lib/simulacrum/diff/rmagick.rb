@@ -1,4 +1,4 @@
-require 'rmagick'
+require 'RMagick'
 require_relative '../diff'
 
 module Simulacrum
