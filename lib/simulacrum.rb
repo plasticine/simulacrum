@@ -3,6 +3,7 @@ require 'capybara'
 require_relative './simulacrum/methods'
 require_relative './simulacrum/matchers'
 require_relative './simulacrum/configuration'
+require_relative "./simulacrum/railtie" if defined? Rails::Railtie
 
 # Gem module
 module Simulacrum
