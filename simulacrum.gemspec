@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rmagick', '~> 2.13.2'
   s.add_dependency 'selenium-webdriver', '~> 2.40.0'
 
-  s.add_development_dependency' codeclimate-test-reporter'
+  s.add_development_dependency 'codeclimate-test-reporter'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec-nc'
