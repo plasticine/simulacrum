@@ -4,6 +4,8 @@ An opinionated UI component regression testing tool built to be tightly integrat
 
 ***
 
+[![Build Status](https://travis-ci.org/plasticine/simulacrum.svg)](https://travis-ci.org/plasticine/simulacrum) [![Code Climate](https://codeclimate.com/github/plasticine/simulacrum.png)](https://codeclimate.com/github/plasticine/simulacrum)
+
 ### Installing
 `gem 'simulacrum'`
 

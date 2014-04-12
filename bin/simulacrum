@@ -2,12 +2,12 @@
 # encoding: UTF-8
 
 # resolve bin path, ignoring symlinks
-require "pathname"
+require 'pathname'
 bin_file = Pathname.new(__FILE__).realpath
 
 # add self to libpath
-$:.unshift File.expand_path("../../lib", bin_file)
+$:.unshift File.expand_path('../../lib', bin_file)
 
 # start up the CLI
-require "simulacrum/cli"
+require 'simulacrum/cli'
 Simulacrum::CLI.start(*ARGV)
