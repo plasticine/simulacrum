@@ -29,7 +29,7 @@ module Simulacrum
       end
 
       def open
-        download_platform_executable unless executable_present?
+        ensure_platform_executable unless executable_available?
         create
       end
 
@@ -43,7 +43,7 @@ module Simulacrum
 
       private
 
-      def download_platform_executable
+      def ensure_platform_executable
         FileUtils.mkdir_p(Rails.root.join('tmp', 'browserstack'))
 
         executable = open(executable_path)
@@ -53,6 +53,7 @@ module Simulacrum
           end
         ensure
           executable.close()
+          File.chmod(0700, executable_path)
         end
       end
 
@@ -60,8 +61,8 @@ module Simulacrum
         Rails.root.join('tmp', 'browserstack', platform_executable)
       end
 
-      def executable_present?
-        File.exist?(executable_path)
+      def executable_available?
+        File.exist?(executable_path) and File.executable?(executable_path)
       end
 
       def create
