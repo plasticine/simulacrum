@@ -29,6 +29,7 @@ module Simulacrum
       end
 
       def open
+        download_platform_executable unless executable_present?
         create
       end
 
@@ -42,13 +43,34 @@ module Simulacrum
 
       private
 
+      def download_platform_executable
+        FileUtils.mkdir_p(Rails.root.join('tmp', 'browserstack'))
+
+        executable = open(executable_path)
+        begin
+          http.request_get(platform_executable_remote_url) do |resp|
+            resp.read_body {|segment| executable.write(segment) }
+          end
+        ensure
+          executable.close()
+        end
+      end
+
+      def executable_path
+        Rails.root.join('tmp', 'browserstack', platform_executable)
+      end
+
+      def executable_present?
+        File.exist?(executable_path)
+      end
+
       def create
         @pid = fork { exec(command) }
         ensure_open
       end
 
       def command
-        cmd = ["#{Rails.root.join('spec/support/', executable)}"]
+        cmd = [executable_path]
         cmd << '-skipCheck'    if @options.skip_check == true
         cmd << '-onlyAutomate' if @options.only_automate == true
         cmd << '-force'        if @options.force == true
@@ -58,12 +80,21 @@ module Simulacrum
         cmd.join(' ')
       end
 
-      def executable
+      def platform_executable
         case RbConfig::CONFIG['host_os']
           when /linux|arch/i
             'BrowserStackLocal_linux'
           when /darwin/i
             'BrowserStackLocal_osx'
+        end
+      end
+
+      def platform_executable_remote_url
+        case RbConfig::CONFIG['host_os']
+          when /linux|arch/i
+            'https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip'
+          when /darwin/i
+            'https://www.browserstack.com/browserstack-local/BrowserStackLocal-darwin-x64.zip'
         end
       end
 
