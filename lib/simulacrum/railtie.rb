@@ -1,7 +1,7 @@
 module Simulacrum
   class Railtie < ::Rails::Railtie
     rake_tasks do
-      require_relative "./simulacrum/tasks"
+      require_relative "./tasks"
     end
   end
 end
