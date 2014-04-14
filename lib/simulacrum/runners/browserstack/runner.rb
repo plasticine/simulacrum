@@ -19,7 +19,7 @@ module Simulacrum
         set_global_env
         execute
       ensure
-        close_tunnel
+        @tunnel.close_tunnel
       end
 
       def execute
@@ -95,12 +95,8 @@ module Simulacrum
       end
 
       def open_tunnel
-        @tunnel.open
-        sleep 1 until @tunnel.is_open?
-      end
-
-      def close_tunnel
-        @tunnel.close
+        @tunnel.open_tunnel
+        sleep 0.1 until @tunnel.is_open?
       end
     end
   end

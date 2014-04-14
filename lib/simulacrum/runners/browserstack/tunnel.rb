@@ -1,5 +1,6 @@
 require 'timeout'
 require 'rbconfig'
+require 'fileutils'
 
 module Simulacrum
   module Browserstack
@@ -28,12 +29,13 @@ module Simulacrum
         "http://#{@username}:#{@api_key}@hub.browserstack.com/wd/hub"
       end
 
-      def open
-        ensure_platform_executable unless executable_available?
-        create
+      def open_tunnel
+        ensure_browserstack_binary
+        create_tunnel
+        ensure_open
       end
 
-      def close
+      def close_tunnel
         kill
       end
 
@@ -43,35 +45,27 @@ module Simulacrum
 
       private
 
-      def ensure_platform_executable
+      def ensure_browserstack_binary
         FileUtils.mkdir_p(Rails.root.join('tmp', 'browserstack'))
 
-        executable = open(executable_path)
-        begin
-          http.request_get(platform_executable_remote_url) do |resp|
-            resp.read_body {|segment| executable.write(segment) }
-          end
-        ensure
-          executable.close()
-          File.chmod(0700, executable_path)
+        unless File.exist?(binary_path)
+          FileUtils.cp(binary_path_for_platform, binary_path)
         end
+
+        File.chmod(01777, binary_path) unless File.executable?(binary_path)
       end
 
-      def executable_path
+      def binary_path
         Rails.root.join('tmp', 'browserstack', platform_executable)
       end
 
-      def executable_available?
-        File.exist?(executable_path) and File.executable?(executable_path)
-      end
-
-      def create
+      def create_tunnel
+        puts command
         @pid = fork { exec(command) }
-        ensure_open
       end
 
       def command
-        cmd = [executable_path]
+        cmd = [binary_path]
         cmd << '-skipCheck'    if @options.skip_check == true
         cmd << '-onlyAutomate' if @options.only_automate == true
         cmd << '-force'        if @options.force == true
@@ -84,19 +78,14 @@ module Simulacrum
       def platform_executable
         case RbConfig::CONFIG['host_os']
           when /linux|arch/i
-            'BrowserStackLocal_linux'
+            'BrowserStackLocal_linux_x64'
           when /darwin/i
             'BrowserStackLocal_osx'
         end
       end
 
-      def platform_executable_remote_url
-        case RbConfig::CONFIG['host_os']
-          when /linux|arch/i
-            'https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip'
-          when /darwin/i
-            'https://www.browserstack.com/browserstack-local/BrowserStackLocal-darwin-x64.zip'
-        end
+      def binary_path_for_platform
+        File.join(Simulacrum.root, 'support', platform_executable)
       end
 
       def formatted_ports

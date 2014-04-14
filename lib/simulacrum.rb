@@ -13,6 +13,10 @@ module Simulacrum
   @current_browser = nil
   @configuration = Simulacrum::Configuration.new
 
+  def self.root
+    File.expand_path('../..', __FILE__)
+  end
+
   def self.components
     @components
   end
