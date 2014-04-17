@@ -6,6 +6,10 @@ module Simulacrum
     class SimulacrumFormatter < RSpec::Core::Formatters::BaseTextFormatter
       attr_reader :output_hash
 
+      SummaryStruct = Struct.new(:duration, :example_count, :failure_count, :pending_count)
+      ExampleStruct = Struct.new(:description, :full_description, :execution_result,
+                                 :metadata, :exception, :location, :file_path)
+
       def initialize(output)
         super
         @output_hash = {}
@@ -34,40 +38,26 @@ module Simulacrum
       def dump_profile; end
 
       def dump_summary(duration, example_count, failure_count, pending_count)
-        @output_hash[:summary] = {
-          :duration => duration,
-          :example_count => example_count,
-          :failure_count => failure_count,
-          :pending_count => pending_count
-        }
-        @output_hash[:summary_line] = summary_line(example_count, failure_count, pending_count)
-      end
-
-      def summary_line(example_count, failure_count, pending_count)
-        summary = pluralize(example_count, "example")
-        summary << ", " << pluralize(failure_count, "failure")
-        summary << ", #{pending_count} pending" if pending_count > 0
-        summary
+        @output_hash[:summary] = SummaryStruct.new(
+          duration,
+          example_count,
+          failure_count,
+          pending_count
+        )
       end
 
       def stop
         super
         @output_hash[:examples] = examples.map do |example|
-          {
-            :description => example.description,
-            :full_description => example.full_description,
-            :status => example.execution_result[:status],
-            :file_path => example.metadata[:file_path],
-            :line_number  => example.metadata[:line_number],
-          }.tap do |hash|
-            if e=example.exception
-              hash[:exception] =  {
-                :class => e.class.name,
-                :message => e.message,
-                :backtrace => e.backtrace,
-              }
-            end
-          end
+          ExampleStruct.new(
+            example.description,
+            example.full_description,
+            example.execution_result,
+            {execution_result: example.metadata[:execution_result]},
+            example.exception,
+            example.location,
+            example.file_path
+          )
         end
       end
     end

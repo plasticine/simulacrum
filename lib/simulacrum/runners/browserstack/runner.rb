@@ -1,5 +1,6 @@
 require_relative './tunnel'
 require_relative './logger'
+require_relative './summary'
 require_relative '../base_runner'
 require 'yaml'
 require 'parallel'
@@ -17,7 +18,10 @@ module Simulacrum
         super()
         open_tunnel
         set_global_env
-        execute
+        results = execute
+        summary = Simulacrum::Browserstack::Summary.new(results)
+        summary.dump_summary
+        summary.dump_failures
       ensure
         @tunnel.close_tunnel
       end

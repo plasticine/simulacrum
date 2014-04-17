@@ -7,13 +7,9 @@ module Simulacrum
       def run
         formatter = Simulacrum::Formatters::SimulacrumFormatter.new($stdout)
         reporter = RSpec::Core::Reporter.new(formatter)
-
         configure_rspec(reporter)
-
-        {
-          exitcode: invoke_rspec,
-          json: formatter.output_hash.to_json
-        }
+        invoke_rspec
+        {results: Marshal.dump(formatter.output_hash)}
       end
 
       private
@@ -24,6 +20,8 @@ module Simulacrum
 
       def configure_rspec(reporter)
         RSpec.configuration.color = true
+        RSpec.configuration.color_enabled = true
+        RSpec.configuration.tty = true
         RSpec.configuration.pattern = "**/*_spec.rb"
         RSpec.configuration.profile_examples = false
         RSpec.configuration.instance_variable_set(:@requires, required_helpers)
