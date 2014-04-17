@@ -97,7 +97,7 @@ module Simulacrum
       end
 
       def ensure_open
-        Timeout.timeout(10) do
+        Timeout.timeout(240) do
           sleep 0.1 until tunnel_has_opened?
         end
         @is_open = true
