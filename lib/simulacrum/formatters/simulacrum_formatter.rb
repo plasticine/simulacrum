@@ -35,6 +35,8 @@ module Simulacrum
 
       def dump_failures; end
 
+      def dump_pending; end
+
       def dump_profile; end
 
       def dump_summary(duration, example_count, failure_count, pending_count)
