@@ -1,16 +1,21 @@
 require 'ostruct'
-require 'capybara'
 require_relative './simulacrum/methods'
 require_relative './simulacrum/matchers'
 require_relative './simulacrum/configuration'
-require_relative "./simulacrum/railtie" if defined? Rails::Railtie
+require_relative './simulacrum/driver'
+require_relative './simulacrum/railtie' if defined? Rails::Railtie
+require_relative './simulacrum/runners/browserstack/runner'
 
 # Gem module
 module Simulacrum
-  @browsers = {}
+  @driver = nil
   @components = {}
   @current_browser = nil
   @configuration = Simulacrum::Configuration.new
+
+  def self.root
+    File.expand_path('../..', __FILE__)
+  end
 
   def self.components
     @components
@@ -27,7 +32,9 @@ module Simulacrum
   end
 
   def self.included(receiver, &block)
-    receiver.extend         Simulacrum::Methods
+    @driver = Simulacrum::Driver.new
+
+    receiver.extend Simulacrum::Methods
     receiver.send :include, Simulacrum::Matchers
 
     if defined?(Rails)

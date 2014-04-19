@@ -1,18 +1,18 @@
 require 'ostruct'
 
 module Simulacrum
+  # Configuration Class for managing config of the suite
   class Configuration
-
     COMPONENT_DEFAULTS = {
       acceptable_delta: 1,
       window_size:      [1024, 768],
       capture_delay:    nil,
-      capture_selector: :html,
+      capture_selector: :html
     }
 
     attr_reader :references_path, :reference_filename, :candidate_filename,
-      :diff_filename, :acceptable_delta, :capture_delay, :window_size,
-      :capture_selector, :default_browser
+                :diff_filename, :acceptable_delta, :capture_delay,
+                :window_size, :capture_selector, :default_browser
 
     def initialize
       @config = OpenStruct.new(defaults: OpenStruct.new(COMPONENT_DEFAULTS))
@@ -22,6 +22,8 @@ module Simulacrum
       @config = OpenStruct.new(@config.to_h.merge!(config))
     end
 
+    # TODO: This can be removed? I don't think this is really required now we
+    #       have Simulacrum::Driver
     def default_browser
       @config.default_browser || :selenium
     end

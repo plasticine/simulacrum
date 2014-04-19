@@ -2,6 +2,8 @@ require 'capybara'
 require 'tmpdir'
 
 module Simulacrum
+  # The Renderer Class is responsible for driving Capybara and setting up
+  # the desired page, screenshotting, croping, etc.
   class Renderer
     include Capybara::DSL
 
@@ -32,10 +34,9 @@ module Simulacrum
     private
 
     def resize_window!
-      begin
-        page.driver.browser.manage.window.resize_to(1024, 768)
-      rescue Selenium::WebDriver::Error::UnknownError => e
-      end
+      page.driver.browser.manage.window.resize_to(1024, 768)
+    rescue Selenium::WebDriver::Error::UnknownError
+      return
     end
 
     def save_screenshot!
@@ -43,7 +44,10 @@ module Simulacrum
     end
 
     def tmp_path
-      @tmp_path ||= File.join(@tmp_dir, Simulacrum.configuration.candidate_filename)
+      @tmp_path ||= File.join(
+        @tmp_dir,
+        Simulacrum.configuration.candidate_filename
+      )
     end
   end
 end
