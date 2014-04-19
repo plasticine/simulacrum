@@ -1,10 +1,18 @@
 language: ruby
-cache: bundler
-script: 'bundle exec rspec'
 rvm:
-  - 2.1.0
-  - 2.0.0
+  - ruby-head
+  - 2.1.1
+  - 2.1
+  - 2.0
   - 1.9.3
+bundler_args: --binstubs
+script:
+  - bin/rubocop --version
+  - bin/rubocop --display-cop-names
+  - bin/rspec
 addons:
   code_climate:
     repo_token: e5d708da3fc981c10c3d7f95725436b02a0577d21e7ef84514e82057bf2559f0
+matrix:
+  allow_failures:
+    - rvm: ruby-head

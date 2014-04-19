@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require_relative './tunnel'
 require_relative './summary'
 require_relative '../base_runner'
@@ -23,6 +24,7 @@ module Simulacrum
         super()
         open_tunnel
         set_global_env
+        start_timer
         execute
         summarize
       ensure
@@ -30,11 +32,7 @@ module Simulacrum
       end
 
       def execute
-        @start_time = Time.now
-        @results = Parallel.map_with_index(
-          test_browsers,
-          in_processes: processes
-        ) do |(name, caps), index|
+        @results = Parallel.map_with_index(test_browsers, in_processes: processes) do |(name, caps), index|
           begin
             configure_app_port(index)
             configure_environment(name, caps)
@@ -51,17 +49,24 @@ module Simulacrum
             sleep 1
           end
         end
-        @end_time = Time.now
+      ensure
+        stop_timer
       end
 
       private
 
+      def start_timer
+        @start_time = Time.now
+      end
+
+      def stop_timer
+        @end_time = Time.now
+      end
+
       def summarize
-        summary = Simulacrum::Browserstack::Summary.new(
-          @results,
-          @start_time,
-          @end_time
-        )
+        summary = Simulacrum::Browserstack::Summary.new(@results,
+                                                        @start_time,
+                                                        @end_time)
         summary.dump_summary
         summary.dump_failures
       end
@@ -70,7 +75,9 @@ module Simulacrum
         ENV['APP_SERVER_PORT'] = app_ports[index].to_s
       end
 
+      # rubocop:disable MethodLength
       def configure_environment(name, caps)
+        # TODO: Make these ENV vars less sucky
         ENV['SELENIUM_REMOTE_URL']            = @tunnel.selenium_remote_url
         ENV['BS_DRIVER_NAME']                 = name
         ENV['SELENIUM_BROWSER']               = caps['browser']
@@ -83,6 +90,7 @@ module Simulacrum
         ENV['BS_AUTOMATE_DEVICE']             = caps['device']
         ENV['BS_AUTOMATE_DEVICEORIENTATION']  = caps['deviceOrientation']
       end
+      # rubocop:enable MethodLength
 
       def processes
         parallel? ? @config[:processes].to_i : 1

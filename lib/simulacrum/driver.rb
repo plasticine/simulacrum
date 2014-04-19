@@ -1,9 +1,11 @@
+# encoding: UTF-8
 require 'capybara'
+require 'selenium/webdriver/remote/http/curb'
 
 module Simulacrum
-  # Responsible for registering a custom Capybara driver for use with Selenium
-  # grid endpoints (Browserstack, SauceLabs, etc.). Configures selenium options
-  # via ENV vars so that they can be passed into
+  # Responsible for registering a custom Capybara driver for use with
+  # Selenium grid endpoints (Browserstack, SauceLabs, etc.). Configures
+  # selenium options via ENV vars so that they can be passed into
   class Driver
     def initialize
       register_driver
@@ -18,19 +20,17 @@ module Simulacrum
           app,
           browser: :remote,
           url: selenium_remote_url,
-          desired_capabilities: configure_caps
+          desired_capabilities: capabilities,
+          http_client: http_client
         )
       end
     end
 
-    def configure_capybara
-      Capybara.server_host       = 'localhost'
-      Capybara.server_port       = ENV['APP_SERVER_PORT'].to_i
-      Capybara.default_wait_time = 10
-      Capybara.default_driver    = driver_name
+    def http_client
+      Selenium::WebDriver::Remote::Http::Curb.new
     end
 
-    def configure_caps
+    def capabilities
       caps = Selenium::WebDriver::Remote::Capabilities.new
       caps['project']            = 'UI Regression Testing'
       caps['browserstack.local'] = 'true'
@@ -45,6 +45,13 @@ module Simulacrum
       caps['resolution']         = resolution
       caps['requireWindowFocus'] = require_window_focus
       caps
+    end
+
+    def configure_capybara
+      Capybara.server_host       = 'localhost'
+      Capybara.server_port       = ENV['APP_SERVER_PORT'].to_i
+      Capybara.default_wait_time = 10
+      Capybara.default_driver    = driver_name
     end
 
     def selenium_remote_url

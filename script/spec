@@ -3,5 +3,5 @@
 $(dirname $0)/bootstrap
 
 rm -rf coverage/
-bin/rubocop lib
-COVERAGE=true bin/rspec
+bin/rubocop --display-cop-names
+bin/rspec

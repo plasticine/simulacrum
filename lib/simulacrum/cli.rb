@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'optparse'
 require_relative '../simulacrum'
 require_relative '../simulacrum/command'

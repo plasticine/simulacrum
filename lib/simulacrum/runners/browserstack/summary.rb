@@ -1,10 +1,11 @@
+# encoding: UTF-8
 require 'rspec/core/formatters/helpers'
 require 'rspec/core/formatters/base_text_formatter'
 
 module Simulacrum
   module Browserstack
-    # The Summary Class is responsible for combining dumped examlpes from one or
-    # more other RSpec runs.
+    # The Summary Class is responsible for combining dumped examlpes from one
+    # or more other RSpec runs.
     class Summary < RSpec::Core::Formatters::BaseTextFormatter
       # TODO: Rename me, I'm really just a formatter anyway
       # TODO: Also, should this just be an external gem...? Yes?

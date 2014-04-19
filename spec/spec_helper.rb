@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require_relative 'use_simplecov'
 require_relative 'use_codeclimate'
 

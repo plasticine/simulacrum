@@ -1,13 +1,16 @@
+# encoding: UTF-8
 require 'ostruct'
 require_relative './simulacrum/methods'
 require_relative './simulacrum/matchers'
 require_relative './simulacrum/configuration'
-require_relative './simulacrum/driver'
 require_relative './simulacrum/railtie' if defined? Rails::Railtie
 require_relative './simulacrum/runners/browserstack/runner'
+require_relative './simulacrum/driver'
 
 # Gem module
 module Simulacrum
+  mattr_accessor :components, :configuration
+
   @driver = nil
   @components = {}
   @current_browser = nil
@@ -15,14 +18,6 @@ module Simulacrum
 
   def self.root
     File.expand_path('../..', __FILE__)
-  end
-
-  def self.components
-    @components
-  end
-
-  def self.configuration
-    @configuration
   end
 
   def self.configure(&block)
