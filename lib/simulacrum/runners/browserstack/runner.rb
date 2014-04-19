@@ -1,5 +1,4 @@
 require_relative './tunnel'
-require_relative './logger'
 require_relative './summary'
 require_relative '../base_runner'
 require 'yaml'
@@ -7,44 +6,65 @@ require 'parallel'
 
 module Simulacrum
   module Runners
+    # A Runner Class for Browserstack that handles creating a Browserstack
+    # tunnel, closing it when done. Also handles running the suite in parallel.
     class BrowserstackRunner < Simulacrum::Runners::BaseRunner
       attr_accessor :processes
 
       def initialize(config = {})
         @config = config
         @app_ports = app_ports
-        @tunnel = Simulacrum::Browserstack::Tunnel.new(ENV['BROWSERSTACK_USERNAME'], ENV['BROWSERSTACK_APIKEY'], @app_ports)
+        @tunnel = Simulacrum::Browserstack::Tunnel.new(
+          ENV['BROWSERSTACK_USERNAME'],
+          ENV['BROWSERSTACK_APIKEY'],
+          @app_ports
+        )
 
         super()
         open_tunnel
         set_global_env
-        results = execute
-        summary = Simulacrum::Browserstack::Summary.new(results)
-        summary.dump_summary
-        summary.dump_failures
+        execute
+        summarize
       ensure
         @tunnel.close_tunnel
       end
 
       def execute
-        reporters = Parallel.map_with_index(test_browsers, in_processes: processes) do |(name, caps), index|
+        @start_time = Time.now
+        @results = Parallel.map_with_index(
+          test_browsers,
+          in_processes: processes
+        ) do |(name, caps), index|
           begin
             configure_app_port(index)
             configure_environment(name, caps)
-            result = run
-            result[:driver_name] = name
-            result
-          rescue SystemExit => e
-            puts "[browserstack runner] #execute: #{e.inspect}"
+            run_suite
+          rescue SystemExit
             exit 1
           ensure
-            # TODO: this should have a more reliable way to check that the remote selenium endpoint has closed properly
+            # TODO: this should have a more reliable way to check that the
+            #       remote selenium endpoint has closed properly. Should this
+            #       hit the API and check?
+            #
+            #       Possible to programatically access the Capybara session by
+            #       using `name` - something like `Capybara.drivers[name]`
             sleep 1
           end
         end
+        @end_time = Time.now
       end
 
       private
+
+      def summarize
+        summary = Simulacrum::Browserstack::Summary.new(
+          @results,
+          @start_time,
+          @end_time
+        )
+        summary.dump_summary
+        summary.dump_failures
+      end
 
       def configure_app_port(index)
         ENV['APP_SERVER_PORT'] = app_ports[index].to_s
@@ -93,14 +113,17 @@ module Simulacrum
 
       def browsers
         @browsers ||= begin
-          browsers = YAML.load_file(Rails.root.join('config/browserstack.yml'), safe: true)
+          browsers = YAML.load_file(
+            Rails.root.join('config/browserstack.yml'),
+            safe: true
+          )
           browsers ['browsers']
         end
       end
 
       def open_tunnel
         @tunnel.open_tunnel
-        sleep 0.1 until @tunnel.is_open?
+        sleep 0.1 until @tunnel.open?
       end
     end
   end

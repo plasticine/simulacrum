@@ -4,26 +4,25 @@ require_relative '../simulacrum/command'
 require_relative '../simulacrum/runners/browserstack/runner'
 
 module Simulacrum
+  # Command-line interface for driving Simulacrum
   class CLI
     def self.start(*args)
-      begin
-        options = {}
-        OptionParser.new do |opts|
-          opts.banner = "Usage: example.rb [options]"
+      options = {}
+      OptionParser.new do |opts|
+        opts.banner = 'Usage: example.rb [options]'
 
-          opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-            options[:verbose] = v
-          end
-        end.parse!
+        opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
+          options[:verbose] = v
+        end
+      end.parse!
 
-        p options
-        p ARGV
+      p options
+      p ARGV
 
-        Simulacrum::Runners::BrowserstackRunner.new(processes: 5)
-      rescue => error
-        puts error
-        exit(1)
-      end
+      Simulacrum::Runners::BrowserstackRunner.new(processes: 5)
+    rescue => error
+      puts error
+      exit(1)
     end
   end
 end

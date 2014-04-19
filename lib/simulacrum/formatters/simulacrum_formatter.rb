@@ -3,20 +3,23 @@ require 'rspec/core/formatters/base_text_formatter'
 
 module Simulacrum
   module Formatters
+    # Class responsible for printing output from the RSpec run, and logging
+    # detail into structs that are dumped out to be reconstituted and consumed
+    # or aggregated later.
     class SimulacrumFormatter < RSpec::Core::Formatters::BaseTextFormatter
+      # TODO: Rename this - StructFormatter?
+
       attr_reader :output_hash
 
-      SummaryStruct = Struct.new(:duration, :example_count, :failure_count, :pending_count)
-      ExampleStruct = Struct.new(:description, :full_description, :execution_result,
-                                 :metadata, :exception, :location, :file_path)
+      SummaryStruct = Struct.new(:duration, :example_count, :failure_count,
+                                 :pending_count)
+      ExampleStruct = Struct.new(:description, :full_description,
+                                 :execution_result, :metadata, :exception,
+                                 :location, :file_path)
 
       def initialize(output)
         super
         @output_hash = {}
-      end
-
-      def message(message)
-        (@output_hash[:messages] ||= []) << message
       end
 
       def example_passed(notification)
@@ -51,16 +54,22 @@ module Simulacrum
       def stop
         super
         @output_hash[:examples] = examples.map do |example|
-          ExampleStruct.new(
-            example.description,
-            example.full_description,
-            example.execution_result,
-            {execution_result: example.metadata[:execution_result]},
-            example.exception,
-            example.location,
-            example.file_path
-          )
+          struct_for_example(example)
         end
+      end
+
+      private
+
+      def struct_for_example(example)
+        ExampleStruct.new(
+          example.description,
+          example.full_description,
+          example.execution_result,
+          { execution_result: example.metadata[:execution_result] },
+          example.exception,
+          example.location,
+          example.file_path
+        )
       end
     end
   end

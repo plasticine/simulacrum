@@ -2,6 +2,7 @@ require 'rspec'
 require_relative './comparator'
 
 module Simulacrum
+  # Custom RSpec matchers
   module Matchers
     extend RSpec::Matchers::DSL
 
@@ -23,7 +24,8 @@ module Simulacrum
 
     def self.fail_message(component, comparator)
       <<-eos
-The pixel change percentage exceeded the maximum threshold of #{component.acceptable_delta}%.
+The pixel change percentage exceeded the maximum threshold of \
+#{component.acceptable_delta}%.
 
 There was a #{comparator.diff.delta_percent}% pixel difference found between \
 the reference and the candidate.

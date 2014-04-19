@@ -17,7 +17,7 @@ module Simulacrum
     def test
       # If the component has a reference then we should diff the candidate
       # image against the reference
-      if @component.reference?
+      if component.reference?
         # If there is a diff between the candidate and the reference then we
         # should save both the candidate and diff images and fail the test
         perform_diff ? pass : fail
@@ -33,13 +33,13 @@ module Simulacrum
     private
 
     def pass
-      @component.remove_candidate
-      @component.remove_diff
+      component.remove_candidate
+      component.remove_diff
       true
     end
 
     def fail
-      @diff.save(@component.diff_path)
+      @diff.save(component.diff_path)
       false
     end
 
@@ -48,13 +48,16 @@ module Simulacrum
     end
 
     def perform_diff
-      @diff = Simulacrum::RmagicDiff.new(@component.reference_path,
-                                         @component.candidate_path)
+      # TODO: Support dynamic diffing strategies?
+      @diff = Simulacrum::RMagicDiff.new(
+        component.reference_path,
+        component.candidate_path
+      )
       diff_delta_percent_is_acceptable
     end
 
     def diff_delta_percent_is_acceptable
-      @diff.delta_percent < @component.acceptable_delta
+      diff.delta < component.acceptable_delta
     end
   end
 end

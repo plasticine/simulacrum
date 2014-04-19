@@ -4,9 +4,11 @@ require 'RMagick'
 require_relative 'renderer'
 
 module Simulacrum
+  # Component Class is responsible for managing the testing of a component
+  # defined in a test suite
   class Component
-    attr_reader :name, :browser
     attr_accessor :options
+    attr_reader :name, :browser
 
     def initialize(name, options = {})
       @name = name
@@ -14,7 +16,6 @@ module Simulacrum
       @renderer = Simulacrum::Renderer.new(options.url)
     end
 
-    # Load up the component url and capture an image, returns a File object
     def render
       ensure_example_path
       save_candidate(@renderer.render)
@@ -24,15 +25,15 @@ module Simulacrum
     end
 
     def reference?
-      File.exists?(reference_path)
+      File.exist?(reference_path)
     end
 
     def candidate?
-      File.exists?(candidate_path)
+      File.exist?(candidate_path)
     end
 
     def diff?
-      File.exists?(diff_path)
+      File.exist?(diff_path)
     end
 
     def acceptable_delta
@@ -66,7 +67,6 @@ module Simulacrum
 
     def cleanup
       @renderer.cleanup
-      # FileUtils.remove_entry(root_path) unless reference? || candidate? || diff?
     end
 
     def save_candidate(tmp_image_path)
@@ -75,7 +75,7 @@ module Simulacrum
 
     def crop_candidate_to_selector
       unless capture_selector.nil?
-        candidate_image = Magick::Image::read(candidate_path).first
+        candidate_image = Magick::Image.read(candidate_path).first
         bounds = @renderer.get_bounds_for_selector(capture_selector)
         candidate_image.crop!(*bounds)
         candidate_image.write(candidate_path)
@@ -83,7 +83,11 @@ module Simulacrum
     end
 
     def root_path
-      File.join(Simulacrum.configuration.references_path, name.to_s, driver_path)
+      File.join(
+        Simulacrum.configuration.references_path,
+        name.to_s,
+        driver_path
+      )
     end
 
     def driver_path

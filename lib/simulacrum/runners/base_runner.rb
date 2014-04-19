@@ -3,13 +3,14 @@ require 'simulacrum/formatters/simulacrum_formatter'
 
 module Simulacrum
   module Runners
+    # Base Runner class for running RSpec in parallel.
     class BaseRunner
-      def run
+      def run_suite
         formatter = Simulacrum::Formatters::SimulacrumFormatter.new($stdout)
         reporter = RSpec::Core::Reporter.new(formatter)
         configure_rspec(reporter)
         invoke_rspec
-        {results: Marshal.dump(formatter.output_hash)}
+        { results: Marshal.dump(formatter.output_hash) }
       end
 
       private
@@ -22,7 +23,7 @@ module Simulacrum
         RSpec.configuration.color = true
         RSpec.configuration.color_enabled = true
         RSpec.configuration.tty = true
-        RSpec.configuration.pattern = "**/*_spec.rb"
+        RSpec.configuration.pattern = '**/*_spec.rb'
         RSpec.configuration.profile_examples = false
         RSpec.configuration.instance_variable_set(:@requires, required_helpers)
         RSpec.configuration.instance_variable_set(:@reporter, reporter)

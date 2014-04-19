@@ -4,21 +4,22 @@ require 'fileutils'
 
 module Simulacrum
   module Browserstack
-    include RbConfig
-
+    # Class for handling Browserstack tunnel opening/closing/management
     class Tunnel
+      include RbConfig
+
       attr_reader :selenium_remote_url, :pid, :ports
 
       DEFAULT_OPTIONS = {
         skip_check: true,
         only_automate: false,
         verbose: true,
-        force: true,
+        force: true
       }
 
       def initialize(username, api_key, ports, options = {})
         @pid = nil
-        @is_open = false
+        @open = false
         @username = username
         @api_key = api_key
         @ports = ports
@@ -39,8 +40,8 @@ module Simulacrum
         kill
       end
 
-      def is_open?
-        @is_open
+      def open?
+        @open
       end
 
       private
@@ -77,10 +78,10 @@ module Simulacrum
 
       def platform_executable
         case RbConfig::CONFIG['host_os']
-          when /linux|arch/i
-            'BrowserStackLocal_linux_x64'
-          when /darwin/i
-            'BrowserStackLocal_osx'
+        when /linux|arch/i
+          'BrowserStackLocal_linux_x64'
+        when /darwin/i
+          'BrowserStackLocal_osx'
         end
       end
 
@@ -89,7 +90,7 @@ module Simulacrum
       end
 
       def formatted_ports
-        ports.map {|port| "localhost,#{port},0" }.join(",")
+        ports.map { |port| "localhost,#{port},0" }.join(',')
       end
 
       def kill
@@ -100,22 +101,22 @@ module Simulacrum
         Timeout.timeout(240) do
           sleep 0.1 until tunnel_has_opened?
         end
-        @is_open = true
+        @open = true
       rescue Timeout::Error
         exit(1)
       end
 
       def tunnel_has_opened?
-        x = `curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:45691`.to_i
-        x == 200
+        x = `curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:45691`
+        x.to_i == 200
       end
 
       def running?
-        unless @pid.nil?
+        if @pid.nil?
+          false
+        else
           Process.getpgid(@pid)
           true
-        else
-          false
         end
       rescue Errno::ESRCH
         false

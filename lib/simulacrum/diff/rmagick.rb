@@ -2,7 +2,8 @@ require 'RMagick'
 require_relative '../diff'
 
 module Simulacrum
-  class RmagicDiff < Simulacrum::Diff
+  # The RMagicDiff class implements image diffing using ImageMagick
+  class RMagicDiff < Simulacrum::Diff
     def delta_percent
       @delta * 100
     end
@@ -12,10 +13,10 @@ module Simulacrum
     def compare
       a = Magick::Image.read(@a_path)
       b = Magick::Image.read(@b_path)
-      @image, @delta = compare_images(a, b)
+      @image, @delta = square_root_mean_squared(a, b)
     end
 
-    def compare_images(a, b)
+    def square_root_mean_squared(a, b)
       # Calculate the Square Root Mean Squared Error for the comparison of the
       # two images.
       #

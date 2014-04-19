@@ -3,7 +3,7 @@ require_relative './simulacrum/methods'
 require_relative './simulacrum/matchers'
 require_relative './simulacrum/configuration'
 require_relative './simulacrum/driver'
-require_relative "./simulacrum/railtie" if defined? Rails::Railtie
+require_relative './simulacrum/railtie' if defined? Rails::Railtie
 require_relative './simulacrum/runners/browserstack/runner'
 
 # Gem module
@@ -34,7 +34,7 @@ module Simulacrum
   def self.included(receiver, &block)
     @driver = Simulacrum::Driver.new
 
-    receiver.extend         Simulacrum::Methods
+    receiver.extend Simulacrum::Methods
     receiver.send :include, Simulacrum::Matchers
 
     if defined?(Rails)
