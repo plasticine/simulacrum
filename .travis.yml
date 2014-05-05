@@ -7,9 +7,7 @@ rvm:
   - 1.9.3
 bundler_args: --binstubs
 script:
-  - bin/rubocop --version
-  - bin/rubocop --display-cop-names
-  - bin/rspec
+  - script/spec
 addons:
   code_climate:
     repo_token: e5d708da3fc981c10c3d7f95725436b02a0577d21e7ef84514e82057bf2559f0
