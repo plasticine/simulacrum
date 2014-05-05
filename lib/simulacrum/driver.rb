@@ -1,5 +1,6 @@
 # encoding: UTF-8
 require 'capybara'
+require 'selenium-webdriver'
 require 'selenium/webdriver/remote/http/curb'
 
 module Simulacrum

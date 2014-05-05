@@ -6,3 +6,7 @@ AllCops:
   Exclude:
     - bin/*
     - spec/use_simplecov.rb
+
+TrivialAccessors:
+  Exclude:
+    - lib/simulacrum.rb

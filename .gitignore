@@ -1,5 +1,6 @@
 /bin
 /pkg
 /.bundle
+/coverage
 *.sublime-workspace
 *.sublime-project

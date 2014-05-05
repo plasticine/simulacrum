@@ -1,0 +1,7 @@
+--abc-max 10
+--gte coverage/covered_percent,46.12
+--no-style
+--color
+--abc-exclude Simulacrum::Driver#capabilities
+--abc-exclude Simulacrum::Runners::BaseRunner#configure_rspec
+--abc-exclude Simulacrum::Runners::BrowserstackRunner#configure_environment

@@ -4,4 +4,5 @@ $(dirname $0)/bootstrap
 
 rm -rf coverage/
 bin/rubocop --display-cop-names
-bin/rspec
+bin/rspec --require spec_helper
+bin/rake quality

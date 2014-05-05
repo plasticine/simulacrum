@@ -9,12 +9,18 @@ require_relative './simulacrum/driver'
 
 # Gem module
 module Simulacrum
-  mattr_accessor :components, :configuration
-
   @driver = nil
   @components = {}
   @current_browser = nil
   @configuration = Simulacrum::Configuration.new
+
+  def self.components
+    @components
+  end
+
+  def self.configuration
+    @configuration
+  end
 
   def self.root
     File.expand_path('../..', __FILE__)
@@ -23,7 +29,7 @@ module Simulacrum
   def self.configure(&block)
     options = OpenStruct.new(defaults: OpenStruct.new)
     yield options
-    @configuration.configure(options.to_h)
+    configuration.configure(options.to_h)
   end
 
   def self.included(receiver, &block)
