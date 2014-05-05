@@ -1,8 +1,10 @@
+# encoding: UTF-8
 puts '[Simplecov] enabled'
 require 'simplecov'
 
 module SimpleCov
   module Formatter
+    # Monkies!
     class QualityFormatter
       def format(result)
         SimpleCov::Formatter::HTMLFormatter.new.format(result)

@@ -1,4 +1,6 @@
+# encoding: UTF-8
 module Simulacrum
+  # Base class for implementing diffing strategies
   class Diff
     attr_accessor :a_path, :b_path, :delta, :image
 

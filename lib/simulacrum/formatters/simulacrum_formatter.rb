@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'rspec/core/formatters/json_formatter'
 require 'rspec/core/formatters/base_text_formatter'
 

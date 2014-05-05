@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # Package information
 module Simulacrum
   PACKAGE = 'simulacrum'
