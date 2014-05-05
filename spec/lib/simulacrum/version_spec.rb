@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require_relative '../../../lib/simulacrum/version'
 
 describe Simulacrum do
