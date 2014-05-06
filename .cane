@@ -1,5 +1,4 @@
 --abc-max 10
---gte coverage/covered_percent,46.12
 --no-style
 --color
 --abc-exclude Simulacrum::Driver#capabilities

@@ -2,19 +2,6 @@
 puts '[Simplecov] enabled'
 require 'simplecov'
 
-module SimpleCov
-  module Formatter
-    # Monkies!
-    class QualityFormatter
-      def format(result)
-        SimpleCov::Formatter::HTMLFormatter.new.format(result)
-        File.open('coverage/covered_percent', 'w') do |f|
-          f.puts result.source_files.covered_percent.to_f
-        end
-      end
-    end
-  end
-end
-
-SimpleCov.formatter = SimpleCov::Formatter::QualityFormatter
-SimpleCov.start
+SimpleCov.minimum_coverage 49.03
+SimpleCov.refuse_coverage_drop
+SimpleCov.start { add_filter '/spec/' }

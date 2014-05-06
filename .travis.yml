@@ -5,6 +5,8 @@ rvm:
   - 2.1
   - 2.0
   - 1.9.3
+env:
+  - COVERAGE=true
 bundler_args: --binstubs
 script:
   - script/spec
