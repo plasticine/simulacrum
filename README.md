@@ -4,16 +4,18 @@
 
 Simulacrum is an opinionated UI component regression testing tool built to be tightly integrated with [RSpec], [Capybara], [Selenium Webdriver] and [Browserstack].
 
-### But...why?
+### 🚧 But...why?
 
-Write some words about why this is a good idea.
+Explain the use-case better.
 
-### Opinions
+### 🚧 Opinions
 
 Simulacrum is a little bit opinionated about a few things;
 
 - selenium webdriver (browserstack)
 - testing components
+
+It would be good to explain these opinions, the reason for them and why they are good.
 
 ***
 
