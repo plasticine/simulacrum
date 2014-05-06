@@ -1,0 +1,6 @@
+--abc-max 10
+--no-style
+--color
+--abc-exclude Simulacrum::Driver#capabilities
+--abc-exclude Simulacrum::Runners::BaseRunner#configure_rspec
+--abc-exclude Simulacrum::Runners::BrowserstackRunner#configure_environment

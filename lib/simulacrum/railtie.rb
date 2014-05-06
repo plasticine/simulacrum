@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module Simulacrum
   # Railtie Class for Rails
   class Railtie < ::Rails::Railtie

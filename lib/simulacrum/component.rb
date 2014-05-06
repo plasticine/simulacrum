@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'capybara/dsl'
 require 'fileutils'
 require 'RMagick'

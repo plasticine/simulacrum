@@ -1,0 +1,12 @@
+inherit_from: rubocop-todo.yml
+
+AllCops:
+  Include:
+    - bin/simulacrum
+  Exclude:
+    - bin/*
+    - spec/use_simplecov.rb
+
+TrivialAccessors:
+  Exclude:
+    - lib/simulacrum.rb

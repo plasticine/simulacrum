@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'timeout'
 require 'rbconfig'
 require 'fileutils'
@@ -8,7 +9,8 @@ module Simulacrum
     class Tunnel
       include RbConfig
 
-      attr_reader :selenium_remote_url, :pid, :ports
+      attr_reader :selenium_remote_url, :pid, :ports, :open
+      alias_method :open?, :open
 
       DEFAULT_OPTIONS = {
         skip_check: true,
@@ -40,19 +42,11 @@ module Simulacrum
         kill
       end
 
-      def open?
-        @open
-      end
-
       private
 
       def ensure_browserstack_binary
         FileUtils.mkdir_p(Rails.root.join('tmp', 'browserstack'))
-
-        unless File.exist?(binary_path)
-          FileUtils.cp(binary_path_for_platform, binary_path)
-        end
-
+        FileUtils.cp(binary_path, binary_path) unless File.exist?(binary_path)
         File.chmod(01777, binary_path) unless File.executable?(binary_path)
       end
 
@@ -85,7 +79,7 @@ module Simulacrum
         end
       end
 
-      def binary_path_for_platform
+      def binary_path
         File.join(Simulacrum.root, 'support', platform_executable)
       end
 

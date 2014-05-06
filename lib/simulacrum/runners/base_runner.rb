@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'rspec'
 require 'simulacrum/formatters/simulacrum_formatter'
 
