@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'capybara', '~> 2.2.1'
   s.add_dependency 'rspec', '~> 2.14.1'
   s.add_dependency 'rmagick', '~> 2.13.2'
-  s.add_dependency 'selenium-webdriver', '~> 2.40.0'
+  s.add_dependency 'selenium-webdriver', '~> 2.41.0'
 
   s.add_development_dependency 'cane'
   s.add_development_dependency 'codeclimate-test-reporter'
