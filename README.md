@@ -2,7 +2,11 @@
 
 [![Build Status](https://travis-ci.org/plasticine/simulacrum.svg)](https://travis-ci.org/plasticine/simulacrum) [![Code Climate](https://codeclimate.com/github/plasticine/simulacrum/coverage.png)](https://codeclimate.com/github/plasticine/simulacrum) [![Code Climate](https://codeclimate.com/github/plasticine/simulacrum.png)](https://codeclimate.com/github/plasticine/simulacrum) [![Dependency Status](https://gemnasium.com/plasticine/simulacrum.svg)](https://gemnasium.com/plasticine/simulacrum) [![Gem Version](https://badge.fury.io/rb/simulacrum.svg)](http://badge.fury.io/rb/simulacrum)
 
-Simulacrum is an opinionated UI component regression testing tool built to be tightly integrated with [RSpec], [Capybara], [Selenium Webdriver] and [Browserstack].
+Simulacrum is an opinionated UI component regression testing tool built to be tightly integrated with [RSpec], [Capybara], [Selenium Webdriver] & [Browserstack].
+
+__Simulacrum is still very much in development. There will probably be breaking changes, and the API will almost certainly change.__
+
+***
 
 ### 🚧 But...why?
 
@@ -16,8 +20,6 @@ Simulacrum is a little bit opinionated about a few things;
 - testing components
 
 It would be good to explain these opinions, the reason for them and why they are good.
-
-***
 
 ## Setup
 Simulacrum requires Ruby 1.9.3 or later. To install, add this line to your Gemfile and run `bundle install`:
