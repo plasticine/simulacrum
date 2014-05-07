@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require_relative '../../../lib/simulacrum/version'
+require 'simulacrum/version'
 
 describe Simulacrum do
   describe 'PACKAGE' do

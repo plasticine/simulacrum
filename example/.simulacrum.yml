@@ -1,0 +1,7 @@
+browserstack:
+  firefox_27_osx_mavericks:
+    os: "OS X"
+    os_version: "Mavericks"
+    browser: "firefox"
+    browser_version: "27.0"
+    resolution: "1280x1024"

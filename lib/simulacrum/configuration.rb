@@ -23,12 +23,6 @@ module Simulacrum
       @config = OpenStruct.new(@config.to_h.merge!(config))
     end
 
-    # TODO: This can be removed? I don't think this is really required now we
-    #       have Simulacrum::Driver
-    def default_browser
-      @config.default_browser || :selenium
-    end
-
     def references_path
       if @config.references_path
         @config.references_path

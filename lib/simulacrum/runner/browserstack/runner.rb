@@ -1,25 +1,28 @@
 # encoding: UTF-8
 require_relative './tunnel'
 require_relative './summary'
-require_relative '../base_runner'
+require_relative '../base'
 require 'yaml'
-require 'parallel'
+require 'retries'
 
 module Simulacrum
-  module Runners
+  module Runner
     # A Runner Class for Browserstack that handles creating a Browserstack
     # tunnel, closing it when done. Also handles running the suite in parallel.
-    class BrowserstackRunner < Simulacrum::Runners::BaseRunner
-      attr_accessor :processes
+    class BrowserstackRunner < Simulacrum::Runner::Base
+
+      # Exception to indicate that Browserstack has no available sessions
+      # to start a new test run
+      class NoRemoteSessionsAvailable < RuntimeError; end
+
+      attr_reader :app_ports
 
       def initialize(config = {})
+        @username = ENV['BROWSERSTACK_USERNAME']
+        @apikey = ENV['BROWSERSTACK_APIKEY']
         @config = config
         @app_ports = app_ports
-        @tunnel = Simulacrum::Browserstack::Tunnel.new(
-          ENV['BROWSERSTACK_USERNAME'],
-          ENV['BROWSERSTACK_APIKEY'],
-          @app_ports
-        )
+        @tunnel = Simulacrum::Browserstack::Tunnel.new(@username, @apikey, @app_ports)
 
         super()
         open_tunnel
@@ -32,21 +35,14 @@ module Simulacrum
       end
 
       def execute
-        @results = Parallel.map_with_index(test_browsers, in_processes: processes) do |(name, caps), index|
+        @results = Parallel.map_with_index(browsers, in_processes: processes) do |(name, caps), index|
           begin
+            ensure_available_remote_runner
             configure_app_port(index)
             configure_environment(name, caps)
             run_suite
           rescue SystemExit
             exit 1
-          ensure
-            # TODO: this should have a more reliable way to check that the
-            #       remote selenium endpoint has closed properly. Should this
-            #       hit the API and check?
-            #
-            #       Possible to programatically access the Capybara session by
-            #       using `name` - something like `Capybara.drivers[name]`
-            sleep 1
           end
         end
       ensure
@@ -54,6 +50,27 @@ module Simulacrum
       end
 
       private
+
+      def ensure_available_remote_runner
+        with_retries(max_tries: 10, base_sleep_seconds: 1, max_sleep_seconds: 5) do
+          remote_worker_available?
+        end
+      end
+
+      def plan_details
+        curl = Curl::Easy.new('https://www.browserstack.com/automate/plan.json')
+        curl.http_auth_types = :basic
+        curl.username = @username
+        curl.password = @apikey
+        JSON.parse(curl.perform)
+      end
+
+      def remote_worker_available?
+        plan = plan_details
+        sessions_running = plan[:parallel_sessions_running].to_i
+        sessions_max_allowed = plan[:parallel_sessions_max_allowed].to_i
+        raise NoRemoteSessionsAvailable unless sessions_running < sessions_max_allowed
+      end
 
       def start_timer
         @start_time = Time.now
@@ -64,9 +81,7 @@ module Simulacrum
       end
 
       def summarize
-        summary = Simulacrum::Browserstack::Summary.new(@results,
-                                                        @start_time,
-                                                        @end_time)
+        summary = Simulacrum::Browserstack::Summary.new(@results, @start_time, @end_time)
         summary.dump_summary
         summary.dump_failures
       end
@@ -93,11 +108,7 @@ module Simulacrum
       # rubocop:enable MethodLength
 
       def processes
-        parallel? ? @config[:processes].to_i : 1
-      end
-
-      def test_browsers
-        parallel? ? browsers : [browsers.first]
+        1
       end
 
       def set_global_env
@@ -105,7 +116,15 @@ module Simulacrum
       end
 
       def app_ports
-        @app_ports ||= test_browsers.length.times.map { find_available_port }
+        @app_ports ||= begin
+          if browsers.length
+            browsers.length.times.map do
+              find_available_port
+            end
+          else
+            [find_available_port]
+          end
+        end
       end
 
       def find_available_port
@@ -115,17 +134,23 @@ module Simulacrum
         server.close if server
       end
 
-      def parallel?
-        @config.include?(:processes) && @config[:processes].to_i > 1
-      end
-
       def browsers
         @browsers ||= begin
-          browsers = YAML.load_file(
-            Rails.root.join('config/browserstack.yml'),
-            safe: true
-          )
-          browsers ['browsers']
+          if File.exist?(config_file_path)
+            config = YAML.load_file(config_file_path, safe: true)
+            puts config.inspect
+            config['browserstack']
+          else
+            []
+          end
+        end
+      end
+
+      def config_file_path
+        if defined? Rails
+          Rails.root.join('.simulacrum.yml')
+        else
+          '.simulacrum.yml'
         end
       end
 

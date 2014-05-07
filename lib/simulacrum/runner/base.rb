@@ -3,9 +3,9 @@ require 'rspec'
 require 'simulacrum/formatters/simulacrum_formatter'
 
 module Simulacrum
-  module Runners
+  module Runner
     # Base Runner class for running RSpec in parallel.
-    class BaseRunner
+    class Base
       def run_suite
         formatter = Simulacrum::Formatters::SimulacrumFormatter.new($stdout)
         reporter = RSpec::Core::Reporter.new(formatter)

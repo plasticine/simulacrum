@@ -11,6 +11,8 @@ An opinionated UI component regression testing tool built to be tightly integrat
 
 ### Configuring
 
+Create a spec helper file for simulacrum — `simulacrum_helper.rb` — and throw this junk in it:
+
 ```ruby
 RSpec.configure do |config|
   include Simulacrum
@@ -35,11 +37,18 @@ end
 
 ### Usage
 
-Simulacrum provides a small DSL for configuring and managing UI tests from within Rspec. Basically it boils down to these three methods;
+```shell
+simulacrum --help
+```
+
+
+
+
+<!-- Simulacrum provides a small DSL for configuring and managing UI tests from within Rspec. Basically it boils down to these three methods;
 
 - `component`
 - `configure_browser`
-- `look_the_same`
+- `look_the_same` -->
 
 #### Inspiration
 

@@ -19,17 +19,17 @@ module Simulacrum
         force: true
       }
 
-      def initialize(username, api_key, ports, options = {})
+      def initialize(username, apikey, ports, options = {})
         @pid = nil
         @open = false
         @username = username
-        @api_key = api_key
+        @apikey = apikey
         @ports = ports
         @options = OpenStruct.new(DEFAULT_OPTIONS.clone.merge!(options))
       end
 
       def selenium_remote_url
-        "http://#{@username}:#{@api_key}@hub.browserstack.com/wd/hub"
+        "http://#{@username}:#{@apikey}@hub.browserstack.com/wd/hub"
       end
 
       def open_tunnel
@@ -65,7 +65,7 @@ module Simulacrum
         cmd << '-onlyAutomate' if @options.only_automate == true
         cmd << '-force'        if @options.force == true
         cmd << '-v'            if @options.verbose == true
-        cmd << @api_key
+        cmd << @apikey
         cmd << formatted_ports
         cmd.join(' ')
       end
