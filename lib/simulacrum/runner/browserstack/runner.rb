@@ -138,7 +138,6 @@ module Simulacrum
         @browsers ||= begin
           if File.exist?(config_file_path)
             config = YAML.load_file(config_file_path, safe: true)
-            puts config.inspect
             config['browserstack']
           else
             []
@@ -147,11 +146,7 @@ module Simulacrum
       end
 
       def config_file_path
-        if defined? Rails
-          Rails.root.join('.simulacrum.yml')
-        else
-          '.simulacrum.yml'
-        end
+        Rails.root.join('.simulacrum.yml')
       end
 
       def open_tunnel

@@ -5,7 +5,6 @@ module Simulacrum
   module Runner
     def run(options)
       puts options
-
       if options.browserstack
         Simulacrum::Runner::BrowserstackRunner.new
       end

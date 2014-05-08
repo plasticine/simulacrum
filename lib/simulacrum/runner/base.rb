@@ -7,20 +7,30 @@ module Simulacrum
     # Base Runner class for running RSpec in parallel.
     class Base
       def run_suite
-        formatter = Simulacrum::Formatters::SimulacrumFormatter.new($stdout)
-        reporter = RSpec::Core::Reporter.new(formatter)
-        configure_rspec(reporter)
+        configure_rspec
         invoke_rspec
-        { results: Marshal.dump(formatter.output_hash) }
+        { results: dump_results }
       end
 
       private
+
+      def reporter
+        @reporter ||= RSpec::Core::Reporter.new(formatter)
+      end
+
+      def formatter
+        @formatter ||= Simulacrum::Formatters::SimulacrumFormatter.new($stdout)
+      end
+
+      def dump_results
+        Marshal.dump(formatter.output_hash)
+      end
 
       def invoke_rspec
         RSpec::Core::Runner.run(['spec/ui'])
       end
 
-      def configure_rspec(reporter)
+      def configure_rspec
         RSpec.configuration.color = true
         RSpec.configuration.color_enabled = true
         RSpec.configuration.tty = true
