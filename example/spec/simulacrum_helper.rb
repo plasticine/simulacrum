@@ -2,14 +2,14 @@ require 'rspec'
 require 'capybara'
 require 'simulacrum'
 
+require './example_app'
+
 RSpec.configure do |config|
   include Simulacrum
 
-  Simulacrum.configure do |config|
-    config.driver = Simulacrum::Driver::BrowserstackDriver.new(
-      username: '1234abcd',
-      api_key: '1234abcd'
-    )
-    config.defaults.acceptable_delta = 0.1
+  Capybara.app = ExampleApp
+
+  Simulacrum.configure do |simulacrum|
+    simulacrum.component.delta_threshold = 1  # 1% difference tollerance
   end
 end
