@@ -23,7 +23,8 @@ module Simulacrum
         @stdout = stdout
 
         add_banner
-        add_options
+        add_runner_options
+        add_format_options
         add_separator
         add_version
         add_help
@@ -67,7 +68,7 @@ module Simulacrum
         end
       end
 
-      def add_options
+      def add_runner_options
         parser.on('--runner [RUNNER]',
                   [:default, :browserstack],
                   'Runner to use for executing specs (local, browserstack).') do |runner|
@@ -92,9 +93,11 @@ module Simulacrum
 
         parser.on('--browser [BROWSER]',
                   'Browser configuration to use') do |browser|
-          options.browser = browser
+          options.browser = browser.to_sym
         end
+      end
 
+      def add_format_options
         add_separator
 
         parser.on('-c',

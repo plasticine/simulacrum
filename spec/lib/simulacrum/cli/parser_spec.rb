@@ -90,4 +90,14 @@ describe Simulacrum::CLI::Parser do
       it { subject.result.max_processes.should == 5 }
     end
   end
+
+  describe '--browser' do
+    it { subject.result.browser.should be_nil }
+
+    context 'when the option is set' do
+      let(:option) { '--browser firefox' }
+
+      it { subject.result.browser.should == :firefox }
+    end
+  end
 end
