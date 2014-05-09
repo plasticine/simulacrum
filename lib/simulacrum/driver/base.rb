@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module Simulacrum
   module Driver
     # Base class for Drivers to inherit
