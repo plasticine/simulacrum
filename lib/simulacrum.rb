@@ -5,7 +5,6 @@ require_relative './simulacrum/matchers'
 require_relative './simulacrum/configuration'
 require_relative './simulacrum/railtie' if defined? Rails::Railtie
 require_relative './simulacrum/runner'
-require_relative './simulacrum/driver'
 
 # Gem module
 module Simulacrum
@@ -24,10 +23,10 @@ module Simulacrum
   end
   module_function :configuration
 
-  def driver
-    @driver ||= Simulacrum::Driver.new
+  def runner_options
+    @runner_options
   end
-  module_function :driver
+  module_function :runner_options
 
   def root
     File.expand_path('../..', __FILE__)
@@ -35,12 +34,13 @@ module Simulacrum
   module_function :root
 
   def run(options)
-    Simulacrum::Runner.run(options)
+    @runner_options = options
+    Simulacrum::Runner.run
   end
   module_function :run
 
   def configure(&block)
-    options = OpenStruct.new(defaults: OpenStruct.new)
+    options = OpenStruct.new(component: OpenStruct.new)
     yield options
     configuration.configure(options.to_h)
   end
@@ -56,4 +56,23 @@ module Simulacrum
     end
   end
   module_function :included
+
+  def config_file
+    YAML.load_file(Simulacrum.config_file_path)
+  end
+  module_function :config_file
+
+  def config_file?
+    File.exist?(Simulacrum.config_file_path)
+  end
+  module_function :config_file?
+
+  def config_file_path
+    if defined? Rails
+      Rails.root.join('.simulacrum.yml')
+    else
+      '.simulacrum.yml'
+    end
+  end
+  module_function :config_file_path
 end

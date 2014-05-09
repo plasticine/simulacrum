@@ -15,7 +15,7 @@ module Simulacrum
       DEFAULT_OPTIONS = {
         skip_check: true,
         only_automate: false,
-        verbose: true,
+        verbose: false,
         force: true
       }
 
@@ -45,17 +45,10 @@ module Simulacrum
       private
 
       def ensure_browserstack_binary
-        FileUtils.mkdir_p(Rails.root.join('tmp', 'browserstack'))
-        FileUtils.cp(binary_path, binary_path) unless File.exist?(binary_path)
         File.chmod(01777, binary_path) unless File.executable?(binary_path)
       end
 
-      def binary_path
-        Rails.root.join('tmp', 'browserstack', platform_executable)
-      end
-
       def create_tunnel
-        puts command
         @pid = fork { exec(command) }
       end
 
@@ -101,8 +94,7 @@ module Simulacrum
       end
 
       def tunnel_has_opened?
-        x = `curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:45691`
-        x.to_i == 200
+        `curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:45691`.to_i == 200
       end
 
       def running?

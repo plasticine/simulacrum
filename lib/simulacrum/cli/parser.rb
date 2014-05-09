@@ -4,10 +4,10 @@ require 'ostruct'
 require 'simulacrum'
 
 module Simulacrum
-  # Option parser for handling options passed into the Simulacrum CLI
-  #
-  # This class is mostly borrowed from Cane's Parser class. Thanks Xav! <3
   module CLI
+    # Option parser for handling options passed into the Simulacrum CLI
+    #
+    # This class is mostly borrowed from Cane's Parser class. Thanks Xav! <3
     class Parser
       attr_reader :stdout
 
@@ -22,6 +22,7 @@ module Simulacrum
       def initialize(stdout = $stdout)
         @stdout = stdout
 
+        add_banner
         add_options
         add_separator
         add_version
@@ -30,6 +31,7 @@ module Simulacrum
 
       def parse(args, _return = true)
         parser.parse!(args)
+        options.files = args if args.size > 0
         options
       rescue OptionParser::InvalidOption,
              OptionParser::AmbiguousOption
@@ -42,6 +44,11 @@ module Simulacrum
 
       private
 
+      def add_banner
+        parser.banner = 'Usage: simulacrum [options] [files or directories]'
+        add_separator
+      end
+
       def add_separator
         parser.separator ''
       end
@@ -49,32 +56,61 @@ module Simulacrum
       def add_version
         parser.on_tail('-v', '--version', 'Show version') do
           stdout.puts Simulacrum::VERSION
-          raise OptionsHandled
+          fail OptionsHandled
         end
       end
 
       def add_help
         parser.on_tail('-h', '--help', 'Show this message') do
           stdout.puts parser
-          raise OptionsHandled
+          fail OptionsHandled
         end
       end
 
       def add_options
-        parser.on('--color', 'Colorize output') do |value|
-          options.color = value
+        parser.on('--runner [RUNNER]',
+                  [:default, :browserstack],
+                  'Runner to use for executing specs (local, browserstack).') do |runner|
+          options.runner = runner
         end
 
-        parser.on('--browserstack', 'Run specs against Browserstack') do |value|
-          options.browserstack = value
+        parser.on('--username [USERNAME]',
+                  'Username for authenticating when using the Browserstack runner.') do |username|
+          options.username = username
+        end
+
+        parser.on('--apikey [APIKEY]',
+                  'API key for authenticating when using the Browserstack runner.') do |apikey|
+          options.apikey = apikey
+        end
+
+        parser.on('--max-processes [N]',
+                  Integer,
+                  'Number of parallel proceses the runner should use.') do |max_processes|
+          options.max_processes = max_processes
+        end
+
+        parser.on('--browser [BROWSER]',
+                  'Browser configuration to use') do |browser|
+          options.browser = browser
+        end
+
+        add_separator
+
+        parser.on('-c',
+                  '--[no-]color',
+                  '--[no-]colour',
+                  'Enable color in the output.') do |value|
+          options.color = value
         end
       end
 
       def options
         @options ||= begin
           options = OpenStruct.new
+          options.files = ['spec/ui']
           options.color = false
-          options.browserstack = false
+          options.runner = :default
           options
         end
       end

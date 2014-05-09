@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require_relative './base'
+require 'simulacrum/driver/base'
 require 'capybara'
 require 'selenium-webdriver'
 require 'selenium/webdriver/remote/http/curb'
@@ -9,8 +9,17 @@ module Simulacrum
     # Responsible for registering a custom Capybara driver for use with
     # Selenium grid endpoints (Browserstack, SauceLabs, etc.). Configures
     # selenium options via ENV vars so that they can be passed into
-    class Browserstack < Simulacrum::Driver::Base
+    class BrowserstackDriver < Simulacrum::Driver::Base
       private
+
+      def configuration
+        {
+          browser: :remote,
+          url: selenium_remote_url,
+          desired_capabilities: capabilities,
+          http_client: http_client
+        }
+      end
 
       def http_client
         Selenium::WebDriver::Remote::Http::Curb.new
@@ -22,6 +31,7 @@ module Simulacrum
         caps['browserstack.local'] = true
         caps['browserstack.debug'] = false
         caps['browser']            = browser
+        caps['browserName']        = browser_name
         caps['browser_version']    = browser_version
         caps['os']                 = os
         caps['os_version']         = os_version
@@ -30,11 +40,20 @@ module Simulacrum
         caps['platform']           = platform
         caps['resolution']         = resolution
         caps['requireWindowFocus'] = require_window_focus
+        caps['realMobile']         = real_mobile
         caps
       end
 
       def browser
         ENV['SELENIUM_BROWSER']
+      end
+
+      def browser_name
+        ENV['BS_BROWSERNAME'] || ''
+      end
+
+      def real_mobile
+        ENV['BS_REALMOBILE'] || false
       end
 
       def browser_version

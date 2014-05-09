@@ -21,7 +21,7 @@ describe Simulacrum::CLI::Parser do
     let(:option) { '--velociraptors' }
 
     it 'handles invalid options by showing help' do
-      subject.output.should include("Usage:")
+      subject.output.should include('Usage:')
       subject.result.should == false
     end
   end
@@ -43,13 +43,51 @@ describe Simulacrum::CLI::Parser do
     end
   end
 
-  describe '--browserstack' do
-    it { subject.result.browserstack.should == false }
+  describe '--runner' do
+    it { subject.result.runner.should == :default }
 
     context 'when the option is set' do
-      let(:option) { '--browserstack' }
+      let(:option) { '--runner browserstack' }
 
-      it { subject.result.browserstack.should == true }
+      it { subject.result.runner.should == :browserstack }
+    end
+
+    context 'when the option is set to an invalid value' do
+      let(:option) { '--runner dropbear' }
+
+      it 'throws an InvalidArgument exception' do
+        expect { subject.result.runner }.to raise_error(OptionParser::InvalidArgument)
+      end
+    end
+  end
+
+  describe '--username' do
+    it { subject.result.username.should be_nil }
+
+    context 'when the option is set' do
+      let(:option) { '--username justin' }
+
+      it { subject.result.username.should == 'justin' }
+    end
+  end
+
+  describe '--apikey' do
+    it { subject.result.apikey.should be_nil }
+
+    context 'when the option is set' do
+      let(:option) { '--apikey 1234abcd' }
+
+      it { subject.result.apikey.should == '1234abcd' }
+    end
+  end
+
+  describe '--processes' do
+    it { subject.result.processes.should be_nil }
+
+    context 'when the option is set' do
+      let(:option) { '--processes 5' }
+
+      it { subject.result.processes.should == 5 }
     end
   end
 end

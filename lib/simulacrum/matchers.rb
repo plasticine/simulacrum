@@ -26,9 +26,9 @@ module Simulacrum
     def self.fail_message(component, comparator)
       <<-eos
 The pixel change percentage exceeded the maximum threshold of \
-#{component.acceptable_delta}%.
+#{component.delta_threshold}%.
 
-There was a #{comparator.diff.delta_percent}% pixel difference found between \
+There was a #{comparator.diff.delta}% pixel difference found between \
 the reference and the candidate.
 
 Reference: #{component.reference_path}

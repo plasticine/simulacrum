@@ -4,7 +4,8 @@ AllCops:
   Include:
     - bin/simulacrum
   Exclude:
-    - bin/*
+    - example
+    - bin
     - spec/use_simplecov.rb
 
 TrivialAccessors:

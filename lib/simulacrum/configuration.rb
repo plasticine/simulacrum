@@ -5,18 +5,18 @@ module Simulacrum
   # Configuration Class for managing config of the suite
   class Configuration
     COMPONENT_DEFAULTS = {
-      acceptable_delta: 1,
+      delta_threshold:  1,
       window_size:      [1024, 768],
       capture_delay:    nil,
       capture_selector: :html
     }
 
     attr_reader :references_path, :reference_filename, :candidate_filename,
-                :diff_filename, :acceptable_delta, :capture_delay,
+                :diff_filename, :delta_threshold, :capture_delay,
                 :window_size, :capture_selector, :default_browser
 
     def initialize
-      @config = OpenStruct.new(defaults: OpenStruct.new(COMPONENT_DEFAULTS))
+      @config = OpenStruct.new(component: OpenStruct.new(COMPONENT_DEFAULTS))
     end
 
     def configure(config)
@@ -28,6 +28,8 @@ module Simulacrum
         @config.references_path
       elsif defined?(Rails)
         File.join(Rails.root, 'spec/ui/references')
+      else
+        'spec/ui/references'
       end
     end
 
@@ -43,12 +45,12 @@ module Simulacrum
       @config.diff_filename || 'diff'
     end
 
-    def acceptable_delta
-      @config.defaults.acceptable_delta || 0.0
+    def delta_threshold
+      @config.component.delta_threshold || 0.0
     end
 
     def capture_selector
-      @config.defaults.capture_selector || nil
+      @config.component.capture_selector || nil
     end
   end
 end

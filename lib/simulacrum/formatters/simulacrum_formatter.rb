@@ -16,7 +16,7 @@ module Simulacrum
                                  :pending_count)
       ExampleStruct = Struct.new(:description, :full_description,
                                  :execution_result, :metadata, :exception,
-                                 :location, :file_path)
+                                 :location, :file_path, :browser)
 
       def initialize(output)
         super
@@ -37,11 +37,14 @@ module Simulacrum
         output.print failure_color('F')
       end
 
-      def dump_failures; end
+      def dump_failures
+      end
 
-      def dump_pending; end
+      def dump_pending
+      end
 
-      def dump_profile; end
+      def dump_profile
+      end
 
       def dump_summary(duration, example_count, failure_count, pending_count)
         @output_hash[:summary] = SummaryStruct.new(
@@ -66,11 +69,18 @@ module Simulacrum
           example.description,
           example.full_description,
           example.execution_result,
-          { execution_result: example.metadata[:execution_result] },
+          metadata_hash(example),
           example.exception,
           example.location,
           example.file_path
         )
+      end
+
+      def metadata_hash(example)
+        {
+          browser: example.metadata[:browser],
+          execution_result: example.metadata[:execution_result]
+        }
       end
     end
   end
