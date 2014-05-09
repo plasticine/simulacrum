@@ -23,7 +23,7 @@ module Simulacrum
         output.puts
 
         failed_examples.each do |example|
-          output.puts(failure_color("simulacrum --browser=#{example.metadata[:browser]} #{RSpec::Core::Metadata::relative_path(example.location)}") + " " + detail_color("# #{example.full_description}"))
+          output.puts(failure_color("simulacrum --browser=#{example.metadata[:browser]} #{RSpec::Core::Metadata::relative_path(example.location)}") + ' ' + detail_color("# #{example.full_description}"))
         end
       end
 
@@ -48,26 +48,24 @@ module Simulacrum
       end
 
       def example_count
-        sum_count_for_key(:example_count)
+        summaries.map { |x| x[:example_count] }.reduce(:+)
       end
 
       def failure_count
-        sum_count_for_key(:failure_count)
+        summaries.map { |x| x[:failure_count] }.reduce(:+)
       end
 
       def pending_count
-        sum_count_for_key(:pending_count)
+        summaries.map { |x| x[:pending_count] }.reduce(:+)
       end
 
-      def find_shared_group(example); end
+      def find_shared_group(example)
+      end
 
-      def group_and_parent_groups(example); end
+      def group_and_parent_groups(example)
+      end
 
       private
-
-      def sum_count_for_key(key)
-        summaries.map { |x| x[key] }.reduce(:+)
-      end
 
       def color_enabled?
         Simulacrum.runner_options.color

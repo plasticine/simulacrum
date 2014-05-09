@@ -81,13 +81,13 @@ describe Simulacrum::CLI::Parser do
     end
   end
 
-  describe '--processes' do
-    it { subject.result.processes.should be_nil }
+  describe '--max-processes' do
+    it { subject.result.max_processes.should be_nil }
 
     context 'when the option is set' do
-      let(:option) { '--processes 5' }
+      let(:option) { '--max-processes 5' }
 
-      it { subject.result.processes.should == 5 }
+      it { subject.result.max_processes.should == 5 }
     end
   end
 end

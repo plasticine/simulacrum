@@ -133,11 +133,11 @@ module Simulacrum
         ENV['SELENIUM_REMOTE_URL']            = @tunnel.selenium_remote_url
         ENV['BS_DRIVER_NAME']                 = name
         ENV['SELENIUM_BROWSER']               = caps['browser']
-        ENV['SELENIUM_VERSION']               = caps['browser_version']
+        ENV['SELENIUM_VERSION']               = caps['browser_version'].to_s
         ENV['BS_AUTOMATE_OS']                 = caps['os']
-        ENV['BS_AUTOMATE_OS_VERSION']         = caps['os_version']
+        ENV['BS_AUTOMATE_OS_VERSION']         = caps['os_version'].to_s
         ENV['BS_AUTOMATE_RESOLUTION']         = caps['resolution']
-        ENV['BS_AUTOMATE_REQUIREWINDOWFOCUS'] = caps['requireWindowFocus']
+        ENV['BS_AUTOMATE_REQUIREWINDOWFOCUS'] = caps['requireWindowFocus'].to_s
         ENV['BS_AUTOMATE_PLATFORM']           = caps['platform']
         ENV['BS_AUTOMATE_DEVICE']             = caps['device']
         ENV['BS_AUTOMATE_DEVICEORIENTATION']  = caps['deviceOrientation']
@@ -157,9 +157,7 @@ module Simulacrum
       def app_ports
         @app_ports ||= begin
           if browsers.length
-            browsers.length.times.map do
-              find_available_port
-            end
+            browsers.length.times.map { find_available_port }
           else
             [find_available_port]
           end
