@@ -10,6 +10,7 @@ module Simulacrum
       def use
         register_driver
         configure_capybara
+        self
       end
 
       private

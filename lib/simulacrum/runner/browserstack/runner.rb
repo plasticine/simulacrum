@@ -41,16 +41,18 @@ module Simulacrum
         puts
         @results = Parallel.map_with_index(browsers, in_processes: processes) do |(name, caps), index|
           begin
-            ensure_available_remote_runner
+            # ensure_available_remote_runner
             configure_app_port(index)
             configure_environment(name, caps)
             configure_browser_setting(name)
+            configure_session_reset
             run
           rescue SystemExit
             exit 1
           end
         end
       ensure
+        puts
         stop_timer
       end
 
@@ -68,13 +70,19 @@ module Simulacrum
         end
       end
 
+      def configure_session_reset
+        RSpec.configuration.after do
+          Capybara.reset_sessions!
+        end
+      end
+
       def configure_rspec
         super
         RSpec.configuration.instance_variable_set(:@reporter, reporter)
       end
 
       def configure_driver
-        Simulacrum::Driver::BrowserstackDriver.use
+        @driver ||= Simulacrum::Driver::BrowserstackDriver.use
       end
 
       def reporter
@@ -90,7 +98,7 @@ module Simulacrum
       end
 
       def ensure_available_remote_runner
-        with_retries(max_tries: 10, base_sleep_seconds: 1, max_sleep_seconds: 5) do
+        with_retries(max_tries: 10, base_sleep_seconds: 1, max_sleep_seconds: 10) do
           remote_worker_available?
         end
       end
@@ -114,8 +122,9 @@ module Simulacrum
 
       def remote_worker_available?
         details = account_details
-        puts "#{details.parallel_sessions_running} - #{details.parallel_sessions_max_allowed}"
-        fail NoRemoteSessionsAvailable unless details.parallel_sessions_running < details.parallel_sessions_max_allowed
+        unless details.parallel_sessions_running < details.parallel_sessions_max_allowed
+          fail NoRemoteSessionsAvailable unless details.parallel_sessions_running < details.parallel_sessions_max_allowed
+        end
       end
 
       def start_timer
