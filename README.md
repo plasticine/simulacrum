@@ -24,6 +24,8 @@ It would be good to explain these opinions, the reason for them and why they are
 ## Setup
 Simulacrum requires Ruby 1.9.3 or later. To install, add this line to your Gemfile and run `bundle install`:
 
+Create a spec helper file for simulacrum — `simulacrum_helper.rb` — and throw this junk in it:
+
 ```ruby
 gem 'simulacrum'
 ```
@@ -49,11 +51,18 @@ end
 
 ## Usage
 
-Simulacrum provides a small DSL for configuring and managing UI tests from within Rspec. Basically it boils down to these three methods;
+```shell
+simulacrum --help
+```
+
+
+
+
+<!-- Simulacrum provides a small DSL for configuring and managing UI tests from within Rspec. Basically it boils down to these three methods;
 
 - `component`
 - `configure_browser`
-- `look_the_same`
+- `look_the_same` -->
 
 ***
 

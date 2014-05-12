@@ -8,12 +8,23 @@ module Simulacrum
     # or more other RSpec runs.
     class Summary < RSpec::Core::Formatters::BaseTextFormatter
       # TODO: Rename me, I'm really just a formatter anyway
-      # TODO: Also, should this just be an external gem...? Yes?
+      # TODO: Also, should this just be an external gem...? Prolly not?
       def initialize(results_set, start_time, end_time)
         super($stdout)
         @results_set = results_set
         @start_time = start_time
         @end_time = end_time
+      end
+
+      def dump_commands_to_rerun_failed_examples
+        return if failed_examples.empty?
+        output.puts
+        output.puts('Failed examples:')
+        output.puts
+
+        failed_examples.each do |example|
+          output.puts(failure_color("simulacrum --browser=#{example.metadata[:browser]} #{RSpec::Core::Metadata::relative_path(example.location)}") + ' ' + detail_color("# #{example.full_description}"))
+        end
       end
 
       def dump_summary
@@ -48,14 +59,16 @@ module Simulacrum
         summaries.map { |x| x[:pending_count] }.reduce(:+)
       end
 
-      def find_shared_group(example); end
+      def find_shared_group(example)
+      end
 
-      def group_and_parent_groups(example); end
+      def group_and_parent_groups(example)
+      end
 
       private
 
       def color_enabled?
-        true
+        Simulacrum.runner_options.color
       end
 
       def examples

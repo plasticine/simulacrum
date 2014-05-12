@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require_relative '../../../lib/simulacrum/component'
+require 'simulacrum/component'
 require 'ostruct'
 
 describe Simulacrum::Component do

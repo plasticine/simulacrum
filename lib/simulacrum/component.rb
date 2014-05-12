@@ -37,8 +37,8 @@ module Simulacrum
       File.exist?(diff_path)
     end
 
-    def acceptable_delta
-      options.acceptable_delta || Simulacrum.configuration.acceptable_delta
+    def delta_threshold
+      options.delta_threshold || Simulacrum.configuration.delta_threshold
     end
 
     def reference_path

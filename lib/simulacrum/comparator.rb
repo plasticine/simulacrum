@@ -58,7 +58,7 @@ module Simulacrum
     end
 
     def diff_delta_percent_is_acceptable
-      diff.delta < component.acceptable_delta
+      diff.delta < component.delta_threshold
     end
   end
 end

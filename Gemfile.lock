@@ -5,6 +5,7 @@ PATH
       capybara (~> 2.2.1)
       curb (~> 0.8.5)
       parallel (~> 1.0.0)
+      retries
       rmagick (~> 2.13.2)
       rspec (~> 2.14.1)
       selenium-webdriver (~> 2.41.0)
@@ -67,6 +68,7 @@ GEM
     rake (10.3.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    retries (0.0.5)
     rmagick (2.13.2)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
