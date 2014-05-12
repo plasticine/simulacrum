@@ -21,6 +21,8 @@ module Simulacrum
       attr_reader :app_ports
 
       def initialize
+        start_timer
+
         @username = Simulacrum.runner_options.username
         @apikey = Simulacrum.runner_options.apikey
         @app_ports = app_ports
@@ -28,7 +30,6 @@ module Simulacrum
 
         open_tunnel
         set_global_env
-        start_timer
         execute
         summarize
       ensure
@@ -36,6 +37,8 @@ module Simulacrum
       end
 
       def execute
+        puts "Using Browserstack runner with #{processes} remote workers"
+        puts
         @results = Parallel.map_with_index(browsers, in_processes: processes) do |(name, caps), index|
           begin
             ensure_available_remote_runner
@@ -87,12 +90,20 @@ module Simulacrum
       end
 
       def ensure_available_remote_runner
-        with_retries(max_tries: 10, base_sleep_seconds: 0.1, max_sleep_seconds: 5) do
+        with_retries(max_tries: 10, base_sleep_seconds: 1, max_sleep_seconds: 5) do
           remote_worker_available?
         end
       end
 
-      def plan_details
+      def account_details
+        response = perform_account_details_request
+        details = OpenStruct.new
+        details.parallel_sessions_running = response['parallel_sessions_running'].to_i
+        details.parallel_sessions_max_allowed = response['parallel_sessions_max_allowed'].to_i
+        details
+      end
+
+      def perform_account_details_request
         curl = Curl::Easy.new('https://www.browserstack.com/automate/plan.json')
         curl.http_auth_types = :basic
         curl.username = @username
@@ -102,10 +113,9 @@ module Simulacrum
       end
 
       def remote_worker_available?
-        plan = plan_details
-        sessions_running = plan['parallel_sessions_running'].to_i
-        sessions_max_allowed = plan['parallel_sessions_max_allowed'].to_i
-        fail NoRemoteSessionsAvailable unless sessions_running < sessions_max_allowed
+        details = account_details
+        puts "#{details.parallel_sessions_running} - #{details.parallel_sessions_max_allowed}"
+        fail NoRemoteSessionsAvailable unless details.parallel_sessions_running < details.parallel_sessions_max_allowed
       end
 
       def start_timer
@@ -147,7 +157,7 @@ module Simulacrum
       # rubocop:enable MethodLength
 
       def processes
-        Simulacrum.runner_options.max_processes
+        Simulacrum.runner_options.max_processes || 2
       end
 
       def set_global_env

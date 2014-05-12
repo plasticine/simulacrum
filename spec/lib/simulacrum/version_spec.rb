@@ -7,6 +7,6 @@ describe Simulacrum do
   end
 
   describe 'VERSION' do
-    it { Simulacrum::VERSION.should == '0.2.0' }
+    it { Simulacrum::VERSION.should == '0.3.0' }
   end
 end
