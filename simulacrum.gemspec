@@ -6,6 +6,8 @@ Gem::Specification.new do |gem|
   gem.name          = Simulacrum::PACKAGE
   gem.version       = Simulacrum::VERSION
   gem.platform      = Gem::Platform::RUBY
+  gem.required_ruby_version = ">= 1.9.3"
+
   gem.authors       = ['Justin Morris']
   gem.email         = ['desk@pixelbloom.com']
   gem.homepage      = 'https://github.com/plasticine/simulacrum'
@@ -24,13 +26,13 @@ Gem::Specification.new do |gem|
   gem.executables   = ['simulacrum']
   gem.has_rdoc      = false
 
-  gem.add_dependency 'capybara', '~> 2.3.0'
-  gem.add_dependency 'curb', '~> 0.8.5'
-  gem.add_dependency 'parallel', '~> 1.0.0'
+  gem.add_dependency 'capybara', ['~> 2.3.0']
+  gem.add_dependency 'curb', ['~> 0.8.5']
+  gem.add_dependency 'parallel', ['~> 1.0.0']
   gem.add_dependency 'retries'
-  gem.add_dependency 'rmagick', '~> 2.13.2'
-  gem.add_dependency 'rspec', '~> 2.14.1'
-  gem.add_dependency 'selenium-webdriver', '~> 2.42.0'
+  gem.add_dependency 'rmagick', ['~> 2.13.2']
+  gem.add_dependency 'rspec', ['~> 2.14.1']
+  gem.add_dependency 'selenium-webdriver', ['~> 2.41.0']
 
   gem.add_development_dependency 'cane'
   gem.add_development_dependency 'codeclimate-test-reporter'
