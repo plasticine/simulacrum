@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 module Simulacrum
   module Browserstack
     # The Browserstack API class wraps up functionality for talking to the

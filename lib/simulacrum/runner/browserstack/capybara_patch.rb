@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 module Capybara
   module Selenium
     # Monkey patch the Capybara Driver class to ensure that we can call `quit`
