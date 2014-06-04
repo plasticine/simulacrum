@@ -1,6 +1,8 @@
 # encoding: UTF-8
+require_relative './capybara_patch'
 require_relative './tunnel'
 require_relative './summary'
+require_relative './api'
 require_relative '../base'
 require 'simulacrum/driver/browserstack'
 require 'parallel'
@@ -26,14 +28,14 @@ module Simulacrum
         @username = Simulacrum.runner_options.username
         @apikey = Simulacrum.runner_options.apikey
         @app_ports = app_ports
+        @api = Simulacrum::Browserstack::API.new(@username, @apikey)
         @tunnel = Simulacrum::Browserstack::Tunnel.new(@username, @apikey, @app_ports)
 
-        open_tunnel
         set_global_env
         execute
         summarize
       ensure
-        @tunnel.close_tunnel if @tunnel
+        @tunnel.close if @tunnel
       end
 
       def execute
@@ -41,18 +43,20 @@ module Simulacrum
         puts
         @results = Parallel.map_with_index(browsers, in_processes: processes) do |(name, caps), index|
           begin
-            # ensure_available_remote_runner
+            ensure_available_remote_runner
             configure_app_port(index)
             configure_environment(name, caps)
             configure_browser_setting(name)
-            configure_session_reset
             run
           rescue SystemExit
             exit 1
+          rescue Selenium::WebDriver::Error::UnknownError
+            puts "Selenium::WebDriver::Error::UnknownError was raised"
+          ensure
+            Capybara.current_session.driver.browser.quit
           end
         end
       ensure
-        puts
         stop_timer
       end
 
@@ -70,19 +74,13 @@ module Simulacrum
         end
       end
 
-      def configure_session_reset
-        RSpec.configuration.after do
-          Capybara.reset_sessions!
-        end
-      end
-
       def configure_rspec
         super
         RSpec.configuration.instance_variable_set(:@reporter, reporter)
       end
 
       def configure_driver
-        @driver ||= Simulacrum::Driver::BrowserstackDriver.use
+        Simulacrum::Driver::BrowserstackDriver.use
       end
 
       def reporter
@@ -98,32 +96,16 @@ module Simulacrum
       end
 
       def ensure_available_remote_runner
-        with_retries(max_tries: 10, base_sleep_seconds: 1, max_sleep_seconds: 10) do
+        puts 'ensure_available_remote_runner'
+        with_retries(max_tries: 20, base_sleep_seconds: 0.5, max_sleep_seconds: 15) do
           remote_worker_available?
         end
       end
 
-      def account_details
-        response = perform_account_details_request
-        details = OpenStruct.new
-        details.parallel_sessions_running = response['parallel_sessions_running'].to_i
-        details.parallel_sessions_max_allowed = response['parallel_sessions_max_allowed'].to_i
-        details
-      end
-
-      def perform_account_details_request
-        curl = Curl::Easy.new('https://www.browserstack.com/automate/plan.json')
-        curl.http_auth_types = :basic
-        curl.username = @username
-        curl.password = @apikey
-        curl.perform
-        JSON.parse(curl.body_str)
-      end
-
       def remote_worker_available?
-        details = account_details
-        unless details.parallel_sessions_running < details.parallel_sessions_max_allowed
-          fail NoRemoteSessionsAvailable unless details.parallel_sessions_running < details.parallel_sessions_max_allowed
+        account_details = @api.account_details
+        unless account_details.sessions_running < account_details.sessions_allowed
+          fail NoRemoteSessionsAvailable
         end
       end
 
@@ -197,16 +179,12 @@ module Simulacrum
             browsers = browsers.select do |name, value|
               name == Simulacrum.runner_options.browser
             end if Simulacrum.runner_options.browser
+            puts browsers.inspect
             browsers
           else
             fail 'DERP!'
           end
         end
-      end
-
-      def open_tunnel
-        @tunnel.open_tunnel
-        sleep 0.1 until @tunnel.open?
       end
     end
   end

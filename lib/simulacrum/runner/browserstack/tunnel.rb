@@ -26,19 +26,21 @@ module Simulacrum
         @apikey = apikey
         @ports = ports
         @options = OpenStruct.new(DEFAULT_OPTIONS.clone.merge!(options))
+
+        open
       end
 
       def selenium_remote_url
         "http://#{@username}:#{@apikey}@hub.browserstack.com/wd/hub"
       end
 
-      def open_tunnel
+      def open
         ensure_browserstack_binary
         create_tunnel
         ensure_open
       end
 
-      def close_tunnel
+      def close
         kill
       end
 

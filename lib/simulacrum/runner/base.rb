@@ -12,7 +12,7 @@ module Simulacrum
       end
 
       def run
-        @driver ||= configure_driver
+        configure_driver
         configure_rspec
         run_rspec
       end
@@ -20,7 +20,7 @@ module Simulacrum
       private
 
       def configure_driver
-        @driver ||= Simulacrum::Driver::LocalDriver.use
+        Simulacrum::Driver::LocalDriver.use
       end
 
       def run_rspec

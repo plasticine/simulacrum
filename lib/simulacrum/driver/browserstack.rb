@@ -3,6 +3,7 @@ require 'simulacrum/driver/base'
 require 'capybara'
 require 'selenium-webdriver'
 require 'selenium/webdriver/remote/http/curb'
+require 'pry'
 
 module Simulacrum
   module Driver
@@ -29,7 +30,7 @@ module Simulacrum
         caps = Selenium::WebDriver::Remote::Capabilities.new
         caps['project']            = 'UI Regression Testing'
         caps['browserstack.local'] = true
-        caps['browserstack.debug'] = false
+        caps['browserstack.debug'] = true
         caps['browser']            = browser
         caps['browserName']        = browser_name
         caps['browser_version']    = browser_version
