@@ -2,8 +2,7 @@
 require 'simulacrum/driver/base'
 require 'capybara'
 require 'selenium-webdriver'
-require 'selenium/webdriver/remote/http/curb'
-require 'pry'
+# require 'selenium/webdriver/remote/http/curb'
 
 module Simulacrum
   module Driver
@@ -18,13 +17,13 @@ module Simulacrum
           browser: :remote,
           url: selenium_remote_url,
           desired_capabilities: capabilities,
-          http_client: http_client
+          # http_client: http_client
         }
       end
 
-      def http_client
-        Selenium::WebDriver::Remote::Http::Curb.new
-      end
+      # def http_client
+      #   Selenium::WebDriver::Remote::Http::Curb.new
+      # end
 
       def capabilities
         caps = Selenium::WebDriver::Remote::Capabilities.new
