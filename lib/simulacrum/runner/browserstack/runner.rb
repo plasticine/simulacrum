@@ -53,7 +53,7 @@ module Simulacrum
           rescue Selenium::WebDriver::Error::UnknownError
             puts "Selenium::WebDriver::Error::UnknownError was raised"
           ensure
-            Capybara.current_session.driver.browser.quit
+            quit_browser
           end
         end
       ensure
@@ -66,6 +66,14 @@ module Simulacrum
       end
 
       private
+
+      def quit_browser
+        begin
+          Capybara.current_session.driver.browser.quit
+        rescue Selenium::WebDriver::Error::UnknownError
+          puts "Selenium::WebDriver::Error::UnknownError was raised"
+        end
+      end
 
       def configure_browser_setting(name)
         RSpec.configuration.around do |example|
