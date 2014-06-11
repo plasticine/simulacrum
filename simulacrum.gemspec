@@ -30,9 +30,9 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'curb', ['~> 0.8.5']
   gem.add_dependency 'parallel', ['~> 1.0.0']
   gem.add_dependency 'retries'
-  gem.add_dependency 'rmagick', ['~> 2.13.2']
-  gem.add_dependency 'rspec', ['~> 2.14.1']
-  gem.add_dependency 'selenium-webdriver', ['~> 2.41.0']
+  gem.add_dependency 'rmagick', '~> 2.13.2'
+  gem.add_dependency 'rspec', ['~> 2.14.1', '~> 2.99.0']
+  gem.add_dependency 'selenium-webdriver', '~> 2.41.0'
 
   gem.add_development_dependency 'cane'
   gem.add_development_dependency 'codeclimate-test-reporter'

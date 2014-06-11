@@ -35,6 +35,7 @@ module Simulacrum
         execute
         summarize
       ensure
+        quit_browser
         @tunnel.close if @tunnel
       end
 
@@ -70,13 +71,17 @@ module Simulacrum
       def quit_browser
         Capybara.current_session.driver.browser.quit
       rescue Selenium::WebDriver::Error::UnknownError
-        puts 'Selenium::WebDriver::Error::UnknownError was raised'
+        puts 'Selenium::WebDriver::Error::UnknownError was raised in quit_browser'
       end
 
       def configure_browser_setting(name)
         RSpec.configuration.around do |example|
           example.metadata[:browser] = name
-          example.run
+          begin
+            example.run
+          rescue Selenium::WebDriver::Error::UnknownError
+            puts 'Selenium::WebDriver::Error::UnknownError was raised in configure_browser_setting'
+          end
         end
       end
 
@@ -102,7 +107,6 @@ module Simulacrum
       end
 
       def ensure_available_remote_runner
-        puts 'ensure_available_remote_runner'
         with_retries(max_tries: 20, base_sleep_seconds: 0.5, max_sleep_seconds: 15) do
           remote_worker_available?
         end

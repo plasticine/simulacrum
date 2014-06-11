@@ -13,7 +13,6 @@ module Capybara
         @browser.quit if @browser
       rescue Errno::ECONNREFUSED,
              Selenium::WebDriver::Error::UnknownError
-        puts 'Driver.quit Error'
         # Browser must have already gone
       ensure
         @browser = nil
