@@ -27,9 +27,9 @@ module Simulacrum
 
       def capabilities
         caps = Selenium::WebDriver::Remote::Capabilities.new
-        caps['project']            = 'UI Regression Testing'
+        caps['project']            = 'Simulacrum'
         caps['browserstack.local'] = true
-        caps['browserstack.debug'] = true
+        caps['browserstack.debug'] = false
         caps['browser']            = browser
         caps['browserName']        = browser_name
         caps['browser_version']    = browser_version
