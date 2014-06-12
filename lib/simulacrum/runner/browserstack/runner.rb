@@ -35,7 +35,6 @@ module Simulacrum
         execute
         summarize
       ensure
-        quit_browser
         @tunnel.close if @tunnel
       end
 
@@ -140,7 +139,6 @@ module Simulacrum
 
       # rubocop:disable MethodLength
       def configure_environment(name, caps)
-        # TODO: Make these ENV vars less sucky
         ENV['SELENIUM_REMOTE_URL']            = @tunnel.selenium_remote_url
         ENV['BS_DRIVER_NAME']                 = name
         ENV['SELENIUM_BROWSER']               = caps['browser']
@@ -189,9 +187,9 @@ module Simulacrum
             browsers = browsers.select do |name, value|
               name == Simulacrum.runner_options.browser
             end if Simulacrum.runner_options.browser
-            puts browsers.inspect
             browsers
           else
+            # TODO: Raise a better error...
             fail 'DERP!'
           end
         end
