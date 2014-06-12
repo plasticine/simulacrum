@@ -21,35 +21,35 @@ describe Simulacrum::CLI::Parser do
     let(:option) { '--velociraptors' }
 
     it 'handles invalid options by showing help' do
-      subject.output.should include('Usage:')
-      subject.result.should == false
+      expect(subject.output).to include('Usage:')
+      expect(subject.result).to eq(false)
     end
   end
 
   describe '--version' do
     let(:option) { '--version' }
 
-    it { subject.result.should == true }
-    it { subject.output.should include(Simulacrum::VERSION) }
+    it { expect(subject.result).to eq(true) }
+    it { expect(subject.output).to include(Simulacrum::VERSION) }
   end
 
   describe '--color' do
-    it { subject.result.color.should == false }
+    it { expect(subject.result.color).to eq(false) }
 
     context 'when the option is set' do
       let(:option) { '--color' }
 
-      it { subject.result.color.should == true }
+      it { expect(subject.result.color).to eq(true) }
     end
   end
 
   describe '--runner' do
-    it { subject.result.runner.should == :default }
+    it { expect(subject.result.runner).to eq(:default) }
 
     context 'when the option is set' do
       let(:option) { '--runner browserstack' }
 
-      it { subject.result.runner.should == :browserstack }
+      it { expect(subject.result.runner).to eq(:browserstack) }
     end
 
     context 'when the option is set to an invalid value' do
@@ -62,42 +62,42 @@ describe Simulacrum::CLI::Parser do
   end
 
   describe '--username' do
-    it { subject.result.username.should be_nil }
+    it { expect(subject.result.username).to be_nil }
 
     context 'when the option is set' do
       let(:option) { '--username justin' }
 
-      it { subject.result.username.should == 'justin' }
+      it { expect(subject.result.username).to eq('justin') }
     end
   end
 
   describe '--apikey' do
-    it { subject.result.apikey.should be_nil }
+    it { expect(subject.result.apikey).to be_nil }
 
     context 'when the option is set' do
       let(:option) { '--apikey 1234abcd' }
 
-      it { subject.result.apikey.should == '1234abcd' }
+      it { expect(subject.result.apikey).to eq('1234abcd') }
     end
   end
 
   describe '--max-processes' do
-    it { subject.result.max_processes.should be_nil }
+    it { expect(subject.result.max_processes).to be_nil }
 
     context 'when the option is set' do
       let(:option) { '--max-processes 5' }
 
-      it { subject.result.max_processes.should == 5 }
+      it { expect(subject.result.max_processes).to eq(5) }
     end
   end
 
   describe '--browser' do
-    it { subject.result.browser.should be_nil }
+    it { expect(subject.result.browser).to be_nil }
 
     context 'when the option is set' do
       let(:option) { '--browser firefox' }
 
-      it { subject.result.browser.should == :firefox }
+      it { expect(subject.result.browser).to eq(:firefox) }
     end
   end
 end

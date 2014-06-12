@@ -17,7 +17,7 @@ describe Simulacrum::Component do
   subject(:component) { described_class.new(name, options) }
 
   before(:each) do
-    Simulacrum.stub(:configuration) { configuration }
+    allow(Simulacrum).to receive(:configuration) { configuration }
   end
 
   describe '#render' do
@@ -32,14 +32,14 @@ describe Simulacrum::Component do
       configuration.reference_filename = reference_filename
     end
 
-    it { should == false }
+    it { is_expected.to eq(false) }
 
     context 'when a reference image exists' do
       before(:each) do
-        File.stub(:exist?).with("#{references_path}/#{name}/rack_test/#{reference_filename}.png") { true }
+        allow(File).to receive(:exist?).with("#{references_path}/#{name}/rack_test/#{reference_filename}.png") { true }
       end
 
-      it { should == true }
+      it { is_expected.to eq(true) }
     end
   end
 
@@ -51,14 +51,14 @@ describe Simulacrum::Component do
       configuration.candidate_filename = 'candidate'
     end
 
-    it { should == false }
+    it { is_expected.to eq(false) }
 
     context 'when a candidate image exists' do
       before(:each) do
-        File.stub(:exist?).with("#{references_path}/#{name}/rack_test/#{candidate_filename}.png") { true }
+        allow(File).to receive(:exist?).with("#{references_path}/#{name}/rack_test/#{candidate_filename}.png") { true }
       end
 
-      it { should == true }
+      it { is_expected.to eq(true) }
     end
   end
 
@@ -70,14 +70,14 @@ describe Simulacrum::Component do
       configuration.diff_filename = diff_filename
     end
 
-    it { should == false }
+    it { is_expected.to eq(false) }
 
     context 'when a diff image exists' do
       before(:each) do
-        File.stub(:exist?).with("#{references_path}/#{name}/rack_test/#{diff_filename}.png") { true }
+        allow(File).to receive(:exist?).with("#{references_path}/#{name}/rack_test/#{diff_filename}.png") { true }
       end
 
-      it { should == true }
+      it { is_expected.to eq(true) }
     end
   end
 

@@ -4,7 +4,6 @@ require 'use_codeclimate'
 require 'use_simplecov'
 require 'use_coveralls' if ENV['COVERAGE']
 require 'bundler/setup'
-require 'rspec/autorun'
 require 'simulacrum'
 
 RSpec.configure do |config|
