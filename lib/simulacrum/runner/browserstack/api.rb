@@ -1,4 +1,6 @@
 # encoding: UTF-8
+require 'uri'
+require 'net/https'
 
 module Simulacrum
   module Browserstack
@@ -21,12 +23,19 @@ module Simulacrum
       private
 
       def request(url)
-        curl = Curl::Easy.new(url)
-        curl.http_auth_types = :basic
-        curl.username = @username
-        curl.password = @apikey
-        curl.perform
-        JSON.parse(curl.body_str)
+        uri = parse_url(url)
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.read_timeout = 30
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        request = Net::HTTP::Get.new(uri.request_uri)
+        request.basic_auth(@username, @apikey)
+        response = http.request(request)
+        JSON.parse(response.body)
+      end
+
+      def parse_url(url)
+        URI.parse(url)
       end
     end
   end

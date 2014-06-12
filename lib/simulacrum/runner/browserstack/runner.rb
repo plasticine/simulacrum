@@ -158,7 +158,7 @@ module Simulacrum
       # rubocop:enable MethodLength
 
       def processes
-        Simulacrum.runner_options.max_processes || 2
+        Simulacrum.runner_options.max_processes || @api.account_details.sessions_allowed
       end
 
       def set_global_env
