@@ -6,7 +6,6 @@ require_relative './api'
 require_relative '../base'
 require 'simulacrum/driver/browserstack'
 require 'parallel'
-require 'curb'
 require 'yaml'
 require 'retries'
 

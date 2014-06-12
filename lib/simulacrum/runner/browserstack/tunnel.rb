@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'timeout'
 require 'fileutils'
+require 'English'
 
 module Simulacrum
   module Browserstack
@@ -40,7 +41,7 @@ module Simulacrum
 
       def binary_path
         binary_path = `which BrowserStackLocal`.strip
-        if $?.success? && File.executable?(binary_path)
+        if $CHILD_STATUS.success? && File.executable?(binary_path)
           binary_path
         else
           fail 'BrowserStackLocal binary not found or not executable'
@@ -76,7 +77,7 @@ module Simulacrum
           sleep 0.1 until tunnel_open?
         end
         @open = true
-        puts "Browserstack local tunnel opened."
+        puts 'Browserstack local tunnel opened.'
       rescue Timeout::Error
         exit(1)
       end
