@@ -113,7 +113,7 @@ module Simulacrum
 
         parser.on('--browser [BROWSER]',
                   'Browser configuration to use') do |browser|
-          options['browser'] = browser.to_s
+          options['browser'] = browser.to_sym
         end
       end
 
@@ -124,7 +124,7 @@ module Simulacrum
                   '--[no-]color',
                   '--[no-]colour',
                   'Enable color in the output.') do |value|
-          options.color = value
+          options['color'] = value
         end
       end
 
