@@ -33,7 +33,7 @@ module Simulacrum
       def parse(args, _return = true)
         parser.parse!(args)
         options['files'] = args if args.size > 0
-        OpenStruct.new(get_default_options.merge(options))
+        OpenStruct.new(default_options.merge(options))
       rescue OptionParser::InvalidOption,
              OptionParser::AmbiguousOption
         args = %w(--help)
@@ -45,11 +45,9 @@ module Simulacrum
 
       private
 
-      def get_default_options
-        read_options_from_file.merge({
-          username: ENV['SIMULACRUM_USERNAME'],
-          apikey: ENV['SIMULACRUM_APIKEY']
-        })
+      def default_options
+        read_options_from_file.merge(username: ENV['SIMULACRUM_USERNAME'],
+                                     apikey: ENV['SIMULACRUM_APIKEY'])
       end
 
       def read_options_from_file
@@ -132,7 +130,7 @@ module Simulacrum
 
       def options
         @options ||= begin
-          options = Hash.new
+          options = {}
           options['files'] = ['spec/ui']
           options['color'] = false
           options
