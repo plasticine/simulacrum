@@ -23,19 +23,28 @@ module Simulacrum
       private
 
       def request(url)
-        uri = parse_url(url)
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.read_timeout = 30
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-        request = Net::HTTP::Get.new(uri.request_uri)
-        request.basic_auth(@username, @apikey)
-        response = http.request(request)
+        response = make_request(url)
         JSON.parse(response.body)
       end
 
       def parse_url(url)
         URI.parse(url)
+      end
+
+      def prepare_http(uri)
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.read_timeout = 30
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        http
+      end
+
+      def make_request
+        uri = parse_url(url)
+        http = prepare_http(uri)
+        request = Net::HTTP::Get.new(uri.request_uri)
+        request.basic_auth(@username, @apikey)
+        http.request(request)
       end
     end
   end
