@@ -39,7 +39,7 @@ module Simulacrum
         http
       end
 
-      def make_request
+      def make_request(url)
         uri = parse_url(url)
         http = prepare_http(uri)
         request = Net::HTTP::Get.new(uri.request_uri)

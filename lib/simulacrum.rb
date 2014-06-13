@@ -8,6 +8,8 @@ require_relative './simulacrum/runner'
 
 # Gem module
 module Simulacrum
+  CONFIG_FILE = './.simulacrum.yml'
+
   @driver = nil
   @components = {}
   @current_browser = nil
@@ -69,9 +71,9 @@ module Simulacrum
 
   def config_file_path
     if defined? Rails
-      Rails.root.join('.simulacrum.yml')
+      Rails.root.join(CONFIG_FILE)
     else
-      '.simulacrum.yml'
+      CONFIG_FILE
     end
   end
   module_function :config_file_path

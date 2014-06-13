@@ -29,7 +29,6 @@ module Simulacrum
 
       def configure_rspec
         RSpec.configuration.color = Simulacrum.runner_options.color
-        RSpec.configuration.color_enabled = Simulacrum.runner_options.color
         RSpec.configuration.tty = true
         RSpec.configuration.pattern = '**/*_spec.rb'
         RSpec.configuration.profile_examples = false
