@@ -32,8 +32,8 @@ module Simulacrum
 
       def parse(args, _return = true)
         parser.parse!(args)
-        options.files = args if args.size > 0
-        options
+        options['files'] = args if args.size > 0
+        OpenStruct.new(default_options.merge(options))
       rescue OptionParser::InvalidOption,
              OptionParser::AmbiguousOption
         args = %w(--help)
@@ -44,6 +44,26 @@ module Simulacrum
       end
 
       private
+
+      def default_options
+        read_options_from_file.merge(username: ENV['SIMULACRUM_USERNAME'],
+                                     apikey: ENV['SIMULACRUM_APIKEY'])
+      end
+
+      def read_options_from_file
+        if Simulacrum.config_file?
+          filter_file_options(Simulacrum.config_file)
+        else
+          {}
+        end
+      end
+
+      def filter_file_options(file_options)
+        file_options.tap do |hash|
+          hash.delete('username')
+          hash.delete('apikey')
+        end
+      end
 
       def add_banner
         parser.banner = 'Usage: simulacrum [options] [files or directories]'
@@ -70,30 +90,30 @@ module Simulacrum
 
       def add_runner_options
         parser.on('--runner [RUNNER]',
-                  [:default, :browserstack],
-                  'Runner to use for executing specs (local, browserstack).') do |runner|
-          options.runner = runner
+                  [:browserstack],
+                  'Runner to use for executing specs (browserstack).') do |runner|
+          options['runner'] = runner
         end
 
         parser.on('--username [USERNAME]',
                   'Username for authenticating when using the Browserstack runner.') do |username|
-          options.username = username
+          options['username'] = username
         end
 
         parser.on('--apikey [APIKEY]',
                   'API key for authenticating when using the Browserstack runner.') do |apikey|
-          options.apikey = apikey
+          options['apikey'] = apikey
         end
 
         parser.on('--max-processes [N]',
                   Integer,
                   'Number of parallel proceses the runner should use.') do |max_processes|
-          options.max_processes = max_processes
+          options['max_processes'] = max_processes.to_i
         end
 
         parser.on('--browser [BROWSER]',
                   'Browser configuration to use') do |browser|
-          options.browser = browser.to_sym
+          options['browser'] = browser.to_sym
         end
       end
 
@@ -104,16 +124,15 @@ module Simulacrum
                   '--[no-]color',
                   '--[no-]colour',
                   'Enable color in the output.') do |value|
-          options.color = value
+          options['color'] = value
         end
       end
 
       def options
         @options ||= begin
-          options = OpenStruct.new
-          options.files = ['spec/ui']
-          options.color = false
-          options.runner = :default
+          options = {}
+          options['files'] = ['spec/ui']
+          options['color'] = false
           options
         end
       end

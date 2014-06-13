@@ -7,9 +7,9 @@ module Simulacrum
   module Runner
     def run
       case Simulacrum.runner_options.runner
-      when :default
+      when nil
         Simulacrum::Runner::Base.new
-      when :browserstack
+      when 'browserstack'
         Simulacrum::Runner::BrowserstackRunner.new
       end
     end

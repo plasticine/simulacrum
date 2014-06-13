@@ -44,7 +44,7 @@ describe Simulacrum::CLI::Parser do
   end
 
   describe '--runner' do
-    it { expect(subject.result.runner).to eq(:default) }
+    it { expect(subject.result.runner).to be_nil }
 
     context 'when the option is set' do
       let(:option) { '--runner browserstack' }

@@ -164,7 +164,7 @@ module Simulacrum
 
       def app_ports
         @app_ports ||= begin
-          if browsers.length
+          if browsers.any?
             browsers.length.times.map { find_available_port }
           else
             [find_available_port]
