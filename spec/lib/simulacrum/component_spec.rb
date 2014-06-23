@@ -3,40 +3,68 @@ require 'simulacrum/component'
 require 'ostruct'
 
 describe Simulacrum::Component do
-  let(:name) { 'My Component' }
-  let(:references_path) { 'references_path' }
+  let(:name) { 'MyComponent' }
+  let(:references_path) { 'references' }
+  let(:configuration) { OpenStruct.new references_path: references_path }
   let(:options) do
-    Struct.new(:url).new('http://localhost')
+    options = OpenStruct.new
+    options.url = 'http://localhost'
+    options
   end
-  let(:configuration) do
-    configuration = OpenStruct.new
-    configuration.references_path = references_path
-    configuration
-  end
+  let(:renderer) { double('Simulacrum::Renderer') }
 
   subject(:component) { described_class.new(name, options) }
 
-  before(:each) do
+  before do
     allow(Simulacrum).to receive(:configuration) { configuration }
+    expect(Simulacrum::Renderer).to receive(:new).with(options.url) { renderer }
   end
 
   describe '#render' do
-    pending
+    subject { component.render }
+
+    before do
+      configuration.candidate_filename = 'candidate'
+      expect(FileUtils).to receive(:mkdir_p).with('references/MyComponent/rack_test')
+      expect(renderer).to receive(:render) { '/tmp/rendered_component.png' }
+      expect(FileUtils).to receive(:mv).with('/tmp/rendered_component.png', 'references/MyComponent/rack_test/candidate.png')
+      expect(renderer).to receive(:cleanup)
+    end
+
+    it { is_expected.to eq true }
+
+    describe 'when a selector is set the candidate is cropped' do
+      let(:capture_selector) { '.widget' }
+      let(:images) { double }
+      let(:image) { double('Magick::Image') }
+      let(:selector_bounds) { [0, 0, 100, 100] }
+
+      before do
+        options.capture_selector = capture_selector
+        expect(Magick::Image).to receive(:read).with('references/MyComponent/rack_test/candidate.png') { images }
+        expect(images).to receive(:first) { image }
+        expect(renderer).to receive(:get_bounds_for_selector).with(capture_selector) { selector_bounds }
+        expect(image).to receive(:crop!).with(*selector_bounds)
+        expect(image).to receive(:write).with('references/MyComponent/rack_test/candidate.png')
+      end
+
+      it { is_expected.to eq true }
+    end
   end
 
   describe '#reference?' do
     let(:reference_filename) { 'reference' }
     subject { component.reference? }
 
-    before(:each) do
+    before do
       configuration.reference_filename = reference_filename
     end
 
     it { is_expected.to eq(false) }
 
     context 'when a reference image exists' do
-      before(:each) do
-        allow(File).to receive(:exist?).with("#{references_path}/#{name}/rack_test/#{reference_filename}.png") { true }
+      before do
+        expect(File).to receive(:exist?).with('references/MyComponent/rack_test/reference.png') { true }
       end
 
       it { is_expected.to eq(true) }
@@ -55,7 +83,7 @@ describe Simulacrum::Component do
 
     context 'when a candidate image exists' do
       before(:each) do
-        allow(File).to receive(:exist?).with("#{references_path}/#{name}/rack_test/#{candidate_filename}.png") { true }
+        allow(File).to receive(:exist?).with('references/MyComponent/rack_test/candidate.png') { true }
       end
 
       it { is_expected.to eq(true) }
@@ -74,34 +102,104 @@ describe Simulacrum::Component do
 
     context 'when a diff image exists' do
       before(:each) do
-        allow(File).to receive(:exist?).with("#{references_path}/#{name}/rack_test/#{diff_filename}.png") { true }
+        expect(File).to receive(:exist?).with('references/MyComponent/rack_test/diff.png') { true }
       end
 
       it { is_expected.to eq(true) }
     end
   end
 
-  describe '#acceptable_delta' do
+  describe '#delta_threshold' do
+    subject { component.delta_threshold }
 
+    let(:configuration) { OpenStruct.new delta_threshold: 99 }
+
+    it { is_expected.to eq(99) }
+
+    context 'when the delta_threshold option has been passed in' do
+      let(:options) { Struct.new(:url, :delta_threshold).new('http://localhost', 1) }
+
+      it 'uses the option value' do
+        is_expected.to eq(1)
+      end
+    end
   end
 
   describe '#reference_path' do
+    subject { component.reference_path }
 
+    before do
+      configuration.reference_filename = 'reference'
+    end
+
+    it { is_expected.to eq('references/MyComponent/rack_test/reference.png') }
   end
 
   describe '#candidate_path' do
+    subject { component.candidate_path }
 
+    before do
+      configuration.candidate_filename = 'candidate'
+    end
+
+    it { is_expected.to eq('references/MyComponent/rack_test/candidate.png') }
   end
 
   describe '#diff_path' do
+    subject { component.diff_path }
 
+    before do
+      configuration.diff_filename = 'diff'
+    end
+
+    it { is_expected.to eq('references/MyComponent/rack_test/diff.png') }
   end
 
   describe '#remove_candidate' do
+    subject { component.remove_candidate }
 
+    before do
+      expect(File).to receive(:exist?) { has_candidate }
+    end
+
+    context 'when a candidate exists' do
+      let(:has_candidate) { true }
+
+      before do
+        expect(FileUtils).to receive(:rm)
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when there is no candidate exists' do
+      let(:has_candidate) { false }
+
+      it { is_expected.to be_nil }
+    end
   end
 
   describe '#remove_diff' do
+    subject { component.remove_diff }
 
+    before do
+      expect(File).to receive(:exist?) { has_diff }
+    end
+
+    context 'when a diff exists' do
+      let(:has_diff) { true }
+
+      before do
+        expect(FileUtils).to receive(:rm)
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when there is no diff exists' do
+      let(:has_diff) { false }
+
+      it { is_expected.to be_nil }
+    end
   end
 end

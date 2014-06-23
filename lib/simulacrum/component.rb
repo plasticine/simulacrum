@@ -19,8 +19,10 @@ module Simulacrum
 
     def render
       ensure_example_path
-      save_candidate(@renderer.render)
+      tmp_path = @renderer.render
+      save_candidate(tmp_path)
       crop_candidate_to_selector
+      true
     ensure
       cleanup
     end
@@ -38,20 +40,24 @@ module Simulacrum
     end
 
     def delta_threshold
+      # TODO: These should probably be `configuration.defaults....`
       options.delta_threshold || Simulacrum.configuration.delta_threshold
     end
 
     def reference_path
+      # TODO: These should probably be `configuration.defaults....`
       filename = Simulacrum.configuration.reference_filename
       File.join(root_path, "#{filename}.png")
     end
 
     def candidate_path
+      # TODO: These should probably be `configuration.defaults....`
       filename = Simulacrum.configuration.candidate_filename
       File.join(root_path, "#{filename}.png")
     end
 
     def diff_path
+      # TODO: These should probably be `configuration.defaults....`
       filename = Simulacrum.configuration.diff_filename
       File.join(root_path, "#{filename}.png")
     end
