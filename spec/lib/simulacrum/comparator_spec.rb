@@ -8,10 +8,12 @@ describe Simulacrum::Comparator do
   let(:candidate_path) { '/candidate_path' }
   let(:diff_path) { '/diff_path' }
   let(:delta_threshold) { 0 }
-  let(:component) { double(reference_path: reference_path,
-                           candidate_path: candidate_path,
-                           diff_path: diff_path,
-                           delta_threshold: delta_threshold) }
+  let(:component) do
+    double(reference_path: reference_path,
+           candidate_path: candidate_path,
+           diff_path: diff_path,
+           delta_threshold: delta_threshold)
+  end
 
   describe '#initialize' do
     subject { described_class.new(component) }
