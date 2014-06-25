@@ -5,6 +5,7 @@ require 'ostruct'
 
 describe Simulacrum::Component do
   let(:name) { 'MyComponent' }
+  let(:driver_name) { 'MyDriver' }
   let(:references_path) { 'references' }
   let(:configuration) { OpenStruct.new references_path: references_path }
   let(:options) do
@@ -18,6 +19,7 @@ describe Simulacrum::Component do
 
   before do
     allow(Simulacrum).to receive(:configuration) { configuration }
+    allow(Capybara).to receive(:current_driver) { driver_name }
     expect(Simulacrum::Renderer).to receive(:new).with(options.url) { renderer }
   end
 
@@ -26,9 +28,9 @@ describe Simulacrum::Component do
 
     before do
       configuration.candidate_filename = 'candidate'
-      expect(FileUtils).to receive(:mkdir_p).with('references/MyComponent/rack_test')
+      expect(FileUtils).to receive(:mkdir_p).with('references/MyComponent/MyDriver')
       expect(renderer).to receive(:render) { '/tmp/rendered_component.png' }
-      expect(FileUtils).to receive(:mv).with('/tmp/rendered_component.png', 'references/MyComponent/rack_test/candidate.png')
+      expect(FileUtils).to receive(:mv).with('/tmp/rendered_component.png', 'references/MyComponent/MyDriver/candidate.png')
       expect(renderer).to receive(:cleanup)
     end
 
@@ -42,11 +44,11 @@ describe Simulacrum::Component do
 
       before do
         options.capture_selector = capture_selector
-        expect(Magick::Image).to receive(:read).with('references/MyComponent/rack_test/candidate.png') { images }
+        expect(Magick::Image).to receive(:read).with('references/MyComponent/MyDriver/candidate.png') { images }
         expect(images).to receive(:first) { image }
         expect(renderer).to receive(:get_bounds_for_selector).with(capture_selector) { selector_bounds }
         expect(image).to receive(:crop!).with(*selector_bounds)
-        expect(image).to receive(:write).with('references/MyComponent/rack_test/candidate.png')
+        expect(image).to receive(:write).with('references/MyComponent/MyDriver/candidate.png')
       end
 
       it { is_expected.to eq true }
@@ -65,7 +67,7 @@ describe Simulacrum::Component do
 
     context 'when a reference image exists' do
       before do
-        expect(File).to receive(:exist?).with('references/MyComponent/rack_test/reference.png') { true }
+        expect(File).to receive(:exist?).with('references/MyComponent/MyDriver/reference.png') { true }
       end
 
       it { is_expected.to eq(true) }
@@ -84,7 +86,7 @@ describe Simulacrum::Component do
 
     context 'when a candidate image exists' do
       before(:each) do
-        allow(File).to receive(:exist?).with('references/MyComponent/rack_test/candidate.png') { true }
+        allow(File).to receive(:exist?).with('references/MyComponent/MyDriver/candidate.png') { true }
       end
 
       it { is_expected.to eq(true) }
@@ -103,7 +105,7 @@ describe Simulacrum::Component do
 
     context 'when a diff image exists' do
       before(:each) do
-        expect(File).to receive(:exist?).with('references/MyComponent/rack_test/diff.png') { true }
+        expect(File).to receive(:exist?).with('references/MyComponent/MyDriver/diff.png') { true }
       end
 
       it { is_expected.to eq(true) }
@@ -133,7 +135,7 @@ describe Simulacrum::Component do
       configuration.reference_filename = 'reference'
     end
 
-    it { is_expected.to eq('references/MyComponent/rack_test/reference.png') }
+    it { is_expected.to eq('references/MyComponent/MyDriver/reference.png') }
   end
 
   describe '#candidate_path' do
@@ -143,7 +145,7 @@ describe Simulacrum::Component do
       configuration.candidate_filename = 'candidate'
     end
 
-    it { is_expected.to eq('references/MyComponent/rack_test/candidate.png') }
+    it { is_expected.to eq('references/MyComponent/MyDriver/candidate.png') }
   end
 
   describe '#diff_path' do
@@ -153,7 +155,7 @@ describe Simulacrum::Component do
       configuration.diff_filename = 'diff'
     end
 
-    it { is_expected.to eq('references/MyComponent/rack_test/diff.png') }
+    it { is_expected.to eq('references/MyComponent/MyDriver/diff.png') }
   end
 
   describe '#remove_candidate' do

@@ -9,7 +9,7 @@ module Simulacrum
   # defined in a test suite
   class Component
     attr_accessor :options
-    attr_reader :name, :browser
+    attr_reader :name
 
     def initialize(name, options = {})
       @name = name
