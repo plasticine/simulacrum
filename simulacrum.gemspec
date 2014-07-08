@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.name          = Simulacrum::PACKAGE
   gem.version       = Simulacrum::VERSION
   gem.platform      = Gem::Platform::RUBY
-  gem.required_ruby_version = ">= 1.9.3"
+  gem.required_ruby_version = '>= 1.9.3'
 
   gem.authors       = ['Justin Morris']
   gem.email         = ['desk@pixelbloom.com']
@@ -21,7 +21,7 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = '>= 1.9.3'
   gem.files         = `git ls-files`.split("\n")
-  gem.test_files    = Dir["spec/**/*"]
+  gem.test_files    = Dir['spec/**/*']
   gem.require_paths = ['lib']
   gem.executables   = ['simulacrum']
   gem.has_rdoc      = false

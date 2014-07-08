@@ -9,7 +9,7 @@ module Simulacrum
       case Simulacrum.runner_options.runner
       when nil
         Simulacrum::Runner::Base.new
-      when 'browserstack'
+      when :browserstack
         Simulacrum::Runner::BrowserstackRunner.new
       end
     end

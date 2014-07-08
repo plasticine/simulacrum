@@ -1,11 +1,13 @@
 # Simulacrum Example App
 
-Run the web server;
+Serve some files;
 
-1. `bundle install`
-2. `cd ./public`
-3. `python -m SimpleHTTPServer 8000`
+```
+./script/start
+```
 
-Then in a new terminal window;
+Then in a new terminal window:
 
-2. `BROWSERSTACK_USERNAME=yourusername BROWSERSTACK_APIKEY=yourapikey rake simulacrum:spec`
+```
+simulacrum
+```

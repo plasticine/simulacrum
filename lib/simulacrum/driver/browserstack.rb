@@ -29,7 +29,7 @@ module Simulacrum
         caps = Selenium::WebDriver::Remote::Capabilities.new
         caps['project']            = 'Simulacrum'
         caps['browserstack.local'] = true
-        caps['browserstack.debug'] = false
+        caps['browserstack.debug'] = true
         caps['browser']            = browser
         caps['browserName']        = browser_name
         caps['browser_version']    = browser_version
