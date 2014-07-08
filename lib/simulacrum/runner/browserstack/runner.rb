@@ -49,8 +49,8 @@ module Simulacrum
             run
           rescue SystemExit
             exit 1
-          rescue Selenium::WebDriver::Error::UnknownError
-            puts 'Selenium::WebDriver::Error::UnknownError was raised'
+          # rescue Selenium::WebDriver::Error::UnknownError
+          #   puts 'Selenium::WebDriver::Error::UnknownError was raised'
           ensure
             quit_browser
           end
@@ -68,8 +68,8 @@ module Simulacrum
 
       def quit_browser
         Capybara.current_session.driver.browser.quit
-      rescue Selenium::WebDriver::Error::UnknownError
-        puts 'Selenium::WebDriver::Error::UnknownError was raised in quit_browser'
+      # rescue Selenium::WebDriver::Error::UnknownError
+      #   puts 'Selenium::WebDriver::Error::UnknownError was raised in quit_browser'
       end
 
       def configure_browser_setting(name)
@@ -77,8 +77,8 @@ module Simulacrum
           example.metadata[:browser] = name
           begin
             example.run
-          rescue Selenium::WebDriver::Error::UnknownError
-            puts 'Selenium::WebDriver::Error::UnknownError was raised in configure_browser_setting'
+          # rescue Selenium::WebDriver::Error::UnknownError
+          #   puts 'Selenium::WebDriver::Error::UnknownError was raised in configure_browser_setting'
           end
         end
       end

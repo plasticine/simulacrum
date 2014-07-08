@@ -6,5 +6,5 @@ describe 'My Button' do
     options.url = '/button.html'
   end
 
-  it { should look_the_same }
+  it { is_expected.to look_the_same }
 end
