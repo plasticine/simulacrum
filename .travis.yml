@@ -17,3 +17,6 @@ matrix:
       env: COVERAGE=true
   allow_failures:
     - rvm: ruby-head
+gemfile:
+  - gemfiles/rspec_2.gemfile
+  - gemfiles/rspec_3.gemfile
