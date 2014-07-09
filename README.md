@@ -1,6 +1,10 @@
 ## Simulacrum
 
-[![Build Status](https://travis-ci.org/plasticine/simulacrum.svg)](https://travis-ci.org/plasticine/simulacrum) [![Code Climate](https://codeclimate.com/github/plasticine/simulacrum/coverage.png)](https://codeclimate.com/github/plasticine/simulacrum) [![Code Climate](https://codeclimate.com/github/plasticine/simulacrum.png)](https://codeclimate.com/github/plasticine/simulacrum) [![Dependency Status](https://gemnasium.com/plasticine/simulacrum.svg)](https://gemnasium.com/plasticine/simulacrum) [![Gem Version](https://badge.fury.io/rb/simulacrum.svg)](http://badge.fury.io/rb/simulacrum)
+[![Build Status](https://travis-ci.org/plasticine/simulacrum.svg)][travis]
+[![Code Climate](https://codeclimate.com/github/plasticine/simulacrum/coverage.png)][codeclimate]
+[![Code Climate](https://codeclimate.com/github/plasticine/simulacrum.png)][codeclimate]
+[![Dependency Status](https://gemnasium.com/plasticine/simulacrum.svg)][gemnasium]
+[![Gem Version](https://badge.fury.io/rb/simulacrum.svg)][gem_version]
 
 Simulacrum is an opinionated UI component regression testing tool built to be tightly integrated with [RSpec], [Capybara], [Selenium Webdriver] & [Browserstack].
 
@@ -71,11 +75,13 @@ simulacrum --help
 - [Huxley]
 - [Green Onion]
 
-
-
-[Huxley]: 				https://github.com/facebook/huxley
-[Green Onion]:  		http://intridea.github.io/green_onion
-[Browserstack]:         http://www.browserstack.com
-[RSpec]:                http://rspec.info
-[Capybara]:             https://github.com/jnicklas/capybara
-[Selenium Webdriver]:   http://docs.seleniumhq.org/projects/webdriver/
+[Huxley]: 				    https://github.com/facebook/huxley
+[Green Onion]:  		  http://intridea.github.io/green_onion
+[Browserstack]:       http://www.browserstack.com
+[RSpec]:              http://rspec.info
+[Capybara]:           https://github.com/jnicklas/capybara
+[Selenium Webdriver]: http://docs.seleniumhq.org/projects/webdriver/
+[codeclimate]:        https://codeclimate.com/github/plasticine/simulacrum
+[travis]:             https://travis-ci.org/plasticine/simulacrum
+[gemnasium]:          https://gemnasium.com/plasticine/simulacrum
+[gem_version]:        http://badge.fury.io/rb/simulacrum
