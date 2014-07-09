@@ -1,10 +1,10 @@
 ## Simulacrum
 
-[![Build Status](https://travis-ci.org/plasticine/simulacrum.svg)][travis]
-[![Code Climate](https://codeclimate.com/github/plasticine/simulacrum/coverage.png)][codeclimate]
-[![Code Climate](https://codeclimate.com/github/plasticine/simulacrum.png)][codeclimate]
-[![Dependency Status](https://gemnasium.com/plasticine/simulacrum.svg)][gemnasium]
-[![Gem Version](https://badge.fury.io/rb/simulacrum.svg)][gem_version]
+[![Build Status](http://img.shields.io/travis/plasticine/simulacrum.svg?style=flat)][travis]
+[![Code Climate](http://img.shields.io/codeclimate/github/plasticine/simulacrum.svg?style=flat)][codeclimate]
+[![Code Climate](http://img.shields.io/codeclimate/coverage/github/plasticine/simulacrum.svg?style=flat)][codeclimate]
+[![Dependency Status](http://img.shields.io/gemnasium/plasticine/simulacrum.svg?style=flat)][gemnasium]
+[![Gem Version](http://img.shields.io/gem/v/simulacrum.svg?style=flat)][gem_version]
 
 Simulacrum is an opinionated UI component regression testing tool built to be tightly integrated with [RSpec], [Capybara], [Selenium Webdriver] & [Browserstack].
 
@@ -72,11 +72,12 @@ simulacrum --help
 
 #### Inspiration / Similar tools
 
-- [Huxley]
-- [Green Onion]
+- Huxley
+- Green Onion
 
-[Huxley]: 				    https://github.com/facebook/huxley
-[Green Onion]:  		  http://intridea.github.io/green_onion
+
+[huxley]: 			  https://github.com/facebook/huxley
+[green_onion]:  		  http://intridea.github.io/green_onion
 [Browserstack]:       http://www.browserstack.com
 [RSpec]:              http://rspec.info
 [Capybara]:           https://github.com/jnicklas/capybara
