@@ -7,6 +7,8 @@ module Simulacrum
   module Runner
     # Base Runner class for running RSpec in parallel.
     class Base
+      attr_reader :exit_code
+
       def initialize
         run
       end
@@ -14,7 +16,7 @@ module Simulacrum
       def run
         configure_driver
         configure_rspec
-        run_rspec
+        @exit_code = run_rspec
       end
 
       private

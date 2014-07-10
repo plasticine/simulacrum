@@ -9,6 +9,7 @@ bundler_args: --binstubs
 script:
   - script/spec
 addons:
+  sauce_connect: true
   code_climate:
     repo_token: e5d708da3fc981c10c3d7f95725436b02a0577d21e7ef84514e82057bf2559f0
 matrix:
@@ -20,3 +21,11 @@ matrix:
 gemfile:
   - gemfiles/rspec_2.gemfile
   - gemfiles/rspec_3.gemfile
+env:
+  global:
+    - AUTOMATE_PROJECT="$TRAVIS_REPO_SLUG"
+    - AUTOMATE_BUILD="Travis build No. $TRAVIS_BUILD_NUMBER for $TRAVIS_REPO_SLUG"
+    - secure: I3cJCwxNLnMsszfwZJNKLhEiseXi2aoz/2PmMa+6sJoPFfRYN6iVTBVtUEHipX3FnGx+rba8tRggcrDfVdvz4h8Pkq+znUfgXpbbta2yRw/zmQjvxxNxsKXAJJvgQ1vPArFukdEXURckIXMxZAHmmeU0NSV61MPD3zbJu36w5OA=
+    - secure: VlisKWdR03cbqSw530do5gnfkmttz1mctdOA4FwMp+KFurfPLFYoMpldxvHzricuB97OuiroBiopEas4Xey5XDjGr1Puklb47UIhqxx+XsBQ0xhd4ZfRZ1hvBCEI1dMSBrwwwq9QXt0gKp0f4ORGqOv6Fg7MrSExthQT9W8AfXs=
+    - secure: PcVAVdrUj1z7fztYklzExbkxCkwEgdKaaSt4eQNNuxdBvj8MwDAp7JvKasqAALBLJgcthj+jt+BU2l3LABPZyZPkl6A6FstoXvmK0fUAPr2k9InuiFX6UgybNKvhIQOyF++9bw0kCTZlkGn3KSw0vLZAx10/+XCb8mu7ghwylrI=
+    - secure: IO5ls6xcCpbgxEJFpKJhh5WT1FxwZOiwdhXs2OMElPCDAoMrQcooClvlSG6MWAY344F9p6jS3JFy0m8AZWw9IuJr5HeS36o5HS1Zf1+A/Awe8BDkyfHZTORZPU6VucFfLmZxgDXSFAmKxTaXUPhPQGXGbXuvT8KdkbqT43eA2HI=
