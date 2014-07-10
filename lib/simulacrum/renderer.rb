@@ -35,20 +35,32 @@ module Simulacrum
     private
 
     def resize_window!
-      page.driver.browser.manage.window.resize_to(1024, 768)
+      case Capybara.default_driver
+      when :poltergeist
+        page.driver.resize(*window_size)
+      else
+        page.driver.browser.manage.window.resize_to(*window_size)
+      end
     rescue Selenium::WebDriver::Error::UnknownError
       return
     end
 
     def save_screenshot!
-      page.driver.save_screenshot(tmp_path)
+      case Capybara.default_driver
+      when :poltergeist
+        page.save_screenshot("#{tmp_path}.png", full: true)
+      else
+        page.driver.save_screenshot(tmp_path)
+      end
+    end
+
+    def window_size
+      [1024, 768]
     end
 
     def tmp_path
-      @tmp_path ||= File.join(
-        @tmp_dir,
-        Simulacrum.configuration.candidate_filename
-      )
+      @tmp_path ||= File.join(@tmp_dir,
+                              Simulacrum.configuration.candidate_filename)
     end
   end
 end

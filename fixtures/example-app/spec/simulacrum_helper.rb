@@ -1,8 +1,10 @@
 require 'capybara'
+require 'capybara/poltergeist'
 require 'simulacrum'
-require './example_app'
+require './fixture_app'
 
 RSpec.configure do |config|
   include Simulacrum
-  Capybara.app = ExampleApp
+  Capybara.default_driver = :poltergeist
+  Capybara.app = FixtureApp
 end

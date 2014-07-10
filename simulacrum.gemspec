@@ -46,4 +46,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'cucumber'
   gem.add_development_dependency 'aruba'
   gem.add_development_dependency 'sinatra'
+  gem.add_development_dependency 'sauce', '~> 3.1.1'
+  gem.add_development_dependency 'sauce-connect'
+  gem.add_development_dependency 'poltergeist'
 end
