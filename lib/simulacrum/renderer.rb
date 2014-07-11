@@ -26,7 +26,7 @@ module Simulacrum
     end
 
     def get_bounds_for_selector(selector)
-      element = page.find(selector)
+      element = page.find(selector.to_s)
       location = element.native.location
       size = element.native.size
       [location.x, location.y, size.width, size.height]

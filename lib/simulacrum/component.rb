@@ -81,7 +81,7 @@ module Simulacrum
     end
 
     def crop_candidate_to_selector
-      if capture_selector
+      unless capture_selector.nil?
         candidate_image = Magick::Image.read(candidate_path).first
         bounds = @renderer.get_bounds_for_selector(capture_selector)
         candidate_image.crop!(*bounds)

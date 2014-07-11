@@ -18,17 +18,22 @@ module Simulacrum
       end
 
       def run_and_exit
-        @kernel.exit(runner.exit_code)
+        @exit_code = run
+        @kernel.exit(@exit_code)
       end
 
       private
 
-      def runner
-        @runner ||= Simulacrum.run(parse_argv)
+      def run
+        if parsed_argv == true
+          0
+        else
+          Simulacrum.run(parsed_argv).exit_code
+        end
       end
 
-      def parse_argv
-        CLI::Parser.parse(@argv)
+      def parsed_argv
+        @parsed_argv ||= CLI::Parser.parse(@argv)
       end
     end
   end
