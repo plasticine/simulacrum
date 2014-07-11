@@ -27,12 +27,20 @@ module Simulacrum
 
     def get_bounds_for_selector(selector)
       element = page.find(selector.to_s)
-      location = element.native.location
-      size = element.native.size
+      location = element_location(element)
+      size = element_size(element)
       [location.x, location.y, size.width, size.height]
     end
 
     private
+
+    def element_location(element)
+      element.native.location
+    end
+
+    def element_size(element)
+      element.native.size
+    end
 
     def resize_window!
       case Capybara.default_driver

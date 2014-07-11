@@ -39,7 +39,6 @@ GEM
       xpath (~> 2.0)
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
-    cliver (0.3.2)
     cmdparse (2.0.6)
     codeclimate-test-reporter (0.3.0)
       simplecov (>= 0.7.1, < 1.0.0)
@@ -82,11 +81,6 @@ GEM
     parser (2.1.9)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
-    poltergeist (1.5.1)
-      capybara (~> 2.1)
-      cliver (~> 0.3.1)
-      multi_json (~> 1.0)
-      websocket-driver (>= 0.2.0)
     powerpack (0.0.9)
     pry (0.10.0)
       coderay (~> 1.1.0)
@@ -166,7 +160,6 @@ GEM
     tzinfo (1.2.1)
       thread_safe (~> 0.1)
     websocket (1.0.7)
-    websocket-driver (0.3.4)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -180,7 +173,6 @@ DEPENDENCIES
   codeclimate-test-reporter
   coveralls
   cucumber
-  poltergeist
   pry
   rake
   rspec (~> 3.0.0)
