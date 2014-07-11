@@ -10,7 +10,7 @@ if ENV['CI']
   Capybara.default_driver = :sauce
 
   Sauce.config do |sauce|
-    sauce[:browsers] = [["Linux", "Chrome", nil]]
+    sauce[:browsers] = [['Linux', 'Chrome', nil]]
   end
 end
 
