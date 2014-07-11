@@ -5,5 +5,6 @@ $(dirname $0)/bootstrap
 rm -rf coverage/
 bin/rubocop --display-cop-names
 bin/rspec --require spec_helper
-bin/appraisal bin/cucumber --require features/support/env.rb
+bin/appraisal rspec2 bin/cucumber --require features/support/env.rb --strict
+bin/appraisal rspec3 bin/cucumber --require features/support/env.rb --strict
 bin/rake quality

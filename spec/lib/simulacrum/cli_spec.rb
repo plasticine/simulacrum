@@ -3,15 +3,17 @@ require 'spec_helper'
 require 'simulacrum/cli'
 
 describe Simulacrum::CLI do
-  describe '.run' do
-    let!(:parser)     { stub_const('Simulacrum::CLI::Parser', double) }
-    let!(:simulacrum) { stub_const('Simulacrum', double) }
+  describe '.execute!' do
+    let(:parser)     { stub_const('Simulacrum::CLI::Parser', double) }
+    let(:simulacrum) { stub_const('Simulacrum', double) }
+    let(:runner)     { double('runner', exit_code: exit_code) }
+    let(:exit_code)  { 0 }
 
     it 'runs simulacrum with the given args' do
       expect(parser).to receive(:parse).with('--args').and_return(args: true)
-      expect(simulacrum).to receive(:run).with(args: true).and_return('tracer')
+      expect(simulacrum).to receive(:run).with(args: true).and_return(runner)
 
-      expect(described_class.run('--args')).to eq('tracer')
+      expect(-> { described_class.execute!('--args') }).to raise_error SystemExit
     end
   end
 end

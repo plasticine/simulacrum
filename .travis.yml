@@ -5,7 +5,7 @@ rvm:
   - 2.1
   - 2.0
   - 1.9.3
-bundler_args: --binstubs
+bundler_args: "--binstubs --standalone --without documentation --path ../bundle"
 script:
   - script/spec
 addons:
@@ -18,6 +18,7 @@ matrix:
       env: COVERAGE=true
   allow_failures:
     - rvm: ruby-head
+  fast_finish: true
 gemfile:
   - gemfiles/rspec_2.gemfile
   - gemfiles/rspec_3.gemfile

@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'simulacrum/cli'
+Simulacrum::CLI.execute!(ARGV.dup)

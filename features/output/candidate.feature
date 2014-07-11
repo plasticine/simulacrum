@@ -20,19 +20,13 @@ Feature: candidate image output
   Scenario: There is already a reference, and there is no diff so a candidate should not be created
     Given a reference image for "ui_component" with content: "ui_component.png"
     When I run `simulacrum`
-    Then the exit status should be 0
-    And the output should contain "1 example, 0 failures"
-    And a candidate for "ui_component" should not exist
+    Then a candidate for "ui_component" should not exist
 
   Scenario: There is no reference present so a candidate should be created
     When I run `simulacrum`
-    Then the exit status should be 0
-    And the output should contain "1 example, 0 failures, 1 pending"
-    And a candidate for "ui_component" should exist
+    Then a candidate for "ui_component" should exist
 
   Scenario: There is a diff when the test is run so a candidate should be created
     Given a reference image for "ui_component" with content: "diff.png"
     When I run `simulacrum`
-    Then the exit status should be 1
-    And the output should contain "1 example, 1 failure"
-    And a candidate for "ui_component" should exist
+    Then a candidate for "ui_component" should exist

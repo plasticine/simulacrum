@@ -1,4 +1,5 @@
 require 'capybara'
+require 'aruba'
 require 'aruba/cucumber'
 require 'fileutils'
 
