@@ -1,7 +1,6 @@
 # encoding: UTF-8
 require 'use_codeclimate'
 require 'use_simplecov'
-require 'use_coveralls' if ENV['COVERAGE']
 require 'bundler/setup'
 require 'simulacrum'
 
