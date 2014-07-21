@@ -4,10 +4,10 @@ Feature: candidate image output
   or if the diff threshold is met.
 
   Background:
-    Given a fixture application "example-app"
+    Given a fixture application
     And a file named "spec/ui/ui_component_spec.rb" with:
       """ruby
-      require "simulacrum_helper"
+      require 'simulacrum_helper'
 
       describe 'UI Component' do
         component :ui_component do |options|
@@ -18,7 +18,7 @@ Feature: candidate image output
       """
 
   Scenario: There is already a reference, and there is no diff so a candidate should not be created
-    Given a reference image for "ui_component" with content: "ui_component.png"
+    Given a reference image for "ui_component" with content: "a1.png"
     When I run `simulacrum`
     Then a candidate for "ui_component" should not exist
 

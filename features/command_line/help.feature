@@ -1,4 +1,3 @@
-@announce
 Feature: `--help` option
 
   The `--help` option should display usage information for simulacrum
