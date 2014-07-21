@@ -2,17 +2,8 @@ require 'capybara'
 require 'aruba'
 require 'aruba/cucumber'
 require 'fileutils'
-
-if ENV['CI']
-  require 'sauce'
-  require 'sauce/capybara'
-
-  Capybara.default_driver = :sauce
-
-  Sauce.config do |sauce|
-    sauce[:browsers] = [['Linux', 'Chrome', nil]]
-  end
-end
+require 'dotenv'
+Dotenv.load
 
 ENV['PROJECT_ROOT_PATH'] = File.expand_path('../../../', __FILE__)
 

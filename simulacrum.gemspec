@@ -48,9 +48,11 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec', ['~> 3.0.0']
   gem.add_development_dependency 'rubocop', ['~> 0.20.1']
-  gem.add_development_dependency 'sauce', ['~> 3.1.1']
-  gem.add_development_dependency 'sauce-connect'
+  gem.add_development_dependency 'sauce', ['~> 3.4.8']
+  gem.add_development_dependency 'sauce-connect', ['~> 3.4.1']
+  gem.add_development_dependency 'sauce-cucumber', ['~> 3.4.0']
   gem.add_development_dependency 'shoulda-matchers'
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'sinatra'
+  gem.add_development_dependency 'dotenv'
 end

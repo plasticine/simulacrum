@@ -25,6 +25,7 @@ addons:
   # - gemfiles/rspec_3.gemfile
 env:
   global:
+    - SAUCE=true
     - AUTOMATE_PROJECT="$TRAVIS_REPO_SLUG"
     - AUTOMATE_BUILD="Travis build No. $TRAVIS_BUILD_NUMBER for $TRAVIS_REPO_SLUG"
     - secure: I3cJCwxNLnMsszfwZJNKLhEiseXi2aoz/2PmMa+6sJoPFfRYN6iVTBVtUEHipX3FnGx+rba8tRggcrDfVdvz4h8Pkq+znUfgXpbbta2yRw/zmQjvxxNxsKXAJJvgQ1vPArFukdEXURckIXMxZAHmmeU0NSV61MPD3zbJu36w5OA=

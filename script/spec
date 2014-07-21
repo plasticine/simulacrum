@@ -4,9 +4,9 @@ $(dirname $0)/bootstrap
 
 rm -rf coverage/
 rm -rf tmp/
-# bin/rubocop --display-cop-names
-# bin/rspec --require spec_helper
-# bin/appraisal install
-# bin/appraisal rspec2 bin/cucumber --require features/support/env.rb --strict features/exit_codes/passing.feature
-bin/appraisal rspec3 bin/cucumber --require features/support/env.rb --strict features/exit_codes/passing.feature
-# bin/rake quality
+bin/rubocop --display-cop-names
+bin/rspec --require spec_helper
+bin/appraisal install
+bin/appraisal rspec2 bin/cucumber --require features/support/env.rb --strict features
+bin/appraisal rspec3 bin/cucumber --require features/support/env.rb --strict features
+bin/rake quality

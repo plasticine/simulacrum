@@ -10,7 +10,6 @@ require_relative './simulacrum/runner'
 module Simulacrum
   CONFIG_FILE = './.simulacrum.yml'
 
-  @driver = nil
   @components = {}
   @current_browser = nil
   @configuration = Simulacrum::Configuration.new
@@ -47,17 +46,6 @@ module Simulacrum
     configuration.configure(options.to_h)
   end
   module_function :configure
-
-  def included(receiver, &block)
-    receiver.extend Simulacrum::Methods
-    receiver.send :include, Simulacrum::Matchers
-
-    if defined?(Rails)
-      receiver.send :include, Rails.application.routes.url_helpers
-      receiver.send :include, Rails.application.routes.mounted_helpers
-    end
-  end
-  module_function :included
 
   def config_file
     YAML.load_file(Simulacrum.config_file_path)

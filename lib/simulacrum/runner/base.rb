@@ -26,19 +26,20 @@ module Simulacrum
       end
 
       def run_rspec
-        RSpec::Core::Runner.run(Simulacrum.runner_options.files)
+        RSpec::Core::Runner.run(test_files)
+      end
+
+      def test_files
+        Simulacrum.runner_options.files
       end
 
       def configure_rspec
+        RSpec.configuration.include Simulacrum::Matchers
+        RSpec.configuration.extend Simulacrum::Methods
         RSpec.configuration.color = Simulacrum.runner_options.color
         RSpec.configuration.tty = true
         RSpec.configuration.pattern = '**/*_spec.rb'
         RSpec.configuration.profile_examples = false
-        RSpec.configuration.instance_variable_set(:@requires, required_helpers)
-      end
-
-      def required_helpers
-        ['spec/simulacrum_helper']
       end
     end
   end
