@@ -21,4 +21,9 @@ Sauce.config do |config|
   config[:os] = 'Linux'
   config[:browser] = 'Chrome'
   config[:browser_version] = '35'
+  host = config[:application_host] || '127.0.0.1'
+  port = config[:application_port] || 3000
+  Capybara.server_port       = port
+  Capybara.app_host          = "http://#{host}:#{port}"
+  Capybara.default_wait_time = 30
 end
