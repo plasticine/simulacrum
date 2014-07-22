@@ -19,6 +19,6 @@ Feature: Passing exit code
   Scenario: Passing tests
     Given a reference image for "ui_component" with content: "a1.png"
     When I run `simulacrum`
-    Then the output should contain "1 example, 0 failures"
+    Then the exit status should be 0
+    And the output should contain "1 example, 0 failures"
     And the output should not contain "pending"
-    And the exit status should be 0

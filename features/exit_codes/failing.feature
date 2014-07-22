@@ -19,6 +19,6 @@ Feature: Failure exit code
   Scenario: There are failing tests
     Given a reference image for "ui_component" with content: "diff.png"
     When I run `simulacrum`
-    Then the output should contain "Failure/Error: it { should look_the_same }"
+    Then the exit status should be 1
+    And the output should contain "Failure/Error: it { should look_the_same }"
     And the output should contain "1 example, 1 failure"
-    And the exit status should be 1

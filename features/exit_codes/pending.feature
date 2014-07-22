@@ -18,5 +18,5 @@ Feature: Pending exit code
 
   Scenario: There is a pending test
     When I run `simulacrum`
-    Then the output should contain "1 example, 0 failures, 1 pending"
-    And the exit status should be 0
+    Then the exit status should be 0
+    And the output should contain "1 example, 0 failures, 1 pending"
