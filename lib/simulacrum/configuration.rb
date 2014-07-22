@@ -19,7 +19,7 @@ module Simulacrum
       @config = OpenStruct.new(component: OpenStruct.new(COMPONENT_DEFAULTS))
     end
 
-    def configure(config = {})
+    def configure(config)
       @config = OpenStruct.new(@config.to_h.merge!(config))
     end
 
