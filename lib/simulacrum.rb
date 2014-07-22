@@ -1,5 +1,6 @@
 # encoding: UTF-8
 require 'ostruct'
+require 'capybara'
 require_relative './simulacrum/methods'
 require_relative './simulacrum/matchers'
 require_relative './simulacrum/configuration'

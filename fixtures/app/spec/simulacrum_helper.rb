@@ -1,3 +1,4 @@
+# encoding: UTF-8
 ENV['RAILS_ENV'] = 'test'
 ENV['RACK_ENV'] = 'test'
 

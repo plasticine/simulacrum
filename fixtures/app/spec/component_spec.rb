@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'simulacrum_helper'
 
 describe 'UI Component', js: true, sauce: true do

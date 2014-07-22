@@ -1,3 +1,4 @@
+# encoding: UTF-8
 Given(/^a (reference|candidate) image for "([^"]*)" with content: "([^"]*)"$/) do |type, component_name, fixture_path|
   fixture_path = File.join(ENV['PROJECT_ROOT_PATH'], 'fixtures', fixture_path)
   destination_path = File.join('spec/ui/references/', component_name, 'sauce', "#{type}.png")

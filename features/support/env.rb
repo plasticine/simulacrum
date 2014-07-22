@@ -1,4 +1,4 @@
-require 'capybara'
+# encoding: UTF-8
 require 'aruba'
 require 'aruba/cucumber'
 require 'fileutils'

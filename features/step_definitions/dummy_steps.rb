@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'fileutils'
 
 Given(/^a fixture application$/) do
