@@ -2,7 +2,6 @@ language: ruby
 rvm:
   - ruby-head
   - 2.1.1
-  - 2.1
   - 2.0
   - 1.9.3
 bundler_args: "--binstubs --standalone --without documentation --path ../bundle"
