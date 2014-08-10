@@ -1,5 +1,6 @@
 # encoding: UTF-8
 require 'rspec'
+require 'simulacrum'
 require 'simulacrum/formatters/simulacrum_formatter'
 require 'simulacrum/driver/local'
 

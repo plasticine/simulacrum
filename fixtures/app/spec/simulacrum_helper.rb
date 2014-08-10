@@ -7,24 +7,25 @@ require 'capybara'
 require 'sauce/capybara'
 require 'simulacrum'
 
-Capybara.app = FixtureApp.new
-Capybara.default_driver = :sauce
+Capybara.app = FixtureApp
 Capybara.run_server = true
+Capybara.app_host = "http://0.0.0.0:#{Capybara.server_port}"
+Capybara.default_driver = :test_driver
+
+# Defines a custom driver so that we can assume a predictable output dir
+Capybara.register_driver :test_driver do |app|
+  if ENV['CI']
+    caps = Selenium::WebDriver::Remote::Capabilities.firefox
+    caps.platform = 'Linux'
+    caps.version = '31'
+    url = "http://#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}@ondemand.saucelabs.com:80/wd/hub"
+    Capybara::Selenium::Driver.new(app, browser: :remote, url: url, desired_capabilities: caps)
+  else
+    Capybara::Selenium::Driver.new(app, browser: :firefox)
+  end
+end
 
 Simulacrum.configure do |config|
   config.component.capture_selector = '#test-capture-selector'
-end
-
-Sauce.config do |config|
-  config[:name] = 'Simulacrum'
-  config[:start_tunnel] = false
-  config[:start_local_application] = false
-  config[:os] = 'Linux'
-  config[:browser] = 'Chrome'
-  config[:browser_version] = '35'
-  host = config[:application_host] || '127.0.0.1'
-  port = config[:application_port]
-  Capybara.server_port       = port
-  Capybara.app_host          = "http://#{host}:#{port}"
-  Capybara.default_wait_time = 30
+  config.component.delta_threshold = 0.1  # allow for colour-space differences between platforms
 end

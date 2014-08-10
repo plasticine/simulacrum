@@ -6,3 +6,4 @@
 *.sublime-workspace
 *.sublime-project
 Gemfile.lock
+.env

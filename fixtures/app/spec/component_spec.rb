@@ -1,7 +1,7 @@
 # encoding: UTF-8
 require 'simulacrum_helper'
 
-describe 'UI Component', js: true, sauce: true do
+describe 'UI Component' do
   component :ui_component do |options|
     options.url = '/ui_component.html'
   end

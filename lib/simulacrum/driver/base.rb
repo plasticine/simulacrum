@@ -30,20 +30,6 @@ module Simulacrum
       def configure_capybara
         Capybara.default_driver    = driver_name
         Capybara.default_wait_time = 10
-        Capybara.server_host       = 'localhost'
-        Capybara.server_port       = app_server_port
-      end
-
-      def app_server_port
-        ENV['APP_SERVER_PORT'].to_i if ENV['APP_SERVER_PORT']
-      end
-
-      def selenium_remote_url
-        ENV['SELENIUM_REMOTE_URL']
-      end
-
-      def driver_name
-        ENV['BS_DRIVER_NAME']
       end
     end
   end
