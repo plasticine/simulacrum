@@ -31,6 +31,11 @@ module Simulacrum
       end
     end
 
+    def diff
+      @diff ||= Simulacrum::RMagicDiff.new(component.reference_path,
+                                           component.candidate_path)
+    end
+
     private
 
     def pass
@@ -50,10 +55,6 @@ module Simulacrum
 
     def pass?
       diff.delta <= component.delta_threshold
-    end
-
-    def diff
-      @diff ||= Simulacrum::RMagicDiff.new(component.reference_path, component.candidate_path)
     end
   end
 end

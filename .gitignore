@@ -1,7 +1,9 @@
 /bin
 /pkg
-.bundle
+/tmp
 /coverage
+.bundle
 *.sublime-workspace
 *.sublime-project
 Gemfile.lock
+.env

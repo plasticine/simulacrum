@@ -4,10 +4,37 @@ require 'simulacrum/cli/parser'
 module Simulacrum
   # Command-line interface for driving Simulacrum
   module CLI
-    def run(args)
-      runner_options = Parser.parse(args)
-      Simulacrum.run(runner_options)
+    def execute!(argv)
+      Command.new(argv).run_and_exit
     end
-    module_function :run
+    module_function :execute!
+
+    # Class for wrappin up logic for running the process and handling exit
+    class Command
+      attr_reader :runner
+
+      def initialize(argv, stdin = STDIN, stdout = STDOUT, stderr = STDERR, kernel = Kernel)
+        @argv, @stdin, @stdout, @stderr, @kernel = argv, stdin, stdout, stderr, kernel
+      end
+
+      def run_and_exit
+        @exit_code = run
+        @kernel.exit(@exit_code)
+      end
+
+      private
+
+      def run
+        if parsed_argv == true
+          0
+        else
+          Simulacrum.run(parsed_argv).exit_code
+        end
+      end
+
+      def parsed_argv
+        @parsed_argv ||= CLI::Parser.parse(@argv)
+      end
+    end
   end
 end

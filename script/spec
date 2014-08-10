@@ -3,6 +3,8 @@
 $(dirname $0)/bootstrap
 
 rm -rf coverage/
+rm -rf tmp/
 bin/rubocop --display-cop-names
 bin/rspec --require spec_helper
+bin/cucumber --require features/support/env.rb --strict features
 bin/rake quality

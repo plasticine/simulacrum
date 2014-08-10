@@ -1,6 +1,10 @@
 ## Simulacrum
 
-[![Build Status](https://travis-ci.org/plasticine/simulacrum.svg?branch=master)](https://travis-ci.org/plasticine/simulacrum) [![Code Climate](https://codeclimate.com/github/plasticine/simulacrum/coverage.png)](https://codeclimate.com/github/plasticine/simulacrum) [![Code Climate](https://codeclimate.com/github/plasticine/simulacrum.png)](https://codeclimate.com/github/plasticine/simulacrum) [![Dependency Status](https://gemnasium.com/plasticine/simulacrum.svg)](https://gemnasium.com/plasticine/simulacrum) [![Gem Version](https://badge.fury.io/rb/simulacrum.svg)](http://badge.fury.io/rb/simulacrum)
+[![Build Status](http://img.shields.io/travis/plasticine/simulacrum.svg?style=flat)][travis]
+[![Code Climate](http://img.shields.io/codeclimate/github/plasticine/simulacrum.svg?style=flat)][codeclimate]
+[![Code Climate](http://img.shields.io/codeclimate/coverage/github/plasticine/simulacrum.svg?style=flat)][codeclimate]
+[![Dependency Status](http://img.shields.io/gemnasium/plasticine/simulacrum.svg?style=flat)][gemnasium]
+[![Gem Version](http://img.shields.io/gem/v/simulacrum.svg?style=flat)][gem_version]
 
 Simulacrum is an opinionated UI component regression testing tool built to be tightly integrated with [RSpec], [Capybara], [Selenium Webdriver] & [Browserstack].
 
@@ -68,14 +72,17 @@ simulacrum --help
 
 #### Inspiration / Similar tools
 
-- [Huxley]
-- [Green Onion]
+- Huxley
+- Green Onion
 
 
-
-[Huxley]: 				https://github.com/facebook/huxley
-[Green Onion]:  		http://intridea.github.io/green_onion
-[Browserstack]:         http://www.browserstack.com
-[RSpec]:                http://rspec.info
-[Capybara]:             https://github.com/jnicklas/capybara
-[Selenium Webdriver]:   http://docs.seleniumhq.org/projects/webdriver/
+[huxley]: 			      https://github.com/facebook/huxley
+[green_onion]:  		  http://intridea.github.io/green_onion
+[Browserstack]:       http://www.browserstack.com
+[RSpec]:              http://rspec.info
+[Capybara]:           https://github.com/jnicklas/capybara
+[Selenium Webdriver]: http://docs.seleniumhq.org/projects/webdriver/
+[codeclimate]:        https://codeclimate.com/github/plasticine/simulacrum
+[travis]:             https://travis-ci.org/plasticine/simulacrum
+[gemnasium]:          https://gemnasium.com/plasticine/simulacrum
+[gem_version]:        http://badge.fury.io/rb/simulacrum

@@ -1,5 +1,4 @@
 # encoding: UTF-8
-ENV['RAILS_ENV'] ||= 'test'
 require 'use_codeclimate'
 require 'use_simplecov'
 require 'bundler/setup'

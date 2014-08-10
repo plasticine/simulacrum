@@ -34,7 +34,7 @@ describe Simulacrum::Component do
       expect(renderer).to receive(:cleanup)
     end
 
-    it { is_expected.to eq true }
+    it { is_expected.to eq(true) }
 
     describe 'when a selector is set the candidate is cropped' do
       let(:capture_selector) { '.widget' }
@@ -51,7 +51,7 @@ describe Simulacrum::Component do
         expect(image).to receive(:write).with('references/MyComponent/MyDriver/candidate.png')
       end
 
-      it { is_expected.to eq true }
+      it { is_expected.to eq(true) }
     end
   end
 
