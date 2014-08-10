@@ -18,6 +18,11 @@ Capybara.register_driver :test_driver do |app|
     caps = Selenium::WebDriver::Remote::Capabilities.firefox
     caps.platform = 'Linux'
     caps.version = '31'
+    caps['name'] = 'Simulacrum'
+    if ENV['TRAVIS']
+      caps['build'] = "#{ENV['TRAVIS_JOB_NUMBER']} (#{ENV['TRAVIS_COMMIT']})"
+    end
+    caps['selenium-version'] = '2.41.0'
     url = "http://#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}@ondemand.saucelabs.com:80/wd/hub"
     Capybara::Selenium::Driver.new(app, browser: :remote, url: url, desired_capabilities: caps)
   else
