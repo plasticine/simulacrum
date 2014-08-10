@@ -76,7 +76,7 @@ simulacrum --help
 - Green Onion
 
 
-[huxley]: 			  https://github.com/facebook/huxley
+[huxley]: 			      https://github.com/facebook/huxley
 [green_onion]:  		  http://intridea.github.io/green_onion
 [Browserstack]:       http://www.browserstack.com
 [RSpec]:              http://rspec.info
