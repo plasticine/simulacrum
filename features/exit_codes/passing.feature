@@ -1,4 +1,3 @@
-@announce
 Feature: Passing exit code
 
   The exit code should always be zero when the tests pass
