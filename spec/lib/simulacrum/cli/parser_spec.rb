@@ -43,6 +43,16 @@ describe Simulacrum::CLI::Parser do
     end
   end
 
+  describe '--verbose' do
+    it { expect(subject.result.verbose).to eq(false) }
+
+    context 'when the option is set' do
+      let(:option) { '--verbose' }
+
+      it { expect(subject.result.verbose).to eq(true) }
+    end
+  end
+
   describe '--runner' do
     it { expect(subject.result.runner).to be_nil }
 
