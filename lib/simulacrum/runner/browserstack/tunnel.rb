@@ -44,14 +44,15 @@ module Simulacrum
         if $CHILD_STATUS.success? && File.executable?(binary_path)
           binary_path
         else
-          fail '[BrowserStack] BrowserStackLocal binary not found or not executable'
+          Simulacrum.logger.fail('BrowserStack') { 'BrowserStackLocal binary not found or not executable' }
+          fail
         end
       end
 
       def create_tunnel
         @process = IO.popen(command)
         @pid = @process.pid
-        puts "[BrowserStack] Openning tunnel (pid #{@pid}) "
+        Simulacrum.logger.debug('BrowserStack') { "Openning tunnel (pid #{@pid})" }
       end
 
       def command
@@ -75,16 +76,13 @@ module Simulacrum
 
       def ensure_open
         Timeout.timeout(240) do
-          $stdout.print '[BrowserStack] Waiting for tunnel to open'
+          Simulacrum.logger.debug('BrowserStack') { 'Waiting for tunnel to open' }
           until tunnel_open?
-            $stdout.print '.'
-            $stdout.flush
             sleep 1
           end
-          puts "\n"
         end
         @open = true
-        puts '[BrowserStack] Tunnel open'
+        Simulacrum.logger.debug('BrowserStack') { 'Tunnel open' }
       rescue Timeout::Error
         exit(1)
       end

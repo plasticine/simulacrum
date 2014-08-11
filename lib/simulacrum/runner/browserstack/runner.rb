@@ -38,8 +38,8 @@ module Simulacrum
       end
 
       def execute
-        puts "[BrowserStack] Using Browserstack runner with #{processes} remote workers"
-        puts
+        Simulacrum.logger.debug('BrowserStack') { "Using runner with #{processes} remote workers" }
+        $stdout.puts
         @results = Parallel.map_with_index(browsers, in_processes: processes) do |(name, caps), index|
           begin
             ensure_available_remote_runner
