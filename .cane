@@ -6,3 +6,4 @@
 --abc-exclude Simulacrum::Runner::BrowserstackRunner#configure_environment
 --abc-exclude Simulacrum::CLI::Parser#add_runner_options
 --abc-exclude Simulacrum::Browserstack::Summary#dump_commands_to_rerun_failed_examples
+--abc-exclude Simulacrum::Browserstack::Tunnel#ensure_open

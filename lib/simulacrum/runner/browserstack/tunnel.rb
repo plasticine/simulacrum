@@ -75,13 +75,14 @@ module Simulacrum
       end
 
       def ensure_open
+        Simulacrum.logger.debug('BrowserStack') { 'Waiting for tunnel to open' }
         Timeout.timeout(240) do
-          Simulacrum.logger.debug('BrowserStack') { 'Waiting for tunnel to open' }
           sleep 1 until tunnel_open?
         end
         @open = true
         Simulacrum.logger.debug('BrowserStack') { 'Tunnel open' }
       rescue Timeout::Error
+        Simulacrum.logger.debug('BrowserStack') { 'Tunnel failed to open, exiting.' }
         exit(1)
       end
 
