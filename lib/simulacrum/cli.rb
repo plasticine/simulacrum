@@ -11,9 +11,7 @@ module Simulacrum
 
     # Class for wrappin up logic for running the process and handling exit
     class Command
-      attr_reader :runner
-
-      def initialize(argv, stdin = STDIN, stdout = STDOUT, stderr = STDERR, kernel = Kernel)
+      def initialize(argv, stdin = $stdin, stdout = $stdout, stderr = $stderr, kernel = Kernel)
         @argv, @stdin, @stdout, @stderr, @kernel = argv, stdin, stdout, stderr, kernel
       end
 

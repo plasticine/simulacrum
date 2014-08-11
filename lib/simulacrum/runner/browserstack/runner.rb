@@ -38,7 +38,7 @@ module Simulacrum
       end
 
       def execute
-        puts "Using Browserstack runner with #{processes} remote workers"
+        puts "[BrowserStack] Using Browserstack runner with #{processes} remote workers"
         puts
         @results = Parallel.map_with_index(browsers, in_processes: processes) do |(name, caps), index|
           begin
