@@ -15,7 +15,7 @@ describe Simulacrum::Runner do
 
       it 'uses the default runner option' do
         expect(Simulacrum::Runner::Base).to receive(:new)
-        described_class.run()
+        described_class.run
       end
     end
 
@@ -24,7 +24,7 @@ describe Simulacrum::Runner do
 
       it 'uses the BrowserStack runner' do
         expect(Simulacrum::Runner::BrowserstackRunner).to receive(:new)
-        described_class.run()
+        described_class.run
       end
     end
 
