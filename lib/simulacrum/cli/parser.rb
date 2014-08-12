@@ -75,7 +75,7 @@ module Simulacrum
       end
 
       def add_version
-        parser.on_tail('-v', '--version', 'Show version') do
+        parser.on_tail('--version', 'Show version') do
           stdout.puts Simulacrum::VERSION
           fail OptionsHandled
         end
@@ -126,6 +126,12 @@ module Simulacrum
                   'Enable color in the output.') do |value|
           options['color'] = value
         end
+
+        parser.on('-v',
+                  '--verbose',
+                  'Be more shouty.') do |value|
+          options['verbose'] = value
+        end
       end
 
       def options
@@ -133,6 +139,7 @@ module Simulacrum
           options = {}
           options['files'] = ['spec/ui']
           options['color'] = false
+          options['verbose'] = false
           options
         end
       end

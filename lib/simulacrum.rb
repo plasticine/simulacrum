@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'ostruct'
 require 'capybara'
+require 'logger'
 require_relative './simulacrum/methods'
 require_relative './simulacrum/matchers'
 require_relative './simulacrum/configuration'
@@ -14,6 +15,12 @@ module Simulacrum
   @components = {}
   @current_browser = nil
   @configuration = Simulacrum::Configuration.new
+  @logger = Logger.new($stdout)
+
+  def logger
+    @logger
+  end
+  module_function :logger
 
   def components
     @components
@@ -37,6 +44,7 @@ module Simulacrum
 
   def run(options)
     @runner_options = options
+    configure_logger
     Simulacrum::Runner.run
   end
   module_function :run
@@ -66,4 +74,8 @@ module Simulacrum
     end
   end
   module_function :config_file_path
+
+  def self.configure_logger
+    @logger.level = @runner_options.verbose ? Logger::DEBUG : Logger::INFO
+  end
 end
