@@ -12,7 +12,7 @@ module Simulacrum
       end
 
       def driver_name
-        'default'
+        'local'
       end
     end
   end

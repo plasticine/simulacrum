@@ -52,5 +52,13 @@ module Simulacrum
     def capture_selector
       @config.component.capture_selector || nil
     end
+
+    def build_name
+      @config.build_name || ''
+    end
+
+    def project_name
+      @config.project_name || 'Simulacrum'
+    end
   end
 end

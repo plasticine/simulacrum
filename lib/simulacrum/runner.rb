@@ -11,8 +11,6 @@ module Simulacrum
         Simulacrum::Runner::Base.new
       when :browserstack
         Simulacrum::Runner::BrowserstackRunner.new
-      # when :saucelabs
-      #   Simulacrum::Runner::SaucelabsRunner.new
       end
     end
     module_function :run

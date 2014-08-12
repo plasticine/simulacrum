@@ -1,14 +1,9 @@
-require 'rspec'
 require 'capybara'
 require 'simulacrum'
 require './example_app'
 
-RSpec.configure do |config|
-  include Simulacrum
+Capybara.app = ExampleApp
 
-  Capybara.app = ExampleApp
-
-  Simulacrum.configure do |simulacrum|
-    simulacrum.component.delta_threshold = 1 # 1% percentage change allowed
-  end
+Simulacrum.configure do |simulacrum|
+  simulacrum.component.delta_threshold = 1.0 # 1.0% change allowed
 end

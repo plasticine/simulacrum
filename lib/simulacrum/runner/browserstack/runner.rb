@@ -8,6 +8,7 @@ require 'simulacrum/driver/browserstack'
 require 'parallel'
 require 'yaml'
 require 'retries'
+require 'pry'
 
 module Simulacrum
   module Runner
@@ -32,44 +33,36 @@ module Simulacrum
 
         set_global_env
         execute
-        summarize
+        summarize_results
+        summarize_exit_codes
       ensure
         @tunnel.close if @tunnel
       end
 
       def execute
-        puts "[BrowserStack] Using Browserstack runner with #{processes} remote workers"
-        puts
-        @results = Parallel.map_with_index(browsers, in_processes: processes) do |(name, caps), index|
+        Simulacrum.logger.info('BrowserStack') { "Using runner with #{processes} remote workers" }
+        @process_exit_codes, @process_results = Parallel.map_with_index(browsers, in_processes: processes) do |(name, caps), index|
           begin
             ensure_available_remote_runner
             configure_app_port(index)
             configure_environment(name, caps)
             configure_browser_setting(name)
-            run
+            exit_code = run
+            [exit_code, { results: dump_results }]
           rescue SystemExit
             exit 1
-          # rescue Selenium::WebDriver::Error::UnknownError
-          #   puts 'Selenium::WebDriver::Error::UnknownError was raised'
           ensure
             quit_browser
           end
-        end
+        end.transpose
       ensure
         stop_timer
-      end
-
-      def run
-        super
-        { results: dump_results }
       end
 
       private
 
       def quit_browser
         Capybara.current_session.driver.browser.quit
-      # rescue Selenium::WebDriver::Error::UnknownError
-      #   puts 'Selenium::WebDriver::Error::UnknownError was raised in quit_browser'
       end
 
       def configure_browser_setting(name)
@@ -77,8 +70,6 @@ module Simulacrum
           example.metadata[:browser] = name
           begin
             example.run
-          # rescue Selenium::WebDriver::Error::UnknownError
-          #   puts 'Selenium::WebDriver::Error::UnknownError was raised in configure_browser_setting'
           end
         end
       end
@@ -125,11 +116,15 @@ module Simulacrum
         @end_time = Time.now
       end
 
-      def summarize
-        summary = Simulacrum::Browserstack::Summary.new(@results, @start_time, @end_time)
+      def summarize_results
+        summary = Simulacrum::Browserstack::Summary.new(@process_results, @start_time, @end_time)
         summary.dump_summary
         summary.dump_failures
         summary.dump_pending
+      end
+
+      def summarize_exit_codes
+        @exit_code = (@process_exit_codes.inject(&:+) == 0) ? 0 : 1
       end
 
       def configure_app_port(index)
