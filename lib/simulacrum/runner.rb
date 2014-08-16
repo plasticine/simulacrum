@@ -1,6 +1,5 @@
 # encoding: UTF-8
 require_relative './runner/base'
-require_relative './runner/browserstack/runner'
 
 module Simulacrum
   # Provide methods for starting the correct runner runner
@@ -10,7 +9,7 @@ module Simulacrum
       when nil
         Simulacrum::Runner::Base.new
       when :browserstack
-        Simulacrum::Runner::BrowserstackRunner.new
+        # Simulacrum::Runner::BrowserstackRunner.new
       end
     end
     module_function :run
