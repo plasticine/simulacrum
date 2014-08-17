@@ -1,23 +1,41 @@
 # encoding: UTF-8
-require_relative './runner/base'
+require 'rspec'
+require 'simulacrum/driver'
+require 'simulacrum/methods'
+require 'simulacrum/matchers'
 
 module Simulacrum
-  # Provide methods for starting the correct runner runner
-  module Runner
-    def run
-      case Simulacrum.runner_options.runner
-      when nil
-        Simulacrum::Runner::Base.new
-      when :browserstack
-        Simulacrum::Runner.use_browserstack_runner
-      end
-    end
-    module_function :run
+  # Base Runner class for running RSpec in parallel.
+  class Runner
+    attr_reader :exit_code
 
-    def use_browserstack_runner
-      require 'simulacrum-browserstack'
-      Simulacrum::Runner::BrowserstackRunner.new
+    def run
+      configure_driver
+      configure_rspec
+      @exit_code = run_rspec
     end
-    module_function :use_browserstack_runner
+
+    private
+
+    def configure_driver
+      Simulacrum::Driver.use
+    end
+
+    def run_rspec
+      RSpec::Core::Runner.run(test_files)
+    end
+
+    def test_files
+      Simulacrum.runner_options.files
+    end
+
+    def configure_rspec
+      RSpec.configuration.include Simulacrum::Matchers
+      RSpec.configuration.extend Simulacrum::Methods
+      RSpec.configuration.color = Simulacrum.runner_options.color
+      RSpec.configuration.tty = true
+      RSpec.configuration.pattern = '**/*_spec.rb'
+      RSpec.configuration.profile_examples = false
+    end
   end
 end

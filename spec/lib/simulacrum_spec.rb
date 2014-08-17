@@ -46,4 +46,8 @@ describe Simulacrum do
   describe '.config_file_path' do
     pending
   end
+
+  describe '.configure_runner' do
+    pending
+  end
 end

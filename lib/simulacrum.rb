@@ -74,7 +74,19 @@ module Simulacrum
   module_function :config_file_path
 
   def self.configure_runner
-    Simulacrum::Runner
+    case Simulacrum.runner_options.runner
+    when nil
+      Simulacrum::Runner.new
+    when :browserstack
+      use_browserstack_runner
+    end
+  end
+
+  def self.use_browserstack_runner
+    require 'simulacrum-browserstack'
+    Simulacrum::Browserstack::Runner.new
+  rescue LoadError
+    raise
   end
 
   def self.configure_logger

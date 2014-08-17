@@ -26,7 +26,7 @@ module Simulacrum
         if parsed_argv == true
           0
         else
-          Simulacrum.run(parsed_argv).exit_code
+          Simulacrum.run(parsed_argv)
         end
       end
 
