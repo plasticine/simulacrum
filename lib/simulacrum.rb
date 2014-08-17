@@ -1,4 +1,5 @@
 # encoding: UTF-8
+require 'yaml'
 require 'ostruct'
 require 'capybara'
 require 'logger'
