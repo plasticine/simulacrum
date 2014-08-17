@@ -43,7 +43,7 @@ module Simulacrum
   def run(options)
     @runner_options = options
     configure_logger
-    Simulacrum::Runner.run
+    configure_runner.run
   end
   module_function :run
 
@@ -72,6 +72,10 @@ module Simulacrum
     end
   end
   module_function :config_file_path
+
+  def self.configure_runner
+    Simulacrum::Runner
+  end
 
   def self.configure_logger
     @logger.level = @runner_options.verbose ? Logger::DEBUG : Logger::INFO
