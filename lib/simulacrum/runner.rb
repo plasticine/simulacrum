@@ -9,17 +9,15 @@ module Simulacrum
       when nil
         Simulacrum::Runner::Base.new
       when :browserstack
-        Simulacrum::Runner.require_browserstack_runner
-        # Simulacrum::Runner::BrowserstackRunner.new
+        Simulacrum::Runner.use_browserstack_runner
       end
     end
     module_function :run
 
-    def require_browserstack_runner
+    def use_browserstack_runner
       require 'simulacrum-browserstack'
-    rescue LoadError
-      puts 'LoadError'
+      Simulacrum::Runner::BrowserstackRunner.new
     end
-    module_function :require_browserstack_runner
+    module_function :use_browserstack_runner
   end
 end
