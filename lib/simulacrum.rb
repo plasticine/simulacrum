@@ -6,7 +6,6 @@ require 'logger'
 require_relative './simulacrum/methods'
 require_relative './simulacrum/matchers'
 require_relative './simulacrum/configuration'
-require_relative './simulacrum/railtie' if defined? Rails::Railtie
 require_relative './simulacrum/runner'
 
 # Gem module
