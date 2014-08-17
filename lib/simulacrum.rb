@@ -1,12 +1,10 @@
 # encoding: UTF-8
+require 'yaml'
 require 'ostruct'
 require 'capybara'
 require 'logger'
-require_relative './simulacrum/methods'
-require_relative './simulacrum/matchers'
-require_relative './simulacrum/configuration'
-require_relative './simulacrum/railtie' if defined? Rails::Railtie
-require_relative './simulacrum/runner'
+require 'simulacrum/configuration'
+require 'simulacrum/runner'
 
 # Gem module
 module Simulacrum
@@ -45,7 +43,7 @@ module Simulacrum
   def run(options)
     @runner_options = options
     configure_logger
-    Simulacrum::Runner.run
+    configure_runner.run
   end
   module_function :run
 
@@ -74,6 +72,22 @@ module Simulacrum
     end
   end
   module_function :config_file_path
+
+  def self.configure_runner
+    case Simulacrum.runner_options.runner
+    when nil
+      Simulacrum::Runner.new
+    when :browserstack
+      use_browserstack_runner
+    end
+  end
+
+  def self.use_browserstack_runner
+    require 'simulacrum-browserstack'
+    Simulacrum::Browserstack::Runner.new
+  rescue LoadError
+    raise
+  end
 
   def self.configure_logger
     @logger.level = @runner_options.verbose ? Logger::DEBUG : Logger::INFO

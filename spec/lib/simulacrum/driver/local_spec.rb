@@ -1,8 +1,8 @@
 # encoding: UTF-8
 require 'spec_helper'
-require 'simulacrum/driver/local'
+require 'simulacrum/driver'
 
-describe Simulacrum::Driver::LocalDriver do
+describe Simulacrum::Driver do
   describe '.use' do
     subject { described_class.use }
 
