@@ -23,18 +23,9 @@ describe Simulacrum::Runner do
       let(:runner) { :browserstack }
 
       it 'uses the BrowserStack runner' do
+        pending
         expect(Simulacrum::Runner::BrowserstackRunner).to receive(:new)
         described_class.run
-      end
-    end
-
-    context 'SauceLabs runner option' do
-      let(:runner) { :saucelabs }
-
-      it 'uses the SauceLabs runner' do
-        pending
-        # expect(Simulacrum::Runner::SaucelabsRunner).to receive(:new)
-        # described_class.run()
       end
     end
   end

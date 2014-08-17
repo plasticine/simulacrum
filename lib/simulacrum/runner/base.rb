@@ -17,7 +17,7 @@ module Simulacrum
       def run
         configure_driver
         configure_rspec
-        run_rspec
+        @exit_code = run_rspec
       end
 
       private
