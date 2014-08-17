@@ -3,10 +3,8 @@ require 'yaml'
 require 'ostruct'
 require 'capybara'
 require 'logger'
-require_relative './simulacrum/methods'
-require_relative './simulacrum/matchers'
-require_relative './simulacrum/configuration'
-require_relative './simulacrum/runner'
+require 'simulacrum/configuration'
+require 'simulacrum/runner'
 
 # Gem module
 module Simulacrum
