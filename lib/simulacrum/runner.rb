@@ -15,19 +15,16 @@ module Simulacrum
     end
 
     def run
-      puts 'Simulacrum::Runner.run'
       @exit_code = run_rspec
     end
 
     private
 
     def configure_driver
-      puts 'Simulacrum::Runner.configure_driver'
       Simulacrum::Driver.use
     end
 
     def run_rspec
-      puts 'Simulacrum::Runner.run_rspec'
       RSpec::Core::Runner.run(test_files)
     end
 
@@ -36,7 +33,6 @@ module Simulacrum
     end
 
     def configure_rspec
-      puts 'Simulacrum::Runner.configure_rspec'
       RSpec.configuration.include Simulacrum::Matchers
       RSpec.configuration.extend Simulacrum::Methods
       RSpec.configuration.color = Simulacrum.runner_options.color
