@@ -83,9 +83,10 @@ module Simulacrum
   end
 
   def self.use_browserstack_runner
+    gem 'simulacrum-browserstack', '>= 0.0.1'
     require 'simulacrum-browserstack'
     Simulacrum::Browserstack::Runner.new
-  rescue LoadError
+  rescue Gem::LoadError
     raise
   end
 

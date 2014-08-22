@@ -18,7 +18,7 @@ module Simulacrum
         when false
           fail Simulacrum::Matchers.fail_message(component, comparator)
         when nil
-          pending Simulacrum::Matchers.pending_message(component)
+          skip Simulacrum::Matchers.pending_message(component)
         end
       end
     end
