@@ -41,6 +41,7 @@ module Simulacrum
   module_function :root
 
   def run(options)
+    puts 'Simulacrum.run'
     @runner_options = options
     configure_logger
     configure_runner.run

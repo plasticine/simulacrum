@@ -3,7 +3,6 @@ require 'rspec'
 require 'simulacrum/driver'
 require 'simulacrum/methods'
 require 'simulacrum/matchers'
-require 'pry'
 
 module Simulacrum
   # Base Runner class for running RSpec in parallel.
