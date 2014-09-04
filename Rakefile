@@ -1,4 +1,6 @@
 #!/usr/bin/env rake
+require 'rubygems'
+require 'bundler/setup'
 require 'rspec/core/rake_task'
 require 'cane/rake_task'
 require 'rdoc/task'

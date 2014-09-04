@@ -7,6 +7,9 @@ bundler_args: "--binstubs --standalone --without documentation --path ../bundle"
 cache: bundler
 script:
   - script/spec
+gemfile:
+  - gemfiles/rspec2.gemfile
+  - gemfiles/rspec3.gemfile
 addons:
   sauce_connect: true
   code_climate:
