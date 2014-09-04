@@ -4,7 +4,7 @@ $(dirname $0)/bootstrap
 
 rm -rf coverage/
 rm -rf tmp/
-bin/rubocop --display-cop-names
-bin/rspec --require spec_helper
-bin/cucumber --require features/support/env.rb --strict features
-bin/rake quality
+bundle exec rubocop --display-cop-names
+bundle exec rspec --require spec_helper
+bundle exec cucumber --require features/support/env.rb --strict features
+bundle exec rake quality

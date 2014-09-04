@@ -47,7 +47,7 @@ module Simulacrum
   end
   module_function :run
 
-  def configure(&block)
+  def configure(&_block)
     options = OpenStruct.new(component: OpenStruct.new)
     yield options
     configuration.configure(options.to_h)
