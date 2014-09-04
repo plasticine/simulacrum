@@ -7,6 +7,8 @@ AllCops:
     - example/**/*
     - bin/*
     - spec/use_simplecov.rb
+    - gemfiles/**/*
+    - bundle/**/*
 
 TrivialAccessors:
   Exclude:
