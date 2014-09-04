@@ -5,7 +5,7 @@ require_relative './component'
 module Simulacrum
   # Rspec utility methods for defining components, browser environments
   module Methods
-    def component(name, &block)
+    def component(name, &_block)
       options = OpenStruct.new
       yield options
       component = Simulacrum::Component.new(name, options)

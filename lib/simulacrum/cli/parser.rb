@@ -30,17 +30,17 @@ module Simulacrum
         add_help
       end
 
-      def parse(args, _return = true)
+      def parse(args, return_value = true)
         parser.parse!(args)
         options['files'] = args if args.size > 0
         OpenStruct.new(default_options.merge(options))
       rescue OptionParser::InvalidOption,
              OptionParser::AmbiguousOption
         args = %w(--help)
-        _return = false
+        return_value = false
         retry
       rescue OptionsHandled
-        _return
+        return_value
       end
 
       private
