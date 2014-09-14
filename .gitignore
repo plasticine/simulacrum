@@ -1,8 +1,8 @@
-/bin
+bin
 /pkg
 /tmp
 /coverage
-/example/spec/ui/references/**/*
+/examples/**/references/**/*
 .bundle
 *.sublime-workspace
 *.sublime-project
