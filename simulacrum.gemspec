@@ -32,7 +32,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rmagick', '~> 2.13.2'
   gem.add_dependency 'rspec', ['>= 2.14.1']
   gem.add_dependency 'selenium-webdriver', ['~> 2.42.0']
-  gem.add_dependency 'retries'
 
   gem.add_development_dependency 'appraisal'
   gem.add_development_dependency 'aruba'
