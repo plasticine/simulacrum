@@ -4,6 +4,8 @@ AllCops:
   Include:
     - bin/simulacrum
   Exclude:
+    - examples/*
+    - examples/**/*
     - bin/*
     - spec/use_simplecov.rb
 

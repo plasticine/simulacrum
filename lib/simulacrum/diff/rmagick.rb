@@ -5,7 +5,7 @@ require_relative '../diff'
 module Simulacrum
   # The RMagicDiff class implements image diffing using ImageMagick
   class RMagicDiff < Simulacrum::Diff
-    def delta_percent
+    def delta
       @delta * 100
     end
 

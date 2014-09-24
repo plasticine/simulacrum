@@ -1,12 +1,12 @@
 # encoding: UTF-8
-require_relative '../../../lib/simulacrum/version'
+require 'simulacrum/version'
 
 describe Simulacrum do
   describe 'PACKAGE' do
-    it { Simulacrum::PACKAGE.should == 'simulacrum' }
+    it { expect(Simulacrum::PACKAGE).to eq('simulacrum') }
   end
 
   describe 'VERSION' do
-    it { Simulacrum::VERSION.should == '0.2.0' }
+    it { expect(Simulacrum::VERSION).to eq('0.3.0') }
   end
 end

@@ -1,6 +1,10 @@
-/bin
+bin
 /pkg
-/.bundle
+/tmp
 /coverage
+/examples/**/references/**/*
+.bundle
 *.sublime-workspace
 *.sublime-project
+Gemfile.lock
+.env

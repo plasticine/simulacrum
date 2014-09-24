@@ -8,11 +8,11 @@ module Simulacrum
   class Comparator
     include RSpec::Core::Pending
 
-    attr_accessor :component, :candidate, :diff
+    attr_reader :component, :diff
 
     def initialize(component)
       @component = component
-      @component.render
+      component.render
     end
 
     def test
@@ -21,7 +21,7 @@ module Simulacrum
       if component.reference?
         # If there is a diff between the candidate and the reference then we
         # should save both the candidate and diff images and fail the test
-        perform_diff ? pass : fail
+        (pass?) ? pass : fail
 
       # Otherwise we should just write the captured candidate to disk, and mark
       # the spec as being pending until the user works out if the candidate is
@@ -29,6 +29,11 @@ module Simulacrum
       else
         skip
       end
+    end
+
+    def diff
+      @diff ||= Simulacrum::RMagicDiff.new(component.reference_path,
+                                           component.candidate_path)
     end
 
     private
@@ -40,7 +45,7 @@ module Simulacrum
     end
 
     def fail
-      @diff.save(component.diff_path)
+      diff.save(component.diff_path)
       false
     end
 
@@ -48,17 +53,8 @@ module Simulacrum
       nil
     end
 
-    def perform_diff
-      # TODO: Support dynamic diffing strategies?
-      @diff = Simulacrum::RMagicDiff.new(
-        component.reference_path,
-        component.candidate_path
-      )
-      diff_delta_percent_is_acceptable
-    end
-
-    def diff_delta_percent_is_acceptable
-      diff.delta < component.acceptable_delta
+    def pass?
+      diff.delta <= component.delta_threshold
     end
   end
 end

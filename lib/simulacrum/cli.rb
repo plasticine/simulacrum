@@ -1,29 +1,38 @@
 # encoding: UTF-8
-require 'optparse'
-require_relative '../simulacrum'
-require_relative '../simulacrum/command'
-require_relative '../simulacrum/runners/browserstack/runner'
+require 'simulacrum/cli/parser'
 
 module Simulacrum
   # Command-line interface for driving Simulacrum
-  class CLI
-    def self.start(*args)
-      options = {}
-      OptionParser.new do |opts|
-        opts.banner = 'Usage: example.rb [options]'
+  module CLI
+    def execute!(argv)
+      Command.new(argv).run_and_exit
+    end
+    module_function :execute!
 
-        opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
-          options[:verbose] = v
+    # Class for wrappin up logic for running the process and handling exit
+    class Command
+      def initialize(argv, stdin = $stdin, stdout = $stdout, stderr = $stderr, kernel = Kernel)
+        @argv, @stdin, @stdout, @stderr, @kernel = argv, stdin, stdout, stderr, kernel
+      end
+
+      def run_and_exit
+        @exit_code = run
+        @kernel.exit(@exit_code)
+      end
+
+      private
+
+      def run
+        if parsed_argv == true
+          0
+        else
+          Simulacrum.run(parsed_argv)
         end
-      end.parse!
+      end
 
-      p options
-      p ARGV
-
-      Simulacrum::Runners::BrowserstackRunner.new(processes: 5)
-    rescue => error
-      puts error
-      exit(1)
+      def parsed_argv
+        @parsed_argv ||= CLI::Parser.parse(@argv)
+      end
     end
   end
 end

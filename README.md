@@ -1,18 +1,37 @@
 ## Simulacrum
 
-[![Build Status](https://travis-ci.org/plasticine/simulacrum.svg?branch=master)](https://travis-ci.org/plasticine/simulacrum) [![Code Climate](https://codeclimate.com/github/plasticine/simulacrum/coverage.png)](https://codeclimate.com/github/plasticine/simulacrum) [![Code Climate](https://codeclimate.com/github/plasticine/simulacrum.png)](https://codeclimate.com/github/plasticine/simulacrum) [![Dependency Status](https://gemnasium.com/plasticine/simulacrum.svg)](https://gemnasium.com/plasticine/simulacrum) [![Gem Version](https://badge.fury.io/rb/simulacrum.svg)](http://badge.fury.io/rb/simulacrum)
+[![Build Status](http://img.shields.io/travis/plasticine/simulacrum.svg?style=flat)][travis]
+[![Code Climate](http://img.shields.io/codeclimate/github/plasticine/simulacrum.svg?style=flat)][codeclimate]
+[![Code Climate](http://img.shields.io/codeclimate/coverage/github/plasticine/simulacrum.svg?style=flat)][codeclimate]
+[![Dependency Status](http://img.shields.io/gemnasium/plasticine/simulacrum.svg?style=flat)][gemnasium]
+[![Gem Version](http://img.shields.io/gem/v/simulacrum.svg?style=flat)][gem_version]
 
-Simulacrum is an opinionated UI component regression testing tool built to be tightly integrated with [RSpec], [Capybara], [Selenium Webdriver] & [Browserstack].
+**Simulacrum is a UI regression testing tool. It helps you write unit-like tests for
+user-interface components in web applications.**
 
-__Simulacrum is still very much in development. There will probably be breaking changes, and the API will almost certainly change.__
+It is built around common tools such as [RSpec], [Capybara] & [Selenium Webdriver].
+
+Support for 3rd party Selenium Webdriver services (such as [Browserstack], and [Saucelabs]) is provided via additional collaborating gems;
+
+|                  |                                                                                             | Status |
+| ---------------- |:------------------------------------------------------------------------------------------- |:------:|
+| **Browserstack** | [plasticine/simulacrum-browserstack](https://github.com/plasticine/simulacrum-browserstack) | WIP 🚧 |
+| **Saucelabs**    | [plasticine/simulacrum-saucelabs](https://github.com/plasticine/simulacrum-saucelabs)       | WIP 🚧 |
+
+#### Does this sound like something you might be interested in?
+
+- Test your UI components visually
+- Know when a component is visually altered
+- Integrate with
+- Test component behaviour (JS) that manipulates visual appearance
 
 ***
 
-### 🚧 But...why?
+### UI Regression Testing
 
 Explain the use-case better.
 
-### 🚧 Opinions
+### Opinions
 
 Simulacrum is a little bit opinionated about a few things;
 
@@ -23,6 +42,8 @@ It would be good to explain these opinions, the reason for them and why they are
 
 ## Setup
 Simulacrum requires Ruby 1.9.3 or later. To install, add this line to your Gemfile and run `bundle install`:
+
+Create a spec helper file for simulacrum — `simulacrum_helper.rb` — and throw this junk in it:
 
 ```ruby
 gem 'simulacrum'
@@ -49,24 +70,35 @@ end
 
 ## Usage
 
-Simulacrum provides a small DSL for configuring and managing UI tests from within Rspec. Basically it boils down to these three methods;
+```shell
+simulacrum --help
+```
+
+
+
+
+<!-- Simulacrum provides a small DSL for configuring and managing UI tests from within Rspec. Basically it boils down to these three methods;
 
 - `component`
 - `configure_browser`
-- `look_the_same`
+- `look_the_same` -->
 
 ***
 
 #### Inspiration / Similar tools
 
-- [Huxley]
-- [Green Onion]
+- Huxley
+- Green Onion
 
 
-
-[Huxley]: 				https://github.com/facebook/huxley
-[Green Onion]:  		http://intridea.github.io/green_onion
-[Browserstack]:         http://www.browserstack.com
-[RSpec]:                http://rspec.info
-[Capybara]:             https://github.com/jnicklas/capybara
-[Selenium Webdriver]:   http://docs.seleniumhq.org/projects/webdriver/
+[huxley]: 			      https://github.com/facebook/huxley
+[green_onion]:  		  http://intridea.github.io/green_onion
+[Browserstack]:       http://www.browserstack.com
+[Saucelabs]:          https://saucelabs.com
+[RSpec]:              http://rspec.info
+[Capybara]:           https://github.com/jnicklas/capybara
+[Selenium Webdriver]: http://docs.seleniumhq.org/projects/webdriver/
+[codeclimate]:        https://codeclimate.com/github/plasticine/simulacrum
+[travis]:             https://travis-ci.org/plasticine/simulacrum
+[gemnasium]:          https://gemnasium.com/plasticine/simulacrum
+[gem_version]:        http://badge.fury.io/rb/simulacrum

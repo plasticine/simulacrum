@@ -1,7 +1,0 @@
-#!/usr/bin/env ruby
-
-require 'simulacrum/cli'
-
-result = Simulacrum::CLI.run(ARGV)
-
-exit(1) unless result

@@ -1,0 +1,4 @@
+#!/bin/sh -xe
+
+bundle --quiet
+rackup --port 8000
