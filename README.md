@@ -6,17 +6,32 @@
 [![Dependency Status](http://img.shields.io/gemnasium/plasticine/simulacrum.svg?style=flat)][gemnasium]
 [![Gem Version](http://img.shields.io/gem/v/simulacrum.svg?style=flat)][gem_version]
 
-Simulacrum is an opinionated UI component regression testing tool built to be tightly integrated with [RSpec], [Capybara], [Selenium Webdriver] & [Browserstack].
+**Simulacrum is a UI regression testing tool. It helps you write unit-like tests for
+user-interface components in web applications.**
 
-__Simulacrum is still very much in development. There will probably be breaking changes, and the API will almost certainly change.__
+It is built around common tools such as [RSpec], [Capybara] & [Selenium Webdriver].
+
+Support for 3rd party Selenium Webdriver services (such as [Browserstack], and [Saucelabs]) is provided via additional collaborating gems;
+
+|                  |                                                                                             | Status |
+| ---------------- |:------------------------------------------------------------------------------------------- |:------:|
+| **Browserstack** | [plasticine/simulacrum-browserstack](https://github.com/plasticine/simulacrum-browserstack) | WIP 🚧 |
+| **Saucelabs**    | [plasticine/simulacrum-saucelabs](https://github.com/plasticine/simulacrum-saucelabs)       | WIP 🚧 |
+
+#### Does this sound like something you might be interested in?
+
+- Test your UI components visually
+- Know when a component is visually altered
+- Integrate with
+- Test component behaviour (JS) that manipulates visual appearance
 
 ***
 
-### 🚧 But...why?
+### UI Regression Testing
 
 Explain the use-case better.
 
-### 🚧 Opinions
+### Opinions
 
 Simulacrum is a little bit opinionated about a few things;
 
@@ -79,6 +94,7 @@ simulacrum --help
 [huxley]: 			      https://github.com/facebook/huxley
 [green_onion]:  		  http://intridea.github.io/green_onion
 [Browserstack]:       http://www.browserstack.com
+[Saucelabs]:          https://saucelabs.com
 [RSpec]:              http://rspec.info
 [Capybara]:           https://github.com/jnicklas/capybara
 [Selenium Webdriver]: http://docs.seleniumhq.org/projects/webdriver/
