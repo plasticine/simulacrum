@@ -9,6 +9,8 @@
 **Simulacrum is a UI regression testing tool. It helps you write unit-like tests for
 user-interface components in web applications.**
 
+🚧 Simulacrum is still very much a Work In Progress, hopefully it can still be useful for you as I work on making it better and more robust. Feedback and PRs accepted and appreciated.
+
 It is built around common tools such as [RSpec], [Capybara] & [Selenium Webdriver].
 
 Support for 3rd party Selenium Webdriver services (such as [Browserstack], and [Saucelabs]) is provided via additional collaborating gems;
@@ -20,25 +22,16 @@ Support for 3rd party Selenium Webdriver services (such as [Browserstack], and [
 
 #### Does this sound like something you might be interested in?
 
+**Problem:** Traditional feature testing is only half the picture, it won’t tell you when something looks broken.
+
 - Test your UI components visually
-- Know when a component is visually altered
-- Integrate with
+- Know when a UI component is visually altered
 - Test component behaviour (JS) that manipulates visual appearance
+- Test the resulting output of your UI code (HTML, JS, CSS)
+
+https://speakerdeck.com/justinmorris/ui-regression-testing-for-fun-and-profit
 
 ***
-
-### UI Regression Testing
-
-Explain the use-case better.
-
-### Opinions
-
-Simulacrum is a little bit opinionated about a few things;
-
-- selenium webdriver (browserstack)
-- testing components
-
-It would be good to explain these opinions, the reason for them and why they are good.
 
 ## Setup
 Simulacrum requires Ruby 1.9.3 or later. To install, add this line to your Gemfile and run `bundle install`:
@@ -74,14 +67,10 @@ end
 simulacrum --help
 ```
 
+### Examples
 
+There are some examples of how Simulacrum can be used in [./examples](https://github.com/plasticine/simulacrum/tree/master/examples)
 
-
-<!-- Simulacrum provides a small DSL for configuring and managing UI tests from within Rspec. Basically it boils down to these three methods;
-
-- `component`
-- `configure_browser`
-- `look_the_same` -->
 
 ***
 
