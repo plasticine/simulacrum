@@ -8,7 +8,7 @@
 
 **Simulacrum is a UI regression testing tool. It helps you write unit-like tests for user-interface components in web applications.**
 
-Simulacrum allows you to write RSpec style specs that when run will compare screenshots of components of your UI to their last “Known Good State”, and tell you if they’ve changed.
+Simulacrum allows you to write RSpec style specs that when run will compare screenshots of your UI components to their last “Known Good State”, and tell you if they’ve changed.
 
 Simulacrum is built around common tools in the Ruby development world, such as [RSpec], [Capybara] & [Selenium Webdriver].
 
