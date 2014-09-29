@@ -84,10 +84,6 @@ Support for 3rd party Selenium Webdriver services (such as [Browserstack], and
 
 ***
 
-####
-
-***
-
 #### Inspiration / Similar tools
 
 The approach Simulacrum takes is not the only way you can approach testing CSS/UI Components,
