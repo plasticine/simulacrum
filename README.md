@@ -86,25 +86,18 @@ Support for 3rd party Selenium Webdriver services (such as [Browserstack], and
 
 #### Inspiration / Similar tools
 
-The approach Simulacrum takes is not the only way you can approach testing CSS/UI Components,
-you can find out about a bunch of others over at [csste.st](http://csste.st/techniques/).
-
-There is also a range of
-
-Simulacrum appraoches the idea of UI regression testing by way of screenshots. There are other techniques that could be used to
-accomplish the same outcome (such as inspecting CSS directly), a good overview of the various techniques is available at [csste.st](http://csste.st/techniques/).
+Simulacrum appraoches the idea of UI regression testing by way of screenshots. There are other techniques that could be used to accomplish the same outcome (such as inspecting CSS directly), a good overview of the various techniques is available at [csste.st](http://csste.st/techniques/).
 
 Some of the tools that Simulacrum is most similar to, and takes inspiration from:
 
-- **[Huxley]** (bfirsh/needle)
-- **[Needle]** (facebook/huxley)
+- **[Huxley]** (`facebook/huxley`)
+- **[Needle]** (`bfirsh/needle`)
 
 
 [plasticine/simulacrum-browserstack]: https://github.com/plasticine/simulacrum-browserstack
 [plasticine/simulacrum-saucelabs]:    https://github.com/plasticine/simulacrum-saucelabs
 [Needle]:                             https://github.com/bfirsh/needle
-[Huxley]: 			                      https://github.com/facebook/huxley
-[Green Onion]:  		                  http://intridea.github.io/green_onion
+[Huxley]:                             https://github.com/facebook/huxley
 [Browserstack]:                       http://www.browserstack.com
 [Saucelabs]:                          https://saucelabs.com
 [RSpec]:                              http://rspec.info
