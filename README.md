@@ -71,18 +71,18 @@ end
 
 Simulacrum provides a CLI tool to help you run your tests. It implements the same file/directory execution options as RSpec itself, so running a subset of your specs is possible (see below). For a full list of CLI flags run `simulacrum --help`.
 
-##### Running specs
+##### CLI Usage
 ```shell
 $ simulacrum                            # Run all specs
 $ simulacrum spec/ui/panels             # Run all specs in a directory
 $ simulacrum spec/ui/my_button_spec.rb  # Run a specific spec
 ```
 
-## Examples
+### Examples
 
 There are some examples of how Simulacrum can be used in [examples](./tree/master/examples).
 
-## Remote & Cross-device testing
+### Remote Selenium & Cross-device testing
 
 Support for 3rd party Selenium Webdriver services (such as [Browserstack], and [Saucelabs]) is provided via additional collaborating gems.
 
