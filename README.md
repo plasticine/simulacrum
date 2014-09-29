@@ -22,7 +22,7 @@ Traditional UI testing is usually feature and functionality driven, and while th
 
 Relying solely on functional tests to verify your UI neglects the visual aspect, meaning that a passing functional test can conceal a visually broken piece UI from a user point-of-view (be it from broken CSS or HTML).
 
-At the end of the day if it looks broken it is broken, even if it might still “work”. Frontend tools (particularly CSS, of course) are very brittle and by their nature make it very easy to accidentally break the look of your website.
+At the end of the day **if it looks broken it is broken**, even if it might still “work”. Frontend tools (particularly CSS, of course) are very brittle and by their nature make it very easy to accidentally break the look of your website.
 
 There is a short slidedeck discussing some of the details and rationale for the project over on [Speakerdeck](https://speakerdeck.com/justinmorris/ui-regression-testing-for-fun-and-profit)
 
