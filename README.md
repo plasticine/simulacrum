@@ -16,7 +16,7 @@ Simulacrum is built around common tools in the Ruby development world, such as [
 
 Feedback and PRs accepted and appreciated — see [Development](#Development) below for how to get up and running.
 
-### What problem is this solving?
+## What problem is this solving?
 
 Traditional UI testing is usually feature and functionality driven, and while this is awesome it is also only really testing half of the actual UI.
 
@@ -26,14 +26,12 @@ At the end of the day if it looks broken it is broken, even if it might still �
 
 There is a short slidedeck discussing some of the details and rationale for the project over on [Speakerdeck](https://speakerdeck.com/justinmorris/ui-regression-testing-for-fun-and-profit)
 
-##### Simulacrum aims to help you;
+### Simulacrum aims to help you;
 
 - test your UI components visually, and know when they change
 - write easy to read specs that don’t require any real special configuration to work
 - test your UI and multiple screen sizes (mediaqueries)
 - test component behaviour (Javascript) that manipulates visual appearance
-
-***
 
 ## Setup
 Simulacrum requires Ruby 1.9.3 or later. To install, add this line to your Gemfile and run `bundle install`:
@@ -51,24 +49,7 @@ end
 
 Simulacrum expects your specs to be under `spec/ui/` and be named `*_spec.rb`.
 
-## Usage
-
-```shell
-> simulacrum --help
-Usage: simulacrum [options] [files or directories]
-```
-
-##### Run all specs
-```shell
-simulacrum
-```
-
-##### Run a specific spec
-```shell
-simulacrum spec/ui/my_button_spec.rb
-```
-
-## Specs
+## Writing Specs
 
 The simplest Simulacrum spec would look something like this;
 
@@ -86,19 +67,33 @@ describe 'MyComponent' do
 end
 ```
 
-### Examples
+## Running Specs
 
-There are some examples of how Simulacrum can be used in [./examples](./tree/master/examples)
+Simulacrum provides a CLI tool to help you run your tests. It implements the same file/directory execution options as RSpec itself, so running a subset of your specs is possible (see below). For a full list of CLI flags run `simulacrum --help`.
 
-### Remote & Cross-device testing
+##### Running specs
+```shell
+$ simulacrum                            # Run all specs
+$ simulacrum spec/ui/panels             # Run all specs in a directory
+$ simulacrum spec/ui/my_button_spec.rb  # Run a specific spec
+```
 
-Support for 3rd party Selenium Webdriver services (such as [Browserstack], and
-[Saucelabs]) is provided via additional collaborating gems;
+## Examples
+
+There are some examples of how Simulacrum can be used in [examples](./tree/master/examples).
+
+## Remote & Cross-device testing
+
+Support for 3rd party Selenium Webdriver services (such as [Browserstack], and [Saucelabs]) is provided via additional collaborating gems.
 
 |                  |                                      | Status |
 | ---------------- |:------------------------------------ |:------:|
 | **Browserstack** | [plasticine/simulacrum-browserstack] | WIP 🚧 |
 | **Saucelabs**    | [plasticine/simulacrum-saucelabs]    | WIP 🚧 |
+
+## Development
+
+The test suite can be run using `./script/spec`.
 
 ***
 
