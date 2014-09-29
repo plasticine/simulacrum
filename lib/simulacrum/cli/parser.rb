@@ -23,7 +23,6 @@ module Simulacrum
         @stdout = stdout
 
         add_banner
-        add_runner_options
         add_format_options
         add_separator
         add_version
@@ -46,23 +45,7 @@ module Simulacrum
       private
 
       def default_options
-        read_options_from_file.merge(username: ENV['SIMULACRUM_USERNAME'],
-                                     apikey: ENV['SIMULACRUM_APIKEY'])
-      end
-
-      def read_options_from_file
-        if Simulacrum.config_file?
-          filter_file_options(Simulacrum.config_file)
-        else
-          {}
-        end
-      end
-
-      def filter_file_options(file_options)
-        file_options.tap do |hash|
-          hash.delete('username')
-          hash.delete('apikey')
-        end
+        {}
       end
 
       def add_banner
@@ -82,44 +65,13 @@ module Simulacrum
       end
 
       def add_help
-        parser.on_tail('-h', '--help', 'Show this message') do
+        parser.on_tail('-h', '--help', 'You\'re looking at it!') do
           stdout.puts parser
           fail OptionsHandled
         end
       end
 
-      def add_runner_options
-        parser.on('--runner [RUNNER]',
-                  [:browserstack],
-                  'Runner to use for executing specs (browserstack).') do |runner|
-          options['runner'] = runner
-        end
-
-        parser.on('--username [USERNAME]',
-                  'Username for authenticating when using the Browserstack runner.') do |username|
-          options['username'] = username
-        end
-
-        parser.on('--apikey [APIKEY]',
-                  'API key for authenticating when using the Browserstack runner.') do |apikey|
-          options['apikey'] = apikey
-        end
-
-        parser.on('--max-processes [N]',
-                  Integer,
-                  'Number of parallel proceses the runner should use.') do |max_processes|
-          options['max_processes'] = max_processes.to_i
-        end
-
-        parser.on('--browser [BROWSER]',
-                  'Browser configuration to use') do |browser|
-          options['browser'] = browser.to_sym
-        end
-      end
-
       def add_format_options
-        add_separator
-
         parser.on('-c',
                   '--[no-]color',
                   '--[no-]colour',
