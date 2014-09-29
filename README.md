@@ -43,9 +43,9 @@ The next step is to create a `simulacrum_helper.rb` helper file that will help y
 ```ruby
 require 'simulacrum'
 
-Simulacrum.configure do |simulacrum|
-  simulacrum.component.delta_threshold = 0 # 0% change allowed
-  simulacrum.component.capture_selector = '.MyComponent' # CSS selector to crop images around
+Simulacrum.configure do |config|
+  config.component.delta_threshold = 0 # 0% change allowed
+  config.component.capture_selector = '.MyComponent' # CSS selector to crop images around
 end
 ```
 
