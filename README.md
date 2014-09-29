@@ -14,7 +14,7 @@ Simulacrum is built around common tools in the Ruby development world, such as [
 
 **🚧 This project is still a Work In Progress™, hopefully it can still be useful for you as I work on making it better and more robust.**
 
-Feedback and PRs accepted and appreciated — see [Development](#Development) below for how to get up and running.
+Feedback and PRs accepted and appreciated — see [Development](#development) below for how to get up and running.
 
 ## What problem is this solving?
 
@@ -80,7 +80,7 @@ $ simulacrum spec/ui/my_button_spec.rb  # Run a specific spec
 
 ### Examples
 
-There are some examples of how Simulacrum can be used in [examples](./tree/master/examples).
+There are some examples of how Simulacrum can be used in [examples](https://github.com/plasticine/simulacrum/tree/master/examples).
 
 ### Remote Selenium & Cross-device testing
 

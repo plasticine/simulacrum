@@ -7,6 +7,6 @@ describe Simulacrum do
   end
 
   describe 'VERSION' do
-    it { expect(Simulacrum::VERSION).to eq('0.3.0') }
+    it { expect(Simulacrum::VERSION).to eq('0.3.1') }
   end
 end
