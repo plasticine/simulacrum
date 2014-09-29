@@ -68,6 +68,24 @@ simulacrum
 simulacrum spec/ui/my_button_spec.rb
 ```
 
+## Specs
+
+The simplest Simulacrum spec would look something like this;
+
+```ruby
+# spec/ui/my_component_spec.rb
+
+require 'simulacrum_helper'
+
+describe 'MyComponent' do
+  component :mycomponent do |options|
+    options.url = '/link/to/styleguide/example/of/MyComponent.html'
+  end
+
+  it { is_expected.to look_the_same }
+end
+```
+
 ### Examples
 
 There are some examples of how Simulacrum can be used in [./examples](./tree/master/examples)
@@ -90,8 +108,8 @@ Simulacrum appraoches the idea of UI regression testing by way of screenshots. T
 
 Some of the tools that Simulacrum is most similar to, and takes inspiration from:
 
-- **[Huxley]** (`facebook/huxley`)
-- **[Needle]** (`bfirsh/needle`)
+- **[Huxley]** `facebook/huxley`
+- **[Needle]** `bfirsh/needle`
 
 
 [plasticine/simulacrum-browserstack]: https://github.com/plasticine/simulacrum-browserstack
